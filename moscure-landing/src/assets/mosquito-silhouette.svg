@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" fill="none">
+  <!-- Body -->
+  <ellipse cx="100" cy="140" rx="12" ry="28" fill="currentColor" opacity="0.9"/>
+  <!-- Head -->
+  <circle cx="100" cy="105" r="10" fill="currentColor" opacity="0.9"/>
+  <!-- Proboscis -->
+  <line x1="100" y1="115" x2="100" y2="148" stroke="currentColor" strokeWidth="2" opacity="0.8"/>
+  <!-- Wings left pair -->
+  <ellipse cx="68" cy="125" rx="28" ry="10" fill="currentColor" opacity="0.4" transform="rotate(-20 68 125)"/>
+  <ellipse cx="62" cy="138" rx="22" ry="7" fill="currentColor" opacity="0.3" transform="rotate(-15 62 138)"/>
+  <!-- Wings right pair -->
+  <ellipse cx="132" cy="125" rx="28" ry="10" fill="currentColor" opacity="0.4" transform="rotate(20 132 125)"/>
+  <ellipse cx="138" cy="138" rx="22" ry="7" fill="currentColor" opacity="0.3" transform="rotate(15 138 138)"/>
+  <!-- Legs left -->
+  <line x1="90" y1="145" x2="52" y2="172" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+  <line x1="88" y1="155" x2="46" y2="185" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+  <line x1="90" y1="163" x2="50" y2="198" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+  <!-- Legs right -->
+  <line x1="110" y1="145" x2="148" y2="172" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+  <line x1="112" y1="155" x2="154" y2="185" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+  <line x1="110" y1="163" x2="150" y2="198" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+  <!-- Abdomen pattern -->
+  <line x1="92" y1="138" x2="108" y2="138" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
+  <line x1="91" y1="148" x2="109" y2="148" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
+  <line x1="91" y1="158" x2="109" y2="158" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
+</svg>

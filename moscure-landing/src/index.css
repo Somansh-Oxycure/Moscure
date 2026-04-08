@@ -1,0 +1,344 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Global resets ─────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Gradient text utilities ────────────────────────────── */
+.gradient-text-pink-yellow {
+  background: linear-gradient(135deg, #ff4d6d, #ffd60a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-yellow-cyan {
+  background: linear-gradient(135deg, #ffd60a, #00f5d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-cyan-pink {
+  background: linear-gradient(135deg, #00f5d4, #ff4d6d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-full {
+  background: linear-gradient(135deg, #ff4d6d, #ffd60a, #00f5d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Gradient background utilities ─────────────────────── */
+.gradient-pink-yellow {
+  background: linear-gradient(135deg, #ff4d6d, #ffd60a);
+}
+.gradient-yellow-cyan {
+  background: linear-gradient(135deg, #ffd60a, #00f5d4);
+}
+.gradient-cyan-pink {
+  background: linear-gradient(135deg, #00f5d4, #ff4d6d);
+}
+.gradient-full {
+  background: linear-gradient(135deg, #ff4d6d, #00f5d4, #ffd60a);
+}
+
+/* ── Neon border glow ───────────────────────────────────── */
+.neon-border-cyan {
+  box-shadow: 0 0 0 2px #00f5d4, 0 0 20px rgba(0, 245, 212, 0.3);
+}
+.neon-border-pink {
+  box-shadow: 0 0 0 2px #ff4d6d, 0 0 20px rgba(255, 77, 109, 0.3);
+}
+.neon-border-yellow {
+  box-shadow: 0 0 0 2px #ffd60a, 0 0 20px rgba(255, 214, 10, 0.3);
+}
+
+/* ── Border glow pulse keyframe ─────────────────────────── */
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.6; box-shadow: 0 0 15px rgba(0, 245, 212, 0.2); }
+  50%       { opacity: 1;   box-shadow: 0 0 35px rgba(0, 245, 212, 0.6); }
+}
+
+@keyframes borderGlowPink {
+  0%, 100% { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2); }
+  50%       { box-shadow: 0 0 35px rgba(255, 77, 109, 0.6); }
+}
+
+/* ── Hero border glow animation ─────────────────────────── */
+@keyframes heroBorderGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px #00f5d4,
+      0 0 30px rgba(0, 245, 212, 0.4),
+      inset 0 0 30px rgba(0, 245, 212, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px #00f5d4,
+      0 0 60px rgba(0, 245, 212, 0.7),
+      inset 0 0 40px rgba(0, 245, 212, 0.08);
+  }
+}
+
+.hero-card-glow {
+  animation: heroBorderGlow 3s ease-in-out infinite;
+}
+
+@keyframes heroBorderGlowPink {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px #ffd60a,
+      0 0 30px rgba(255, 214, 10, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px #ff4d6d,
+      0 0 60px rgba(255, 77, 109, 0.5);
+  }
+}
+
+.hero-card-glow-pink {
+  animation: heroBorderGlowPink 3.5s ease-in-out infinite;
+}
+
+/* ── Marquee keyframe ────────────────────────────────────── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ── Float badge ────────────────────────────────────────── */
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ── Shimmer sweep on comparison ────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(0, 245, 212, 0.15) 50%, transparent 75%);
+  background-size: 200% auto;
+  animation: shimmer 2s ease-in-out 0.5s 1;
+}
+
+/* ── Noise texture overlay ──────────────────────────────── */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* ── Animated gradient border ───────────────────────────── */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderSpin {
+  to { --angle: 360deg; }
+}
+
+.animated-border {
+  position: relative;
+  border-radius: 1rem;
+  isolation: isolate;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--angle),
+    #FF4D6D 0%,
+    #FFD60A 33%,
+    #00F5D4 66%,
+    #FF4D6D 100%
+  );
+  animation: borderSpin 4s linear infinite;
+  z-index: -1;
+}
+
+/* ── Stat shimmer sweep ──────────────────────────────────── */
+@keyframes statShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.stat-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(0, 245, 212, 0.25) 50%, transparent 75%);
+  background-size: 200% auto;
+  animation: statShimmer 1.6s ease-in-out 0.3s 1;
+}
+
+/* ── Connector line draw-in ─────────────────────────────── */
+@keyframes drawLine {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.connector-line {
+  animation: drawLine 0.6s ease-out 0.8s both;
+}
+
+/* ── Scrollbar styling ──────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #00f5d4; }
+
+/* ── Diseases Page: Alert pulse ring ────────────────────── */
+@keyframes alertPulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  70%  { transform: scale(2.2); opacity: 0;   }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
+
+.alert-pulse {
+  position: relative;
+}
+
+.alert-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 2px solid #FF4D6D;
+  animation: alertPulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ── Diseases Page: Full-page scan-line texture ─────────── */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.015) 2px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+  pointer-events: none;
+}
+
+/* ── Comparison Page: score bar fill ────────────────────── */
+.score-bar-fill {
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Comparison Page: SVG checkmark draw-in ─────────────── */
+@keyframes drawCheck {
+  from { stroke-dashoffset: 50; }
+  to   { stroke-dashoffset: 0;  }
+}
+.check-draw {
+  stroke-dasharray: 50;
+  animation: drawCheck 0.5s ease-out forwards;
+}
+
+/* ── Comparison Page: table row hover scan ──────────────── */
+.table-row-hover:hover {
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 212, 0.04), transparent) !important;
+}
+
+/* ── Comparison Page: trophy slow Y-rotate ──────────────── */
+@keyframes rotateTrophy {
+  0%   { transform: translateY(-50%) rotateY(0deg);   }
+  100% { transform: translateY(-50%) rotateY(360deg); }
+}
+
+/* ── About Page: Scroll indicator bounce ───────────────── */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0);   opacity: 1;   }
+  50%       { transform: translateY(8px); opacity: 0.5; }
+}
+.scroll-indicator {
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+
+/* ── About Page: Icon orbit ring ───────────────────────── */
+@keyframes orbitSpin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+.orbit-ring {
+  animation: orbitSpin 12s linear infinite;
+  transform-origin: center;
+}
+
+/* ── About Page: Commitment stat pulse ─────────────────── */
+@keyframes statPulse {
+  0%, 100% { transform: scale(1);    }
+  50%       { transform: scale(1.04); }
+}
+.stat-pulse-1 { animation: statPulse 3s ease-in-out infinite; }
+.stat-pulse-2 { animation: statPulse 3s ease-in-out 1s infinite; }
+.stat-pulse-3 { animation: statPulse 3s ease-in-out 2s infinite; }
+
+/* ── Contact Page: input focus box-shadow ───────────────── */
+.contact-input:focus {
+  box-shadow: 0 0 0 3px rgba(0, 245, 212, 0.07);
+}
+
+/* ── Contact Page: select dropdown dark theme ───────────── */
+.contact-select {
+  color-scheme: dark;
+}
+.contact-select option {
+  background-color: #1C1C1C;
+  color: #ffffff;
+}
+
+/* ── Contact Page: placeholder text ─────────────────────── */
+.contact-input::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+/* ── Contact Page: submit button glow pulse ─────────────── */
+@keyframes submitGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 245, 212, 0.25); }
+  50%       { box-shadow: 0 0 40px rgba(0, 245, 212, 0.55); }
+}
+.submit-glow {
+  animation: submitGlow 2.5s ease-in-out infinite;
+}
