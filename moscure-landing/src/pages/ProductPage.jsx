@@ -327,6 +327,9 @@ function TestedSpeciesSection() {
               <motion.div key={item.id} whileHover={{ scale: 1.05 }} className="animated-border"
                 variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } } }}>
                 <div className="bg-surface rounded-2xl p-6 flex flex-col items-center justify-center gap-2 text-center min-h-[140px]">
+                  {item.prefix && (
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-textMuted h-[12px]">{item.prefix}</span>
+                  )}
                   <StatNumber stat={item.stat} suffix={item.suffix} accent={item.accent} />
                   <span className="font-mono text-xs uppercase tracking-widest text-textMuted">{item.label}</span>
                 </div>
@@ -586,10 +589,7 @@ function LabTestedSection() {
                     <span className="font-mono text-xs uppercase tracking-widest text-gradientcyan">Certified Lab Testing</span>
                     <span className="font-body text-xs text-textMuted">Government-approved facility · India</span>
                   </div>
-                  <motion.a href="#" whileHover={{ scale: 1.05 }}
-                    className="flex items-center gap-1.5 font-mono text-xs text-gradientcyan border border-gradientcyan/30 px-3 py-1.5 rounded-full hover:bg-gradientcyan/10 transition-colors shrink-0">
-                    Report <ExternalLink size={11} />
-                  </motion.a>
+                 
                 </motion.div>
               </motion.div>
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import logoImg from '../assets/logo.png'
@@ -9,10 +10,12 @@ const NAV_LINKS = [
   { label: 'DISEASES',   href: '#hero',        page: 'diseases' },
   { label: 'COMPARISON', href: '#comparison',  page: 'comparison' },
   { label: 'ABOUT US',   href: '#about-hero',  page: 'about' },
+  { label: 'ABOUT V2',   href: '#about-hero',  page: 'about-v2' },
   { label: 'CONTACT',    href: '#contact-hero', page: 'contact' },
 ]
 
-export default function Navbar({ currentPage = 'landing', onNavigate }) {
+export default function Navbar({ onNavigate }) {
+  const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -36,22 +39,26 @@ export default function Navbar({ currentPage = 'landing', onNavigate }) {
     } else if (link.page === 'about') {
       e.preventDefault()
       onNavigate?.('about')
+    } else if (link.page === 'about-v2') {
+      e.preventDefault()
+      onNavigate?.('about-v2')
     } else if (link.page === 'contact') {
       e.preventDefault()
       onNavigate?.('contact')
-    } else if (currentPage !== 'landing') {
+    } else if (location.pathname !== '/') {
       e.preventDefault()
       onNavigate?.('landing')
     }
   }
 
   const isActiveLink = (link) => {
-    if (link.page === 'product') return currentPage === 'product'
-    if (link.page === 'diseases') return currentPage === 'diseases'
-    if (link.page === 'comparison') return currentPage === 'comparison'
-    if (link.page === 'about') return currentPage === 'about'
-    if (link.page === 'contact') return currentPage === 'contact'
-    return currentPage === 'landing' && link.label === 'HOME'
+    if (link.page === 'product') return location.pathname === '/product'
+    if (link.page === 'diseases') return location.pathname === '/diseases'
+    if (link.page === 'comparison') return location.pathname === '/comparison'
+    if (link.page === 'about') return location.pathname === '/about'
+    if (link.page === 'about-v2') return location.pathname === '/about-v2'
+    if (link.page === 'contact') return location.pathname === '/contact'
+    return location.pathname === '/' && link.label === 'HOME'
   }
 
   return (

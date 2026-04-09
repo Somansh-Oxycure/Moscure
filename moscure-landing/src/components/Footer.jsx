@@ -55,7 +55,7 @@ export default function Footer({ onNavigate }) {
               <img src={logoImg} alt="Moscure" className="h-24 brightness-125 w-auto object-contain" />
             </button>
             <p className="font-body text-sm text-textMuted leading-relaxed">
-              India&apos;s most effective UV LED mosquito trap. Chemical-free,
+              India&apos;s most effective MLID and Phototaxis technology mosquito trap. Chemical-free,
               family-safe protection against Dengue, Malaria, and Chikungunya.
             </p>
             {/* Social icons */}

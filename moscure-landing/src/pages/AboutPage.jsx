@@ -151,7 +151,7 @@ const WHY_CHOOSE = [
     id: 4,
     icon: Cpu,
     title: 'INNOVATIVE TECH',
-    description: 'Cutting-edge UV-LED phototaxis technology that works silently and effectively 24/7.',
+    description: 'Cutting-edge MLID and Phototaxis technology that works silently and effectively 24/7.',
     accentColor: '#FF4D6D',
     gradient: 'from-gradientpink via-gradientyellow to-gradientcyan',
   },

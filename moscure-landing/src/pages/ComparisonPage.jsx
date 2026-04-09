@@ -47,12 +47,12 @@ const ADVANTAGE_TABLE = {
       isMoscure: true,
       label: 'Moscure Trap',
       Icon: ShieldCheck,
-      technology: 'Patented UV-LED · MLID & Phototaxis Technology',
+      technology: 'Patented MLID & Phototaxis Technology',
       insects: 'Mosquito, Fly, Moth, Fruit-Fly, Yellow Jacket, Beetle, Gnats',
       health: ['100% Chemical & Smoke-Free', 'Safe for Kids & Pets', 'Continuous 24/7 Protection'],
       application: 'Indoor & Outdoor',
       waterResistant: true,
-      coverage: 'Large (up to 300 sq.m)',
+      coverage: 'Large (up to 3230 sq ft)',
     },
     {
       id: 'racket',
@@ -189,7 +189,7 @@ const WHY_MOSCURE = [
     statSuffix: ' Chemicals',
     label: 'vs. Toxic Alternatives',
     description:
-      'Chemical sprays, vaporisers, and coils flood your home with toxins inhaled by your family 24/7. Moscure uses patented UV-LED phototaxis technology. Zero chemicals. Ever.',
+      'Chemical sprays, vaporisers, and coils flood your home with toxins inhaled by your family 24/7. Moscure uses patented MLID and Phototaxis technology. Zero chemicals. Ever.',
     Icon: ShieldCheck,
     color: 'text-gradientcyan',
     hex: '#00F5D4',
@@ -239,7 +239,7 @@ const SCORE_CRITERIA = [
 
 const CTA_PILLS = [
   'Chemical-Free',
-  'Covers 300 sq.m',
+  'Covers 3230 sq ft',
   'Child & Pet Safe',
   'Indoor & Outdoor',
   '24/7 Protection',

@@ -355,7 +355,7 @@ function RegionBar({ name, severity, color, index }) {
 }
 
 // ─── DiseaseCard ──────────────────────────────────────────────────────────────
-function DiseaseCard({ disease, isOpen, onToggle }) {
+function DiseaseCard({ disease, isOpen, onToggle, onNavigate }) {
   const { id, name, mosquito, mosquitoLabel, biteTime, dangerLevel, accentColor,
     urgencyTag, keyFact, symptoms, affectedRegions, prevention } = disease
 
@@ -613,11 +613,11 @@ function DiseaseCard({ disease, isOpen, onToggle }) {
                     Moscure protects against {name}
                   </p>
                   <p className="font-body text-xs text-white/65 mt-0.5">
-                    Our UV trap targets <span className="text-gradientcyan">{mosquito}</span> specifically.
+                    Our MLID and Phototaxis Technology trap targets <span className="text-gradientcyan">{mosquito}</span> specifically.
                     Chemical-free. Always on.
                   </p>
                 </div>
-                <button className="shrink-0 font-mono text-xs text-gradientcyan hover:opacity-80 transition-opacity whitespace-nowrap">
+                <button onClick={() => onNavigate('product')} className="shrink-0 font-mono text-xs text-gradientcyan hover:opacity-80 transition-opacity whitespace-nowrap">
                   View Product →
                 </button>
               </motion.div>
@@ -630,7 +630,7 @@ function DiseaseCard({ disease, isOpen, onToggle }) {
 }
 
 // ─── ProtectionStepCard ───────────────────────────────────────────────────────
-function ProtectionStepCard({ step, index }) {
+function ProtectionStepCard({ step, index, onNavigate }) {
   const { step: number, Icon, title, description, highlight, color, primary } = step
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
@@ -684,7 +684,7 @@ function ProtectionStepCard({ step, index }) {
 
         {/* Primary card: extra CTA */}
         {primary && (
-          <button className="font-mono text-xs text-gradientcyan hover:opacity-80 transition-opacity text-left mt-1">
+          <button onClick={() => onNavigate('product')} className="font-mono text-xs text-gradientcyan hover:opacity-80 transition-opacity text-left mt-1">
             Install Now →
           </button>
         )}
@@ -838,6 +838,7 @@ export default function DiseasesPage({ onNavigate }) {
                 disease={disease}
                 isOpen={activeDisease === disease.id}
                 onToggle={toggleDisease}
+                onNavigate={onNavigate}
               />
             ))}
           </div>
@@ -892,7 +893,7 @@ export default function DiseasesPage({ onNavigate }) {
           {/* Step Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {PROTECTION_STEPS.map((step, i) => (
-              <ProtectionStepCard key={step.step} step={step} index={i} />
+              <ProtectionStepCard key={step.step} step={step} index={i} onNavigate={onNavigate} />
             ))}
           </div>
         </div>
@@ -979,7 +980,7 @@ export default function DiseasesPage({ onNavigate }) {
             className="flex flex-wrap items-center justify-center gap-4"
           >
             <motion.button
-              onClick={() => onNavigate?.('product')}
+              onClick={() => onNavigate('product')}
               whileHover={{ scale: 1.04, boxShadow: '0 0 30px rgba(0,245,212,0.5)' }}
               whileTap={{ scale: 0.97 }}
               className="px-8 py-3.5 rounded-full font-mono text-sm uppercase tracking-widest font-bold text-background transition-all"
@@ -989,6 +990,7 @@ export default function DiseasesPage({ onNavigate }) {
             </motion.button>
 
             <motion.button
+              onClick={() => onNavigate('contact')}
               whileHover={{ background: 'rgba(255,255,255,0.08)' }}
               whileTap={{ scale: 0.97 }}
               className="px-8 py-3.5 rounded-full font-mono text-sm uppercase tracking-widest text-white border border-white/20 transition-all"

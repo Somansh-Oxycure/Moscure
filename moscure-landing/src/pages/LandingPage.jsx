@@ -26,7 +26,7 @@ const fadeUp = {
   }),
 }
 
-const BADGE_ITEMS = ['✓ Chemical Free', '✓ Safe for Kids', '✓ UV LED Proven']
+const BADGE_ITEMS = ['✓ Chemical Free', '✓ Safe for Kids', '✓ MLID LED Proven']
 
 function HeroSection({ onNavigate }) {
   const sectionRef = useRef(null)
@@ -91,9 +91,9 @@ function HeroSection({ onNavigate }) {
                 className="font-display leading-none tracking-wide"
                 style={{ fontSize: 'clamp(64px, 9vw, 120px)' }}
               >
-                <motion.span variants={wordVariants} className="block text-white">CATCH</motion.span>
+                <motion.span variants={wordVariants} className="block text-white heading-glow">CATCH</motion.span>
                 <motion.span variants={wordVariants} className="block gradient-text-full italic">EVERY</motion.span>
-                <motion.span variants={wordVariants} className="block text-white">MOSQUITO</motion.span>
+                <motion.span variants={wordVariants} className="block text-white heading-glow">MOSQUITO</motion.span>
               </motion.h1>
             </motion.div>
 
@@ -225,22 +225,26 @@ function HeroSection({ onNavigate }) {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 1.0, type: 'spring', stiffness: 200 }}
-              className="absolute top-4 left-0 z-20 bg-surface border border-gradientcyan/40 rounded-2xl p-3 shadow-xl shadow-gradientcyan/10"
+              className="absolute top-4 left-0 z-20 bg-surface border border-gradientcyan/40 rounded-2xl px-4 py-3 shadow-xl shadow-gradientcyan/10"
               style={{ animation: 'floatBadge 4s ease-in-out infinite' }}
             >
-              <div className="font-display text-3xl text-gradientcyan leading-none">300</div>
-              <div className="font-mono text-[10px] text-textMuted uppercase tracking-wider mt-1">sq mt coverage</div>
+              <div className="font-mono text-[10px] text-gradientcyan/70 uppercase tracking-widest mb-1">Coverage up to</div>
+              <div className="flex items-baseline gap-1">
+                <span className="font-display text-4xl text-gradientcyan leading-none">3230</span>
+                <span className="font-mono text-xs text-textMuted uppercase tracking-wider">sq.ft</span>
+              </div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 1.2, type: 'spring', stiffness: 200 }}
-              className="absolute bottom-16 right-0 z-20 bg-surface border border-gradientyellow/40 rounded-xl p-2.5 shadow-xl shadow-gradientyellow/10"
+              className="absolute bottom-16 right-0 z-20 bg-surface border border-gradientyellow/40 rounded-2xl px-4 py-3 shadow-xl shadow-gradientyellow/10"
               style={{ animation: 'floatBadge 3.5s ease-in-out 0.7s infinite' }}
             >
-              <div className="font-mono text-[10px] text-gradientyellow uppercase tracking-wider">⚡ Powered by</div>
-              <div className="font-display text-lg text-white leading-tight">UV-A LED</div>
+              <div className="font-mono text-[9px] text-gradientyellow/70 uppercase tracking-widest mb-1">⚡ Powered by</div>
+              <div className="font-display text-xl text-white leading-tight tracking-wide">MLID</div>
+              <div className="font-mono text-[10px] text-gradientyellow uppercase tracking-widest mt-0.5">Technology</div>
             </motion.div>
           </motion.div>
 
@@ -347,21 +351,21 @@ function DiseasesSection({ onNavigate }) {
           initial={{ opacity: 0, x: -40 }}
           animate={isHeadingInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="mb-4"
+          className="mb-4 flex justify-center"
         >
           <span className="font-mono text-xs uppercase tracking-widest text-gradientpink">⚠ The Silent Killer</span>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
+        <div className="flex flex-col items-center text-center gap-5 mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isHeadingInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <h2 className="font-display leading-none" style={{ fontSize: 'clamp(56px, 7vw, 100px)' }}>
-              <span className="text-white">KNOW YOUR</span>
-              <br />
-              <span className="gradient-text-pink-yellow italic">ENEMY</span>
+              <span className="text-white heading-glow">KNOW YOUR</span>
+              
+              <span className="gradient-text-pink-yellow ml-5">ENEMY</span>
             </h2>
           </motion.div>
 
@@ -369,7 +373,7 @@ function DiseasesSection({ onNavigate }) {
             initial={{ opacity: 0, y: 20 }}
             animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="max-w-sm text-textMuted font-body text-sm leading-relaxed lg:text-right"
+            className="max-w-lg text-textMuted font-body text-sm leading-relaxed"
           >
             Mosquitoes are the{' '}
             <span className="text-gradientpink font-semibold">deadliest animals on Earth</span>. In
@@ -419,12 +423,12 @@ function ComparisonSection({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="mb-4"
+          className="mb-4 flex justify-center"
         >
-          <span className="font-mono text-xs uppercase tracking-widest text-gradientyellow">⚖ VS THE REST</span>
+          <span className="font-mono text-xs uppercase tracking-widest text-gradientyellow">US VS THE REST</span>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
+        <div className="flex flex-col items-center text-center gap-5 mb-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -432,92 +436,84 @@ function ComparisonSection({ onNavigate }) {
             className="font-display leading-none"
             style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}
           >
-            <span className="text-white">WHY MOSCURE</span>
-            <br />
-            <span className="gradient-text-yellow-cyan">WINS</span>
+            <span className="text-white heading-glow">WHY MOSCURE</span>
+            
+            <span className="gradient-text-yellow-cyan ml-4">WINS</span>
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-xs text-textMuted font-body text-sm leading-relaxed lg:text-right"
+            className="max-w-lg text-textMuted font-body text-sm leading-relaxed"
           >
             Every other solution compromises on safety, effectiveness, or
-            convenience. <br /> Moscure refuses to.
+            convenience. Moscure refuses to.
           </motion.p>
         </div>
 
-        {/* Two-panel comparison card */}
+        {/* Table-style comparison card */}
         <motion.div
           ref={cardRef}
           initial={{ opacity: 0, y: 30 }}
           animate={isCardInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden border border-borderDefault"
+          className="relative rounded-2xl overflow-hidden border border-borderDefault"
         >
-          {/* Others panel */}
-          <div className="bg-red-950/10 border-b md:border-b-0 md:border-r border-red-900/20 p-6 md:p-8">
-            <div className="flex items-center gap-2.5 mb-5 pb-4 border-b border-red-900/20">
-              <div className="shrink-0 bg-red-500/20 rounded-full p-1.5">
-                <X size={13} className="text-red-400" />
+          {/* Shimmer sweep */}
+          {isCardInView && (
+            <motion.div
+              className="absolute inset-0 pointer-events-none z-20"
+              initial={{ x: '-100%', opacity: 0 }}
+              animate={{ x: '200%', opacity: [0, 0.2, 0] }}
+              transition={{ duration: 1.2, delay: 0.5 }}
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(0,245,212,0.15), transparent)' }}
+            />
+          )}
+
+          {/* Header row */}
+          <div className="grid grid-cols-[1fr_1fr_1fr] border-b border-borderDefault">
+            <div className="px-5 py-4 bg-surface/60">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-textMuted/60">Criteria</span>
+            </div>
+            <div className="px-5 py-4 bg-red-950/20 border-l border-red-900/20 flex items-center gap-2">
+              <div className="shrink-0 bg-red-500/20 rounded-full p-1">
+                <X size={11} className="text-red-400" />
               </div>
               <span className="font-mono text-xs uppercase tracking-widest text-red-400">Others</span>
             </div>
-            <div className="space-y-4">
-              {COMPARISON_DATA.map((item, i) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={isCardInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + i * 0.06 }}
-                  className="flex flex-col gap-0.5"
-                >
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-textMuted/50">{item.criteria}</span>
-                  <span className="font-body text-sm text-red-300/70">{item.others}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Moscure panel */}
-          <div className="relative bg-cyan-950/10 p-6 md:p-8 overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'linear-gradient(90deg, #00F5D4, #FFD60A)' }} />
-            <div className="flex items-center gap-2.5 mb-5 pb-4 border-b border-gradientcyan/20">
-              <div className="shrink-0 bg-gradientcyan/20 rounded-full p-1.5">
-                <Check size={13} className="text-gradientcyan" />
+            <div className="relative px-5 py-4 bg-cyan-950/15 border-l border-gradientcyan/20 flex items-center gap-2">
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'linear-gradient(90deg, #00F5D4, #FFD60A)' }} />
+              <div className="shrink-0 bg-gradientcyan/20 rounded-full p-1">
+                <Check size={11} className="text-gradientcyan" />
               </div>
               <span className="font-mono text-xs uppercase tracking-widest text-gradientcyan">Moscure</span>
             </div>
-            <div className="space-y-4">
-              {COMPARISON_DATA.map((item, i) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, x: 16 }}
-                  animate={isCardInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + i * 0.06 }}
-                  className="flex flex-col gap-0.5"
-                >
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-textMuted/50">{item.criteria}</span>
-                  <span className="font-body text-sm text-gradientcyan font-medium">{item.moscure}</span>
-                </motion.div>
-              ))}
-            </div>
-            {isCardInView && (
-              <motion.div
-                className="absolute inset-0 pointer-events-none"
-                initial={{ x: '-100%', opacity: 0 }}
-                animate={{ x: '200%', opacity: [0, 0.2, 0] }}
-                transition={{ duration: 1.2, delay: 0.5 }}
-                style={{ background: 'linear-gradient(90deg, transparent, rgba(0,245,212,0.15), transparent)' }}
-              />
-            )}
           </div>
 
-          {/* VS badge */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-9 h-9 rounded-full bg-background border border-borderDefault shadow-lg">
-            <span className="font-display text-[10px] text-textMuted tracking-wider">VS</span>
-          </div>
+          {/* Data rows */}
+          {COMPARISON_DATA.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={isCardInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.35, delay: 0.3 + i * 0.06 }}
+              className={`grid grid-cols-[1fr_1fr_1fr] border-b border-borderDefault last:border-b-0 ${i % 2 === 0 ? '' : 'bg-white/[0.015]'}`}
+            >
+              {/* Criteria */}
+              <div className="px-5 py-3.5 bg-surface/30 flex items-center">
+                <span className="font-mono text-xs uppercase tracking-wider text-textMuted font-medium">{item.criteria}</span>
+              </div>
+              {/* Others */}
+              <div className="px-5 py-3.5 bg-red-950/10 border-l border-red-900/15 flex items-center">
+                <span className="font-body text-sm text-red-300/80">{item.others}</span>
+              </div>
+              {/* Moscure */}
+              <div className="px-5 py-3.5 bg-cyan-950/10 border-l border-gradientcyan/10 flex items-center">
+                <span className="font-body text-sm text-gradientcyan font-medium">{item.moscure}</span>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         <motion.div
@@ -592,12 +588,12 @@ function FeaturesSection({ onNavigate }) {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="mb-4"
+          className="mb-4 flex justify-center"
         >
           <span className="font-mono text-xs uppercase tracking-widest text-gradientcyan">✦ WHY IT WORKS</span>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+        <div className="flex flex-col items-center text-center gap-5 mb-14">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -605,16 +601,16 @@ function FeaturesSection({ onNavigate }) {
             className="font-display leading-none"
             style={{ fontSize: 'clamp(48px, 6vw, 88px)' }}
           >
-            <span className="text-white">BUILT</span>
-            <br />
-            <span className="gradient-text-cyan-pink">DIFFERENT</span>
+            <span className="text-white heading-glow">BUILT</span>
+            
+            <span className="gradient-text-cyan-pink ml-5">DIFFERENT</span>
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-sm text-textMuted font-body text-sm leading-relaxed lg:text-right"
+            className="max-w-lg text-textMuted font-body text-sm leading-relaxed"
           >
             Four engineering decisions that make Moscure the most effective
             mosquito defense money can buy.
@@ -694,7 +690,7 @@ function CTASection({ onNavigate }) {
           className="font-display leading-none mb-6"
           style={{ fontSize: 'clamp(52px, 8vw, 110px)' }}
         >
-          <span className="text-white">RECLAIM</span>
+          <span className="text-white heading-glow">RECLAIM</span>
           <br />
           <span className="gradient-text-full">YOUR NIGHTS</span>
         </motion.h2>
@@ -742,8 +738,8 @@ function CTASection({ onNavigate }) {
         >
           {[
             { value: '10,000+', label: 'Families Protected' },
-            { value: '99%', label: 'Chemical Free' },
-            { value: '300', label: 'Sq mt Coverage' },
+            { value: '100%', label: 'Chemical Free' },
+            { value: '3230', label: 'Sq ft Coverage' },
             { value: '24/7', label: 'Silent Protection' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">

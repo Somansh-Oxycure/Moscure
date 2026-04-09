@@ -47,7 +47,7 @@ export const COMPARISON_DATA = [
     id: 'coverage',
     criteria: 'Coverage Area',
     others: 'Limited to ~150 sq ft',
-    moscure: 'Up to 300 sq mt',
+    moscure: 'Up to 3230 sq ft',
   },
   {
     id: 'children',
@@ -71,7 +71,7 @@ export const COMPARISON_DATA = [
     id: 'technology',
     criteria: 'Technology',
     others: 'Outdated coil & heat',
-    moscure: 'Patented UV LED Science',
+    moscure: 'Patented MLID and Phototaxis Technology',
   },
   {
     id: 'pets',
@@ -86,9 +86,9 @@ export const FEATURES_DATA = [
   {
     id: 'uv-led',
     icon: 'Zap',
-    title: 'UV LED Technology',
+    title: 'MLID and Phototaxis Technology',
     description:
-      'Patented UV-A spectrum light irresistible to mosquitoes — mimics human body heat and CO₂ signals to lure every last one into the trap.',
+      'Patented MLID and Phototaxis Technology irresistible to mosquitoes — mimics human body heat and CO₂ signals to lure every last one into the trap.',
     gradient: 'gradient-pink-yellow',
     gradientFrom: '#FF4D6D',
     gradientTo: '#FFD60A',
@@ -135,7 +135,7 @@ export const BRAND_VALUES = [
   '360° Coverage',
   'Sleep In Peace',
   'No More Buzzing',
-  'UV LED Technology',
+  'MLID and Phototaxis Technology',
   'Family Safe',
   'Dengue Defense',
   'Malaria Free Zone',
@@ -155,21 +155,21 @@ export const PRODUCTS_DATA = [
     name: 'MOSCURE IPI 1',
     model: 'MC-IPI 1',
     description:
-      'Scientifically engineered UV LED trap for indoor spaces. Silent, chemical-free, and proven effective against all major disease-carrying mosquito species.',
+      'Scientifically engineered MLID and Phototaxis Technology trap for indoor spaces. Silent, chemical-free, and proven effective against all major disease-carrying mosquito species.',
     price: '₹3,299',
     priceLabel: 'INR',
     imageFile: 'product-indoor',
     imageLabel: '[ MC-IPI 1 Image ]',
     specs: [
       { label: 'Coverage', value: '375 sq ft' },
-      { label: 'UV Wavelength', value: '365 nm (UV-A)' },
+      { label: 'MLID Wavelength', value: '365 nm (UV-A)' },
       { label: 'Power', value: 'DC 5V / 0.3A — 1.5W' },
       { label: 'Dimensions', value: '11.9 × 11.9 × 17.8 cm' },
       { label: 'Weight', value: '280 g' },
       { label: 'Child & Pet Safe', value: 'Yes — Certified' },
     ],
     fullDescription:
-      "The MOSCURE IPI 1 (MC-IPI 1) is India's most advanced indoor mosquito trap. Using patented 365 nm UV-A LED technology, it silently lures and captures all major disease-carrying mosquito species. Odour-free and 100% chemical-free — safe for kids, pets, and the whole family.",
+      "The MOSCURE IPI 1 (MC-IPI 1) is India's most advanced indoor mosquito trap. Using patented 365 nm UV LED technology, it silently lures and captures all major disease-carrying mosquito species. Odour-free and 100% chemical-free — safe for kids, pets, and the whole family.",
   },
   {
     id: 'outdoor',
@@ -181,30 +181,30 @@ export const PRODUCTS_DATA = [
     name: 'Moscure IPO',
     model: 'MC-IPO Unit',
     description:
-      'Heavy-duty UV LED mosquito trap built for outdoor environments. Weatherproof design protects your garden, patio, and open spaces around the clock.',
+      'Heavy-duty MLID and Phototaxis Technology mosquito trap built for outdoor environments. Weatherproof design protects your garden, patio, and open spaces around the clock.',
     price: '₹21,599',
     priceLabel: 'INR',
     imageFile: 'product-outdoor',
     imageLabel: '[ IPO Unit Image ]',
     specs: [
       { label: 'Coverage', value: '3230 sq ft' },
-      { label: 'UV Wavelength', value: '365 nm (UV-A)' },
+      { label: 'MLID Wavelength', value: '365 nm (UV-A)' },
       { label: 'Power', value: '9W (Energy-Efficient)' },
       { label: 'Dimensions', value: '11.9 × 11.9 × 17.8 cm' },
       { label: 'Weight', value: '280 g' },
       { label: 'Water Resistant', value: 'Yes' },
     ],
     fullDescription:
-      'The Moscure IPO Unit is purpose-built for outdoor protection. 365 nm UV-A LED technology lures all major mosquito species into the trap — no chemicals, no odour. Water-resistant construction with included hanging mount lets you deploy it in gardens, balconies, and patios for up to 300 m² of coverage. Energy-efficient at just 9W.',
+      'The Moscure IPO Unit is purpose-built for outdoor protection. 365 nm UV-A LED technology lures all major mosquito species into the trap — no chemicals, no odour. Water-resistant construction with included hanging mount lets you deploy it in gardens, balconies, and patios for up to 3230 sq ft of coverage. Energy-efficient at just 9W.',
   },
 ]
 
 // ── Product-page stats ─────────────────────────────────────
 export const STATS_DATA = [
-  { id: 's1', stat: 100, suffix: '%', label: 'Lab Tested',           accent: 'gradientcyan'   },
-  { id: 's2', stat: 95,  suffix: '%', label: 'Catch Rate',           accent: 'gradientyellow' },
-  { id: 's3', stat: 300, suffix: '+', label: 'sq. m Coverage',       accent: 'gradientpink'   },
-  { id: 's4', stat: 24,  suffix: '/7', label: 'Non-Stop Protection', accent: 'gradientcyan'   },
+  { id: 's1', stat: 100, suffix: '%', label: 'Lab Tested',accent: 'gradientcyan'   },
+  { id: 's2', stat: 95,  suffix: '%', label: 'Catch Rate',accent: 'gradientyellow' },
+  { id: 's3', stat: 3230, suffix: '', prefix: 'Coverage up to', label: 'sq ft',          accent: 'gradientpink'   },
+  { id: 's4', stat: 24,  suffix: '/7',prefix:' ', label: 'Non-Stop Protection', accent: 'gradientcyan'   },
 ]
 
 // ── Product features ───────────────────────────────────────
@@ -214,7 +214,7 @@ export const PRODUCT_FEATURES = [
     icon: 'Target',
     title: 'Targeted Mosquito Lure System',
     description:
-      'Patented UV-A LED spectrum mimics human CO₂ and body heat — the exact signals that attract disease-carrying mosquitoes into the trap.',
+      'Patented MLID and Phototaxis Technology spectrum mimics human CO₂ and body heat — the exact signals that attract disease-carrying mosquitoes into the trap.',
     gradient: 'gradient-pink-yellow',
     gradientFrom: '#FF4D6D',
     gradientTo: '#FFD60A',
@@ -242,7 +242,7 @@ export const PRODUCT_FEATURES = [
     gradient: 'gradient-cyan-pink',
     gradientFrom: '#00F5D4',
     gradientTo: '#FF4D6D',
-    tags: ['Indoor'],
+    tags: ['Indoor', 'Outdoor'],
     tagline: 'Hospital-grade safety',
   },
   {
@@ -292,7 +292,7 @@ export const HOW_IT_WORKS = [
     icon: 'Target',
     accentColor: '#FF4D6D',
     description:
-      "The UV-A LED emits light at 365 nm — precisely tuned to the mosquito's visual receptors. Combined with subtle thermal emission, every nearby mosquito is drawn irresistibly toward the device.",
+      "The MLID LED emits light at 365 nm — precisely tuned to the mosquito's visual receptors. Combined with subtle thermal emission, every nearby mosquito is drawn irresistibly toward the device.",
   },
   {
     id: 'capture',

@@ -11,7 +11,7 @@ export default {
         gradientyellow: '#FFD60A',
         gradientcyan: '#00F5D4',
         textPrimary: '#FFFFFF',
-        textMuted: '#8A8A8A',
+        textMuted: '#ADADAD',
         borderDefault: '#2A2A2A',
       },
       fontFamily: {

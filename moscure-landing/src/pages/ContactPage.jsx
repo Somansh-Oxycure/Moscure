@@ -115,17 +115,17 @@ const FAQ_DATA = [
   },
   {
     q: 'Is Moscure safe for children and pets?',
-    a: '100%. Moscure uses only UV-LED light to attract insects — zero chemicals, zero smoke, zero toxins. Specifically designed for homes with babies, toddlers, and pets.',
+    a: '100%. Moscure uses only MLID and Phototaxis light to attract insects — zero chemicals, zero smoke, zero toxins. Specifically designed for homes with babies, toddlers, and pets.',
     accent: '#FFD60A',
   },
   {
     q: 'Can I use Moscure outdoors?',
-    a: 'Yes. The Moscure IPO model is IP-rated for outdoor use and covers up to 300 sq. m, making it perfect for gardens, terraces, and open spaces.',
+    a: 'Yes. The Moscure IPO model is IP-rated for outdoor use and covers up to 3230 sq ft, making it perfect for gardens, terraces, and open spaces.',
     accent: '#FF4D6D',
   },
   {
     q: 'Does Moscure kill mosquitoes or just repel them?',
-    a: 'Moscure primarily repels mosquitoes, but some variants may also help reduce mosquito presence over time through continuous UV-LED phototaxis trapping.',
+    a: 'Moscure primarily repels mosquitoes, but some variants may also help reduce mosquito presence over time through continuous MLID and Phototaxis trapping.',
     accent: '#00F5D4',
   },
   {
@@ -135,7 +135,7 @@ const FAQ_DATA = [
   },
   {
     q: 'What makes Moscure different from other repellents?',
-    a: 'Moscure focuses on a balance of safety, effectiveness, and user comfort. With zero chemicals, 24/7 passive protection, and up to 300 sq. m coverage, it is designed for everyday use — safe for kids, pets, and the whole family.',
+    a: 'Moscure focuses on a balance of safety, effectiveness, and user comfort. With zero chemicals, 24/7 passive protection, and up to 3230 sq ft coverage, it is designed for everyday use — safe for kids, pets, and the whole family.',
     accent: '#FF4D6D',
   },
 ]

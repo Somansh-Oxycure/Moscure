@@ -27,6 +27,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-right: 0.4em;
 }
 
 .gradient-text-yellow-cyan {
@@ -48,6 +49,12 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-right: 0.08em;
+}
+
+/* ── Heading glow ──────────────────────────────────────── */
+.heading-glow {
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.22));
 }
 
 /* ── Gradient background utilities ─────────────────────── */
@@ -279,6 +286,36 @@ body {
 /* ── Comparison Page: table row hover scan ──────────────── */
 .table-row-hover:hover {
   background: linear-gradient(90deg, transparent, rgba(0, 245, 212, 0.04), transparent) !important;
+}
+
+/* ── About V2: Realization strip edge glows ─────────────── */
+.realization-strip {
+  position: relative;
+}
+.realization-strip::before,
+.realization-strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  pointer-events: none;
+}
+.realization-strip::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 77, 109, 0.15), transparent);
+}
+.realization-strip::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255, 77, 109, 0.15), transparent);
+}
+
+/* ── About V2: Vision line hover ────────────────────────── */
+.vision-line {
+  transition: background 0.2s ease;
+}
+.vision-line:hover {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 /* ── Comparison Page: trophy slow Y-rotate ──────────────── */
