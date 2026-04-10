@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform, useInView, animate } from 'framer-motion'
 import { X, Check, Shield, Wind, Zap, Droplets } from 'lucide-react'
 import { BRAND_VALUES, DISEASES_DATA, COMPARISON_DATA, FEATURES_DATA } from '../data/staticData'
+import TrustedByMarquee from '../components/TrustedByMarquee'
 import productImg from '../assets/product.png'
 import mosquitoSvg from '../assets/mosquito-silhouette.svg'
 
@@ -762,6 +763,7 @@ export default function LandingPage({ onNavigate }) {
       <BrandValuesTicker />
       <DiseasesSection onNavigate={onNavigate} />
       <ComparisonSection onNavigate={onNavigate} />
+      <TrustedByMarquee />
       <FeaturesSection onNavigate={onNavigate} />
       <CTASection onNavigate={onNavigate} />
     </main>

@@ -1,4 +1,5 @@
 import { Instagram, Facebook, Twitter, Linkedin } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import logoImg from '../assets/logo.png'
 
 const QUICK_LINKS = [
@@ -11,11 +12,11 @@ const QUICK_LINKS = [
 ]
 
 const RESOURCES = [
-  { label: 'User Manual', href: '#' },
-  { label: 'Installation Guide', href: '#' },
-  { label: 'FAQs', href: '#' },
-  { label: 'Warranty Info', href: '#' },
-  { label: 'Safety Guidelines', href: '#' },
+  { label: 'User Manual',        to: '/user-manual' },
+  { label: 'Installation Guide', to: '/installation-guide' },
+  { label: 'FAQs',               to: '#' },
+  { label: 'Warranty Info',      to: '/warranty' },
+  { label: 'Safety Guidelines',  to: '/safety' },
 ]
 
 const SOCIALS = [
@@ -102,12 +103,12 @@ export default function Footer({ onNavigate }) {
             <ul className="flex flex-col gap-2.5">
               {RESOURCES.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.to}
                     className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors duration-200"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

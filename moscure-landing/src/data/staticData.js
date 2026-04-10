@@ -152,7 +152,7 @@ export const PRODUCTS_DATA = [
     accentClass: 'text-gradientcyan',
     accentBorder: 'border-gradientcyan/40',
     accentBg: 'bg-gradientcyan/10',
-    name: 'MOSCURE IPI 1',
+    name: 'MOSCURE IPI',
     model: 'MC-IPI 1',
     description:
       'Scientifically engineered MLID and Phototaxis Technology trap for indoor spaces. Silent, chemical-free, and proven effective against all major disease-carrying mosquito species.',
@@ -169,7 +169,7 @@ export const PRODUCTS_DATA = [
       { label: 'Child & Pet Safe', value: 'Yes — Certified' },
     ],
     fullDescription:
-      "The MOSCURE IPI 1 (MC-IPI 1) is India's most advanced indoor mosquito trap. Using patented 365 nm UV LED technology, it silently lures and captures all major disease-carrying mosquito species. Odour-free and 100% chemical-free — safe for kids, pets, and the whole family.",
+      "The MOSCURE IPI (MC-IPI 1) is India's most advanced indoor mosquito trap. Using patented 365 nm UV LED technology, it silently lures and captures all major disease-carrying mosquito species. Odour-free and 100% chemical-free — safe for kids, pets, and the whole family.",
   },
   {
     id: 'outdoor',
@@ -192,7 +192,7 @@ export const PRODUCTS_DATA = [
       { label: 'Power', value: '9W (Energy-Efficient)' },
       { label: 'Dimensions', value: '11.9 × 11.9 × 17.8 cm' },
       { label: 'Weight', value: '280 g' },
-      { label: 'Water Resistant', value: 'Yes' },
+      { label: 'Water Resistant', value: 'Yes (IPX4)' },
     ],
     fullDescription:
       'The Moscure IPO Unit is purpose-built for outdoor protection. 365 nm UV-A LED technology lures all major mosquito species into the trap — no chemicals, no odour. Water-resistant construction with included hanging mount lets you deploy it in gardens, balconies, and patios for up to 3230 sq ft of coverage. Energy-efficient at just 9W.',

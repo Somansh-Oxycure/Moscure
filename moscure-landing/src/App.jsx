@@ -10,6 +10,14 @@ import AboutPageV2 from './pages/AboutPageV2'
 import ContactPage from './pages/ContactPage'
 import IPIIndoorProductPage from './pages/products/IPIIndoorProductPage'
 import IPOOutdoorProductPage from './pages/products/IPOOutdoorProductPage'
+import UserManualPage from './pages/products/UserManualPage'
+import InstallationGuidePage from './pages/products/InstallationGuidePage'
+import WarrantyPage from './pages/products/WarrantyPage'
+import SafetyGuidelinesPage from './pages/products/SafetyGuidelinesPage'
+import IPI1UserManualPage from './pages/products/IPI1UserManualPage'
+import IPI1InstallationGuidePage from './pages/products/IPI1InstallationGuidePage'
+import IPI1WarrantyPage from './pages/products/IPI1WarrantyPage'
+import IPI1SafetyGuidelinesPage from './pages/products/IPI1SafetyGuidelinesPage'
 import './index.css'
 
 function ScrollToTop() {
@@ -56,6 +64,14 @@ function AppInner() {
         <Route path="/contact" element={<ContactPage onNavigate={handleNavigate} />} />
         <Route path="/products/moscure-ipi-indoor-mosquito-trap" element={<IPIIndoorProductPage onNavigate={handleNavigate} />} />
         <Route path="/products/moscure-ipo-outdoor-mosquito-trap" element={<IPOOutdoorProductPage onNavigate={handleNavigate} />} />
+        <Route path="/user-manual" element={<UserManualPage />} />
+        <Route path="/installation-guide" element={<InstallationGuidePage />} />
+        <Route path="/warranty" element={<WarrantyPage />} />
+        <Route path="/safety" element={<SafetyGuidelinesPage />} />
+        <Route path="/ipi1/user-manual" element={<IPI1UserManualPage />} />
+        <Route path="/ipi1/installation-guide" element={<IPI1InstallationGuidePage />} />
+        <Route path="/ipi1/warranty" element={<IPI1WarrantyPage />} />
+        <Route path="/ipi1/safety" element={<IPI1SafetyGuidelinesPage />} />
         <Route path="*" element={<LandingPage onNavigate={handleNavigate} />} />
       </Routes>
       <Footer onNavigate={handleNavigate} />

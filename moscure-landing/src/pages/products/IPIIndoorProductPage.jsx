@@ -498,15 +498,24 @@ export default function IPIIndoorProductPage({ onNavigate }) {
   const [mobileCtaVisible, setMobileCtaVisible] = useState(false)
   const [copied, setCopied] = useState(false)
   const heroRef = useRef(null)
+  const ctaRef = useRef(null)
 
-  // Mobile sticky CTA: appears once hero scrolls out of view
+  // Mobile sticky CTA: appears once the Buy Now button scrolls out of view
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setMobileCtaVisible(!entry.isIntersecting),
-      { threshold: 0.1 }
+      { threshold: 0, rootMargin: '0px' }
     )
-    if (heroRef.current) observer.observe(heroRef.current)
+    if (ctaRef.current) observer.observe(ctaRef.current)
     return () => observer.disconnect()
+  }, [])
+
+  // Auto-rotate product images every 3 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveImage(i => (i + 1) % PRODUCT_IMAGES.length)
+    }, 3000)
+    return () => clearInterval(timer)
   }, [])
 
   // SEO: inject meta tags + JSON-LD
@@ -692,23 +701,8 @@ export default function IPIIndoorProductPage({ onNavigate }) {
               </span>
             </motion.div>
 
-            {/* Block 4 — trust badges */}
-            <TrustBadgeRow badges={TRUST_BADGES} />
-
-            {/* Divider */}
-            <div className="h-px bg-borderDefault" />
-
-            {/* Block 5 — specs table */}
-            <SpecsTable specs={PRODUCT_SPECS} />
-
-            {/* Block 6 — about this item bullets */}
-            <BulletList bullets={PRODUCT_BULLETS} />
-
-            {/* Divider */}
-            <div className="h-px bg-borderDefault" />
-
             {/* Block 7 — CTA buttons */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3" ref={ctaRef}>
               <motion.a
                 href=""
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0, 245, 212, 0.4)' }}
@@ -727,6 +721,18 @@ export default function IPIIndoorProductPage({ onNavigate }) {
                 CONTACT FOR INQUIRY
               </motion.button>
             </div>
+
+            {/* Block 4 — trust badges */}
+            <TrustBadgeRow badges={TRUST_BADGES} />
+
+            {/* Divider */}
+            <div className="h-px bg-borderDefault" />
+
+            {/* Block 5 — specs table */}
+            <SpecsTable specs={PRODUCT_SPECS} />
+
+            {/* Block 6 — about this item bullets */}
+            <BulletList bullets={PRODUCT_BULLETS} />
 
             {/* Block 8 — share row */}
             <div className="flex items-center gap-3 flex-wrap">
