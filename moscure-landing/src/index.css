@@ -207,6 +207,28 @@ body {
   z-index: -1;
 }
 
+/* ── Yellow animated border (outdoor product) ───────────── */
+.animated-border-yellow {
+  position: relative;
+  border-radius: 1rem;
+  isolation: isolate;
+}
+
+.animated-border-yellow::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--angle),
+    #FFD60A 0%,
+    #FF4D6D 50%,
+    #FFD60A 100%
+  );
+  animation: borderSpin 4s linear infinite;
+  z-index: -1;
+}
+
 /* ── Stat shimmer sweep ──────────────────────────────────── */
 @keyframes statShimmer {
   0%   { background-position: -200% center; }

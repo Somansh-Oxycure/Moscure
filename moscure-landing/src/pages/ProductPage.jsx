@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence, useInView, useMotionValue, animate } from 'framer-motion'
+import { useRef, useEffect } from 'react'
+import { motion, useInView, useMotionValue, animate } from 'framer-motion'
 import {
-  ShoppingCart, ArrowLeft, MessageCircle,
   Target, Wind, Shield, Volume2, CloudRain, Droplets, CheckCircle2,
-  FlaskConical, ShieldCheck, ExternalLink,
+  FlaskConical, ShieldCheck,
 } from 'lucide-react'
 import { PRODUCTS_DATA, STATS_DATA, PRODUCT_FEATURES, HOW_IT_WORKS } from '../data/staticData'
 import indoorImg from '../assets/product-indoor.png'
@@ -14,119 +13,10 @@ const PRODUCT_IMAGES = { indoor: indoorImg, outdoor: outdoorImg }
 const ICON_MAP = { Target, Wind, Shield, Volume2, CloudRain, Droplets, CheckCircle2 }
 
 // ─────────────────────────────────────────────────────────
-// SECTION 1 — Products Hero + Cards + Full-Screen Detail
+// SECTION 1 — Products Hero + Cards
 // ─────────────────────────────────────────────────────────
 
-function ProductDetailView({ product, onBack }) {
-  const imgSrc = PRODUCT_IMAGES[product.id]
-  return (
-    <motion.div
-      key="detail"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="relative max-w-7xl mx-auto px-6 md:px-12 pt-28 pb-16 md:pt-32 md:pb-20"
-    >
-      {/* Back button */}
-      <motion.button
-        onClick={onBack}
-        whileHover={{ x: -4, borderColor: 'rgba(0,245,212,0.5)', color: '#00F5D4' }}
-        whileTap={{ scale: 0.96 }}
-        className="inline-flex items-center gap-2 font-mono text-sm text-white border border-borderDefault bg-surface px-5 py-2.5 rounded-full mb-12 transition-colors"
-      >
-        <ArrowLeft size={15} />
-        Back to Products
-      </motion.button>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-        {/* Left — large product image */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.55, delay: 0.1 }}
-          className="animated-border sticky top-28"
-        >
-          <div className="bg-white rounded-2xl aspect-square overflow-hidden">
-            <img
-              src={imgSrc}
-              alt={product.name}
-              className="w-full h-full object-contain drop-shadow-2xl"
-            />
-          </div>
-        </motion.div>
-
-        {/* Right — product info */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          className="flex flex-col gap-6"
-        >
-          {/* Badge */}
-          <span className={`font-mono text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border self-start ${product.accentBorder} ${product.accentBg} ${product.accentClass}`}>
-            {product.badge}
-          </span>
-
-          {/* Name */}
-          <div>
-            <h2 className="font-display text-5xl md:text-6xl text-white leading-none mb-1">{product.name}</h2>
-            <p className="font-mono text-xs uppercase tracking-widest text-textMuted">{product.model}</p>
-          </div>
-
-          {/* Description */}
-          <p className="font-body text-sm text-textMuted leading-relaxed">{product.fullDescription}</p>
-
-          {/* Price + stock */}
-          <div className="flex items-center gap-5">
-            <div className="flex items-baseline gap-2">
-              <span className="font-display text-5xl leading-none" style={{ color: product.accentColor }}>{product.price}</span>
-              <span className="font-mono text-xs text-textMuted uppercase">{product.priceLabel}</span>
-            </div>
-            <span className="flex items-center gap-1.5 font-mono text-xs text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
-              In Stock
-            </span>
-          </div>
-
-          {/* Add to cart */}
-          <motion.a
-            href="#"
-            whileHover={{ scale: 1.03, boxShadow: `0 0 30px ${product.accentColor}50` }}
-            whileTap={{ scale: 0.97 }}
-            className="flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold font-mono text-base text-background self-start"
-            style={{ backgroundColor: product.accentColor }}
-          >
-            <ShoppingCart size={18} /> Add to Cart
-          </motion.a>
-
-          
-
-          {/* Specs */}
-          <div className="border border-borderDefault rounded-2xl overflow-hidden mt-2">
-            <div className="px-5 py-3 border-b border-borderDefault">
-              <p className="font-mono text-xs uppercase tracking-widest text-white font-semibold">Specifications</p>
-            </div>
-            {product.specs.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 + i * 0.05 }}
-                className="flex items-center justify-between px-5 py-3 border-b border-borderDefault/60 last:border-0 hover:bg-surfaceHover transition-colors"
-              >
-                <span className="font-mono text-xs uppercase tracking-wider text-textMuted">{s.label}</span>
-                <span className="font-body text-sm font-medium text-white">{s.value}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </motion.div>
-  )
-}
-
-function ProductCard({ product, onViewDetails }) {
+function ProductCard({ product, onNavigate }) {
   const imgSrc = PRODUCT_IMAGES[product.id]
   return (
     <motion.div
@@ -184,7 +74,13 @@ function ProductCard({ product, onViewDetails }) {
 
           {/* CTA — solid accent fill */}
           <motion.button
-            onClick={() => onViewDetails(product.id)}
+            onClick={() => {
+              if (product.id === 'indoor' && onNavigate) {
+                onNavigate('ipiIndoor')
+              } else if (product.id === 'outdoor' && onNavigate) {
+                onNavigate('ipoOutdoor')
+              }
+            }}
             whileHover={{ scale: 1.03, boxShadow: `0 0 24px ${product.accentColor}45` }}
             whileTap={{ scale: 0.97 }}
             className="w-full py-3 rounded-full font-mono text-sm font-bold text-background transition-shadow"
@@ -198,10 +94,7 @@ function ProductCard({ product, onViewDetails }) {
   )
 }
 
-function ProductsHeroSection() {
-  const [activeProduct, setActiveProduct] = useState(null)
-  const activeProductData = PRODUCTS_DATA.find((p) => p.id === activeProduct) ?? null
-
+function ProductsHeroSection({ onNavigate }) {
   return (
     <section id="products" className="relative overflow-hidden min-h-screen">
       {/* Grid bg */}
@@ -209,52 +102,35 @@ function ProductsHeroSection() {
         style={{ backgroundImage: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.025) 0,rgba(255,255,255,0.025) 1px,transparent 1px,transparent 60px),repeating-linear-gradient(90deg,rgba(255,255,255,0.025) 0,rgba(255,255,255,0.025) 1px,transparent 1px,transparent 60px)' }} />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradientcyan/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <AnimatePresence mode="wait">
-        {activeProduct ? (
-          <ProductDetailView
-            key="detail"
-            product={activeProductData}
-            onBack={() => setActiveProduct(null)}
-          />
-        ) : (
-          <motion.div
-            key="grid"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="relative max-w-7xl mx-auto px-6 md:px-12 py-28 md:py-36"
-          >
-            {/* Hero header */}
-            <div className="text-center mb-14">
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }} className="font-mono text-xs uppercase tracking-widest text-gradientcyan mb-4">
-                ✦ OUR LINEUP
-              </motion.p>
-              <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }} className="font-display text-5xl md:text-7xl lg:text-8xl text-white leading-none tracking-wide mb-6">
-                MOSCURE <span className="gradient-text-cyan-pink">PRODUCTS</span>
-              </motion.h1>
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }} className="font-body text-textMuted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                Advanced mosquito-catching technology tested on all disease-carrying species in India.
-                Safe, effective, and reliable protection for indoor and outdoor environments.
-              </motion.p>
-            </div>
+      <div className="relative max-w-7xl mx-auto px-6 md:px-12 py-28 md:py-36">
+        {/* Hero header */}
+        <div className="text-center mb-14">
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }} className="font-mono text-xs uppercase tracking-widest text-gradientcyan mb-4">
+            ✦ OUR LINEUP
+          </motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }} className="font-display text-5xl md:text-7xl lg:text-8xl text-white leading-none tracking-wide mb-6">
+            MOSCURE <span className="gradient-text-cyan-pink">PRODUCTS</span>
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }} className="font-body text-textMuted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            Advanced mosquito-catching technology tested on all disease-carrying species in India.
+            Safe, effective, and reliable protection for indoor and outdoor environments.
+          </motion.p>
+        </div>
 
-            {/* 2-col card grid — constrained width so cards aren't huge */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-              {PRODUCTS_DATA.map((product, i) => (
-                <motion.div key={product.id}
-                  initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}>
-                  <ProductCard product={product} onViewDetails={setActiveProduct} />
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* 2-col card grid — constrained width so cards aren't huge */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          {PRODUCTS_DATA.map((product, i) => (
+            <motion.div key={product.id}
+              initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}>
+              <ProductCard product={product} onNavigate={onNavigate} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
@@ -665,7 +541,7 @@ function BottomCTASection({ onNavigate }) {
 export default function ProductPage({ onNavigate }) {
   return (
     <main>
-      <ProductsHeroSection />
+      <ProductsHeroSection onNavigate={onNavigate} />
       <TestedSpeciesSection />
       <FeaturesGridSection />
       <HowItWorksSection />

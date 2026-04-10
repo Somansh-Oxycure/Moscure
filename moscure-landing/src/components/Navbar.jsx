@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { label: 'DISEASES',   href: '#hero',        page: 'diseases' },
   { label: 'COMPARISON', href: '#comparison',  page: 'comparison' },
   { label: 'ABOUT US',   href: '#about-hero',  page: 'about' },
-  { label: 'ABOUT V2',   href: '#about-hero',  page: 'about-v2' },
   { label: 'CONTACT',    href: '#contact-hero', page: 'contact' },
 ]
 
@@ -39,9 +38,6 @@ export default function Navbar({ onNavigate }) {
     } else if (link.page === 'about') {
       e.preventDefault()
       onNavigate?.('about')
-    } else if (link.page === 'about-v2') {
-      e.preventDefault()
-      onNavigate?.('about-v2')
     } else if (link.page === 'contact') {
       e.preventDefault()
       onNavigate?.('contact')
@@ -56,7 +52,6 @@ export default function Navbar({ onNavigate }) {
     if (link.page === 'diseases') return location.pathname === '/diseases'
     if (link.page === 'comparison') return location.pathname === '/comparison'
     if (link.page === 'about') return location.pathname === '/about'
-    if (link.page === 'about-v2') return location.pathname === '/about-v2'
     if (link.page === 'contact') return location.pathname === '/contact'
     return location.pathname === '/' && link.label === 'HOME'
   }

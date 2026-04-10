@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import {
-  Megaphone, Leaf, Users, HeartHandshake, CheckCircle2,
+  Megaphone, Leaf, Users, HeartHandshake, CheckCircle2, ArrowDown,
 } from 'lucide-react'
 
 // ─── Static Data ──────────────────────────────────────────────────────────────
@@ -364,6 +364,97 @@ export default function AboutPageV2({ onNavigate }) {
         className="fixed top-0 left-0 z-[60] h-0.5 origin-left bg-gradient-to-r from-gradientpink via-gradientyellow to-gradientcyan"
         style={{ scaleX }}
       />
+
+      {/* ════════════════════════════════════════════════════════════
+          HERO — About Moscure
+      ════════════════════════════════════════════════════════════ */}
+      <section id="about-hero" className="relative min-h-screen flex items-end pb-24 md:pb-36 pt-40 overflow-hidden">
+        {/* Ambient glows */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div
+            className="absolute top-0 left-0 w-[700px] h-[500px]"
+            style={{ background: 'radial-gradient(ellipse at top left, rgba(0,245,212,0.05) 0%, transparent 65%)' }}
+          />
+          <div
+            className="absolute bottom-0 right-0 w-[500px] h-[400px]"
+            style={{ background: 'radial-gradient(ellipse at bottom right, rgba(255,77,109,0.04) 0%, transparent 65%)' }}
+          />
+        </div>
+
+        {/* Watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" aria-hidden="true">
+          <span className="font-display text-[22vw] text-white/[0.02] whitespace-nowrap leading-none">
+            MOSCURE
+          </span>
+        </div>
+
+        <div className="relative max-w-3xl mx-auto px-6 w-full">
+          {/* Eyebrow */}
+          <motion.span
+            custom={0}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="font-mono text-xs text-gradientcyan uppercase tracking-[0.3em] block mb-10"
+          >
+            ⬡ OUR STORY
+          </motion.span>
+
+          {/* Heading */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } } }}
+            className="mb-10"
+          >
+            {['ABOUT', 'MOSCURE'].map((line, i) => (
+              <div className="overflow-hidden" key={i}>
+                <motion.span
+                  variants={{ hidden: { opacity: 0, y: 60 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } } }}
+                  className={`font-display text-6xl md:text-8xl lg:text-[9rem] block leading-none ${
+                    i === 1 ? 'gradient-text-cyan-pink' : 'text-white'
+                  }`}
+                >
+                  {line}
+                </motion.span>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Draw-in rule */}
+          <motion.div
+            className="border-t border-white/20 mb-10"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.0, delay: 0.7, ease: 'easeOut' }}
+            style={{ transformOrigin: 'left' }}
+          />
+
+          {/* Tagline */}
+          <WordReveal
+            text="Beyond mosquito control — a commitment to public health, chemical-free living, and every family's right to protection."
+            className="font-body text-xl md:text-2xl text-white/70 leading-[1.8] max-w-2xl"
+            stagger={0.025}
+            delay={0.8}
+          />
+
+          {/* Scroll hint */}
+          <motion.div
+            custom={1.6}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="flex items-center gap-3 mt-16"
+          >
+            <div className="scroll-indicator">
+              <ArrowDown size={16} className="text-textMuted" />
+            </div>
+            <span className="font-mono text-xs uppercase tracking-widest text-textMuted">
+              Read our story
+            </span>
+          </motion.div>
+        </div>
+      </section>
 
       {/* ════════════════════════════════════════════════════════════
           SECTION 1 — Opening: "The Acceptance"

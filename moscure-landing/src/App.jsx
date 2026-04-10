@@ -6,9 +6,10 @@ import LandingPage from './pages/LandingPage'
 import ProductPage from './pages/ProductPage'
 import DiseasesPage from './pages/DiseasesPage'
 import ComparisonPage from './pages/ComparisonPage'
-import AboutPage from './pages/AboutPage'
 import AboutPageV2 from './pages/AboutPageV2'
 import ContactPage from './pages/ContactPage'
+import IPIIndoorProductPage from './pages/products/IPIIndoorProductPage'
+import IPOOutdoorProductPage from './pages/products/IPOOutdoorProductPage'
 import './index.css'
 
 function ScrollToTop() {
@@ -25,8 +26,9 @@ const PAGE_TO_PATH = {
   diseases: '/diseases',
   comparison: '/comparison',
   about: '/about',
-  'about-v2': '/about-v2',
   contact: '/contact',
+  ipiIndoor: '/products/moscure-ipi-indoor-mosquito-trap',
+  ipoOutdoor: '/products/moscure-ipo-outdoor-mosquito-trap',
 }
 
 function AppInner() {
@@ -50,9 +52,10 @@ function AppInner() {
         <Route path="/product" element={<ProductPage onNavigate={handleNavigate} />} />
         <Route path="/diseases" element={<DiseasesPage onNavigate={handleNavigate} />} />
         <Route path="/comparison" element={<ComparisonPage onNavigate={handleNavigate} />} />
-        <Route path="/about" element={<AboutPage onNavigate={handleNavigate} />} />
-        <Route path="/about-v2" element={<AboutPageV2 onNavigate={handleNavigate} />} />
+        <Route path="/about" element={<AboutPageV2 onNavigate={handleNavigate} />} />
         <Route path="/contact" element={<ContactPage onNavigate={handleNavigate} />} />
+        <Route path="/products/moscure-ipi-indoor-mosquito-trap" element={<IPIIndoorProductPage onNavigate={handleNavigate} />} />
+        <Route path="/products/moscure-ipo-outdoor-mosquito-trap" element={<IPOOutdoorProductPage onNavigate={handleNavigate} />} />
         <Route path="*" element={<LandingPage onNavigate={handleNavigate} />} />
       </Routes>
       <Footer onNavigate={handleNavigate} />
