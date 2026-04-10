@@ -715,7 +715,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
             {/* Block 7 — CTA buttons */}
             <div className="flex flex-col gap-3">
               <motion.a
-                href="mailto:contact@moscure.in?subject=Buy%20Moscure%20IPO%20Outdoor%20Trap&body=I'm%20interested%20in%20purchasing%20the%20Moscure%20IPO%20Outdoor%20Mosquito%20Trap."
+                href=""
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(255, 214, 10, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center gap-2 text-background font-display text-xl tracking-wider rounded-xl py-4 w-full"

@@ -710,7 +710,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
             {/* Block 7 — CTA buttons */}
             <div className="flex flex-col gap-3">
               <motion.a
-                href="mailto:contact@moscure.in?subject=Buy%20Moscure%20IPI%20Indoor%20Trap&body=I'm%20interested%20in%20purchasing%20the%20Moscure%20IPI%20Indoor%20Mosquito%20Trap."
+                href=""
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0, 245, 212, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center gap-2 bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4 w-full"
