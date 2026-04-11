@@ -962,7 +962,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 8 — Contact Form
       ════════════════════════════════════════════════════════════ */}
-      <section id="contact" className="relative py-16 md:py-24 overflow-hidden">
+      <section id="contact" className="relative py-16 md:py-24 overflow-visible">
         {/* Background glows */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-0 w-[500px] h-[500px]"
@@ -989,7 +989,7 @@ export default function AboutPageV2({ onNavigate }) {
             📞 REACH US OUT
           </motion.p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 
             {/* Left — emotional copy */}
             <motion.div
@@ -998,7 +998,9 @@ export default function AboutPageV2({ onNavigate }) {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-60px' }}
+              className="lg:sticky lg:top-28 self-start"
             >
+              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
               <p className="font-mono text-xs text-textMuted uppercase tracking-widest mb-4 leading-relaxed">
                 Because no life should be lost due to lack of protection.
               </p>
