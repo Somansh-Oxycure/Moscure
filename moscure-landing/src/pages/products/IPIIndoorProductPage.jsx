@@ -28,7 +28,8 @@ const PRODUCT = {
   name:        'IPI Indoor Mosquito & Insect Trap',
   fullTitle:   'IPI Indoor Mosquito & Insect Trap 365nm UV LED | Silent Electric Bug Zapper | Covers 375 sq ft | Odor-Free, Chemical-Free | Safe for Kids & Pets | 1.5W Compact Fly Killer | 280g Lightweight',
   brand:       'Moscure',
-  price:       3299,
+  originalPrice: 3299,
+  price:       2199,
   currency:    '₹',
   inStock:     true,
   rating:      4.8,
@@ -138,10 +139,10 @@ const REVIEWS = [
 
 const RATING_BREAKDOWN = [
   { stars: 5, count: 89, percent: 72 },
-  { stars: 4, count: 21, percent: 17 },
-  { stars: 3, count:  8, percent:  6 },
-  { stars: 2, count:  4, percent:  3 },
-  { stars: 1, count:  2, percent:  2 },
+  { stars: 4, count: 24, percent: 19 },
+  { stars: 3, count:  11, percent:  9 },
+  { stars: 2, count:  0, percent:  0 },
+  { stars: 1, count:  0, percent:  0 },
 ]
 
 const TICKER_ITEMS = [
@@ -170,7 +171,7 @@ const SCHEMA_JSON = JSON.stringify({
   offers: {
     '@type': 'Offer',
     price: '3299',
-    priceCurrency: 'INR',
+    priceCurrency: '',
     availability: 'https://schema.org/InStock',
     seller: { '@type': 'Organization', name: 'Moscure' },
   },
@@ -690,10 +691,11 @@ export default function IPIIndoorProductPage({ onNavigate }) {
             >
               <div className="flex items-baseline gap-1">
                 <span className="font-body text-sm text-textMuted">{PRODUCT.currency}</span>
+                <span className="font-display text-3xl text-textMuted line-through mr-2">{PRODUCT.originalPrice.toLocaleString('en-IN')}</span>
                 <span className="font-display text-5xl text-white leading-none">
-                  {PRODUCT.price.toLocaleString('en-IN')}
+                  ₹{PRODUCT.price.toLocaleString('en-IN')}
                 </span>
-                <span className="font-mono text-xs text-textMuted uppercase">INR</span>
+                <span className="font-mono text-xs text-textMuted uppercase"></span>
               </div>
               <span className="flex items-center gap-1.5 font-body text-sm text-gradientcyan font-medium">
                 <span className="w-2 h-2 rounded-full bg-gradientcyan inline-block" />
@@ -704,7 +706,8 @@ export default function IPIIndoorProductPage({ onNavigate }) {
             {/* Block 7 — CTA buttons */}
             <div className="flex flex-col gap-3" ref={ctaRef}>
               <motion.a
-                href=""
+                href="https://www.amazon.in/Moscure-Mosquito-Odor-Free-Chemical-Free-Lightweight/dp/B0GCF5LM5B/ref=sr_1_1_sspa?sr=8-1-spons&aref=LNbvtfqxv6&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1"
+              target='blank'
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0, 245, 212, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center gap-2 bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4 w-full"
@@ -881,8 +884,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
 
           <div>
             <h3 className="font-display text-4xl md:text-5xl text-white leading-none">
-              MOSCURE IPI —{' '}
-              <span className="text-gradientcyan">₹3,299</span>
+              MOSCURE IPI 
             </h3>
             <p className="font-body text-sm text-textMuted italic mt-2">
               Free delivery on all orders
@@ -891,7 +893,8 @@ export default function IPIIndoorProductPage({ onNavigate }) {
 
           <div className="flex items-center gap-4 w-full max-w-sm">
             <motion.a
-              href="mailto:contact@moscure.in?subject=Buy%20Moscure%20IPI%20Indoor%20Trap"
+              href="https://www.amazon.in/Moscure-Mosquito-Odor-Free-Chemical-Free-Lightweight/dp/B0GCF5LM5B/ref=sr_1_1_sspa?sr=8-1-spons&aref=LNbvtfqxv6&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1"
+              target='blank'
               whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0, 245, 212, 0.4)' }}
               whileTap={{ scale: 0.98 }}
               className="flex-1 flex items-center justify-center bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4"
@@ -925,10 +928,9 @@ export default function IPIIndoorProductPage({ onNavigate }) {
             <div className="flex items-center justify-between gap-3 max-w-xl mx-auto">
               <div>
                 <p className="font-body text-xs text-textMuted">Moscure IPI</p>
-                <p className="font-display text-2xl text-gradientcyan leading-none">₹3,299</p>
               </div>
               <motion.a
-                href="mailto:contact@moscure.in?subject=Buy%20Moscure%20IPI%20Indoor%20Trap"
+                href="https://www.amazon.in/Moscure-Mosquito-Odor-Free-Chemical-Free-Lightweight/dp/B0GCF5LM5B/ref=sr_1_1_sspa?sr=8-1-spons&aref=LNbvtfqxv6&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="bg-gradientcyan text-background px-6 py-3 rounded-xl font-display text-lg tracking-wider"

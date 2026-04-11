@@ -29,7 +29,8 @@ const PRODUCT = {
   name:        'IPO Outdoor Mosquito & Insect Trap',
   fullTitle:   'IPO Outdoor Mosquito & Insect Trap | 365nm UV LED Trap | Covers 3230 sq ft | Water Resistant, Hangable, Safe & Odor-Free Bug Zapper | 9W Energy-Efficient',
   brand:       'Moscure',
-  price:       21599,
+  originalPrice: 21599,
+  price:       19500,
   currency:    '₹',
   inStock:     true,
   rating:      4.7,
@@ -141,17 +142,17 @@ const REVIEWS = [
 
 const RATING_BREAKDOWN = [
   { stars: 5, count: 72, percent: 73 },
-  { stars: 4, count: 16, percent: 16 },
-  { stars: 3, count:  6, percent:  6 },
-  { stars: 2, count:  3, percent:  3 },
-  { stars: 1, count:  1, percent:  2 },
+  { stars: 4, count: 17, percent: 17 },
+  { stars: 3, count:  10, percent:  10 },
+  { stars: 2, count:  0, percent:  0 },
+  { stars: 1, count:  0, percent:  0 },
 ]
 
 const TICKER_ITEMS = [
   '✓ 365nm UV LED Technology',
   '✓ Covers 3230 sq ft Outdoors',
   '✓ Water Resistant Housing',
-  '✓ Hangable Design',
+  '✓ Hangable Design', 
   '✓ 9W Energy Efficient',
   '✓ Catches Dengue & Malaria Vectors',
   '✓ No Refills Ever',
@@ -172,7 +173,7 @@ const SCHEMA_JSON = JSON.stringify({
   offers: {
     '@type': 'Offer',
     price: '21599',
-    priceCurrency: 'INR',
+    priceCurrency: '',
     availability: 'https://schema.org/InStock',
     seller: { '@type': 'Organization', name: 'Moscure' },
   },
@@ -696,10 +697,11 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
             >
               <div className="flex items-baseline gap-1">
                 <span className="font-body text-sm text-textMuted">{PRODUCT.currency}</span>
+                <span className="font-display text-3xl text-textMuted line-through mr-2">{PRODUCT.originalPrice.toLocaleString('en-IN')}</span>
                 <span className="font-display text-5xl text-white leading-none">
-                  {PRODUCT.price.toLocaleString('en-IN')}
+                  ₹{PRODUCT.price.toLocaleString('en-IN')}
                 </span>
-                <span className="font-mono text-xs text-textMuted uppercase">INR</span>
+                <span className="font-mono text-xs text-textMuted uppercase"></span>
               </div>
               <span className="flex items-center gap-1.5 font-body text-sm text-gradientyellow font-medium">
                 <span className="w-2 h-2 rounded-full bg-gradientyellow inline-block" />
@@ -710,7 +712,8 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
             {/* Block 7 — CTA buttons */}
             <div className="flex flex-col gap-3" ref={ctaRef}>
               <motion.a
-                href=""
+                href="https://www.amazon.in/Moscure-Outdoor-Mosquito-Insect-Energy-Efficient/dp/B0GJ6FY1XD/ref=sr_1_6?sr=8-6"
+                target='blank'
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(255, 214, 10, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center gap-2 text-background font-display text-xl tracking-wider rounded-xl py-4 w-full"
@@ -891,8 +894,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
 
           <div>
             <h3 className="font-display text-4xl md:text-5xl text-white leading-none">
-              MOSCURE IPO —{' '}
-              <span className="text-gradientyellow">₹21,599</span>
+              MOSCURE IPO 
             </h3>
             <p className="font-body text-sm text-textMuted italic mt-2">
               Free delivery on all orders
@@ -901,7 +903,8 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
 
           <div className="flex items-center gap-4 w-full max-w-sm">
             <motion.a
-              href="mailto:contact@moscure.in?subject=Buy%20Moscure%20IPO%20Outdoor%20Trap"
+              href="https://www.amazon.in/Moscure-Outdoor-Mosquito-Insect-Energy-Efficient/dp/B0GJ6FY1XD/ref=sr_1_6?sr=8-6"
+              target="_blank"
               whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(255, 214, 10, 0.4)' }}
               whileTap={{ scale: 0.98 }}
               className="flex-1 flex items-center justify-center text-background font-display text-xl tracking-wider rounded-xl py-4"
@@ -939,7 +942,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
                 <p className="font-display text-2xl text-gradientyellow leading-none">₹21,599</p>
               </div>
               <motion.a
-                href="mailto:contact@moscure.in?subject=Buy%20Moscure%20IPO%20Outdoor%20Trap"
+                href="https://www.amazon.in/Moscure-Outdoor-Mosquito-Insect-Energy-Efficient/dp/B0GJ6FY1XD/ref=sr_1_6?sr=8-6"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="text-background px-6 py-3 rounded-xl font-display text-lg tracking-wider"

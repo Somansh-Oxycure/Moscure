@@ -68,6 +68,7 @@ function ProductCard({ product, onNavigate }) {
 
           {/* Price */}
           <div className="flex items-baseline gap-1.5 mt-auto pt-3 border-t border-borderDefault/60">
+            <span className="font-display text-2xl leading-none text-textMuted line-through mr-2">{product.originalPrice}</span>
             <span className="font-display text-4xl leading-none" style={{ color: product.accentColor }}>{product.price}</span>
             <span className="font-mono text-xs text-textMuted uppercase">{product.priceLabel}</span>
           </div>

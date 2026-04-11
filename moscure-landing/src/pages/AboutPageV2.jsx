@@ -1000,7 +1000,7 @@ export default function AboutPageV2({ onNavigate }) {
               viewport={{ once: true, margin: '-60px' }}
               className="lg:sticky lg:top-28 self-start"
             >
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+              
               <p className="font-mono text-xs text-textMuted uppercase tracking-widest mb-4 leading-relaxed">
                 Because no life should be lost due to lack of protection.
               </p>

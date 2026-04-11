@@ -156,8 +156,9 @@ export const PRODUCTS_DATA = [
     model: 'MC-IPI 1',
     description:
       'Scientifically engineered MLID and Phototaxis Technology trap for indoor spaces. Silent, chemical-free, and proven effective against all major disease-carrying mosquito species.',
-    price: '₹3,299',
-    priceLabel: 'INR',
+    originalPrice: '₹3,299',
+    price: '₹2,199',
+    priceLabel: '',
     imageFile: 'product-indoor',
     imageLabel: '[ MC-IPI 1 Image ]',
     specs: [
@@ -182,8 +183,9 @@ export const PRODUCTS_DATA = [
     model: 'MC-IPO Unit',
     description:
       'Heavy-duty MLID and Phototaxis Technology mosquito trap built for outdoor environments. Weatherproof design protects your garden, patio, and open spaces around the clock.',
-    price: '₹21,599',
-    priceLabel: 'INR',
+    originalPrice: '₹21,599',
+    price: '₹19,500',
+    priceLabel: '',
     imageFile: 'product-outdoor',
     imageLabel: '[ IPO Unit Image ]',
     specs: [
