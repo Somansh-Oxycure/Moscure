@@ -70,7 +70,7 @@ function HotelCard({ hotel, index, isInView }) {
           <img
             src={hotel.logo}
             alt={hotel.name}
-            className="w-auto object-contain opacity-55 group-hover:opacity-95 transition-all duration-500"
+            className="w-auto object-contain opacity-75 group-hover:opacity-100 transition-all duration-500"
             style={{
               filter: 'invert(1) brightness(10) saturate(0)',
               maxWidth: '200px',
@@ -101,6 +101,7 @@ function HotelCard({ hotel, index, isInView }) {
 export default function TrustedByMarquee() {
   const headingRef = useRef(null)
   const scrollRef = useRef(null)
+  const isHovered = useRef(false)
   const isInView = useInView(headingRef, { once: true, margin: '-80px' })
 
   // Start at the middle copy so both directions have room
@@ -137,6 +138,14 @@ export default function TrustedByMarquee() {
   const scroll = (dir) => {
     scrollRef.current?.scrollBy({ left: dir * CARD_SCROLL, behavior: 'smooth' })
   }
+
+  // Auto-rotate one card every 5 seconds, pause on hover
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isHovered.current) scroll(1)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <section className="relative bg-background py-20 md:py-28 overflow-hidden">
@@ -205,6 +214,8 @@ export default function TrustedByMarquee() {
           ref={scrollRef}
           className="flex gap-5 overflow-x-auto pb-2"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          onMouseEnter={() => { isHovered.current = true }}
+          onMouseLeave={() => { isHovered.current = false }}
         >
           {ITEMS.map((hotel, i) => (
             <HotelCard key={i} hotel={hotel} index={i % HOTELS.length} isInView={isInView} />

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import {
   BookOpen, Cpu, Star, Wrench, Zap,
   Droplets, Wind, CheckCircle, Settings,
 } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading, InfoCard,
-  BulletList, SpecTable, StepRow, Divider,
+  BulletList, SpecTable, StepRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 import DocProductSelector from '../../components/DocProductSelector'
 
@@ -68,7 +69,8 @@ const MAINTENANCE = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function UserManualPage() {
-  const [product, setProduct] = useState(null)
+  const location = useLocation()
+  const [product, setProduct] = useState(location.state?.product ?? null)
 
   useEffect(() => {
     if (!product)    document.title = 'User Manual – Select Your MOSCURE Product'
@@ -161,6 +163,7 @@ export default function UserManualPage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="outdoor" current="user-manual" />
     </main>
   )
 }

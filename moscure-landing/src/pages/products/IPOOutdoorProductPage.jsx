@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
+import TrustedByMarquee from '../../components/TrustedByMarquee'
 import {
   Shield, HeartPulse, Maximize2, Zap, Battery,
   Droplets, Ruler, ShieldCheck, Wind, Volume2, Clock,
@@ -104,11 +105,11 @@ const TRUST_BADGES = [
 ]
 
 const DETAIL_IMAGES = [
-  { id: 1, alt: 'How Moscure IPO Outdoor UV LED Trap Works — 365nm Phototaxis Mechanism',   caption: 'How It Works',            src: decp1 },
-  { id: 2, alt: 'Moscure IPO Outdoor Coverage Area — 3230 sq ft Garden & Patio Protection',     caption: 'Coverage Explained',       src: decp2 },
-  { id: 3, alt: 'Moscure IPO Water Resistant Housing — Built for Indian Monsoon Conditions', caption: 'Weather Resistant Build',  src: decp3 },
-  { id: 4, alt: 'Moscure IPO Hanging Installation Guide — Garden, Patio, Balcony Setup',    caption: 'Easy Installation',        src: decp4 },
-  { id: 5, alt: 'Moscure IPO Outdoor Trap Real Results — Effective Mosquito Control',       caption: 'Real Results',             src: decp5 },
+  { id: 1, alt: 'How Moscure IPO Outdoor UV LED Trap Works — 365nm Phototaxis Mechanism',               src: decp1 },
+  { id: 2, alt: 'Moscure IPO Outdoor Coverage Area — 3230 sq ft Garden & Patio Protection',            src: decp2 },
+  { id: 3, alt: 'Moscure IPO Water Resistant Housing — Built for Indian Monsoon Conditions',  src: decp3 },
+  { id: 4, alt: 'Moscure IPO Hanging Installation Guide — Garden, Patio, Balcony Setup',       src: decp4 },
+  { id: 5, alt: 'Moscure IPO Outdoor Trap Real Results — Effective Mosquito Control',            src: decp5 },
 ]
 
 const REVIEWS = [
@@ -731,6 +732,14 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
             {/* Block 4 — trust badges */}
             <TrustBadgeRow badges={TRUST_BADGES} />
 
+            {/* Warranty note */}
+            <div className="flex items-start gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-gradientyellow shrink-0 mt-0.5" />
+              <p className="font-body text-xs text-textMuted leading-relaxed">
+                <span className="text-white font-medium">1-Year Limited Warranty</span> — free repair or replacement for manufacturing defects. Non-transferable; original proof of purchase required.
+              </p>
+            </div>
+
             {/* Divider */}
             <div className="h-px bg-borderDefault" />
 
@@ -804,6 +813,8 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
           ))}
         </div>
       </section>
+
+      <TrustedByMarquee />
 
       {/* ── SECTION 4: Reviews ───────────────────────────────────────── */}
       <section id="reviews" className="relative bg-surface border-t border-borderDefault py-16 md:py-24">

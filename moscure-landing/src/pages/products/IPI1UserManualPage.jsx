@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading, InfoCard,
-  BulletList, SpecTable, StepRow, Divider,
+  BulletList, SpecTable, StepRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -169,6 +169,7 @@ export default function IPI1UserManualPage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="indoor" current="user-manual" />
     </main>
   )
 }

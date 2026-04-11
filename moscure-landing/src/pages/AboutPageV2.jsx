@@ -224,20 +224,14 @@ function VisionLine({ text, accent, index }) {
 
 // ─── CSRRow ────────────────────────────────────────────────────────────────────
 
-function CSRRow({ text, number, index }) {
+function CSRRow({ text, index }) {
   return (
     <motion.div
       variants={staggerItem}
-      whileHover={{ backgroundColor: 'rgba(0,245,212,0.03)' }}
-      className="flex items-center justify-between py-5 border-b border-borderDefault group cursor-default px-2 rounded-sm transition-colors duration-200"
+      className="flex items-start gap-3 py-4 border-b border-borderDefault/50 last:border-0"
     >
-      <div className="flex items-center gap-4">
-        <span className="text-gradientcyan font-bold text-lg leading-none">·</span>
-        <span className="font-body text-base text-white">{text}</span>
-      </div>
-      <span className="font-mono text-xs text-textMuted group-hover:translate-x-1 transition-transform duration-200">
-        [{String(number).padStart(2, '0')}]
-      </span>
+      <span className="mt-[7px] flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gradientcyan" />
+      <span className="font-body text-base text-white/80 leading-relaxed">{text}</span>
     </motion.div>
   )
 }
@@ -869,7 +863,7 @@ export default function AboutPageV2({ onNavigate }) {
             className="mt-4"
           >
             {CSR_INITIATIVES.map((text, i) => (
-              <CSRRow key={i} text={text} number={i + 1} index={i} />
+              <CSRRow key={i} text={text} index={i} />
             ))}
           </motion.div>
         </div>

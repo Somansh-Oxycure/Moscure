@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Zap, Eye, Users, Package, TriangleAlert } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading, InfoCard,
-  BulletList, IconRow, Divider,
+  BulletList, IconRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 import DocProductSelector from '../../components/DocProductSelector'
 
@@ -48,7 +49,8 @@ const PLACEMENT = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function SafetyGuidelinesPage() {
-  const [product, setProduct] = useState(null)
+  const location = useLocation()
+  const [product, setProduct] = useState(location.state?.product ?? null)
 
   useEffect(() => {
     if (!product)    document.title = 'Safety Guidelines – Select Your MOSCURE Product'
@@ -153,6 +155,7 @@ export default function SafetyGuidelinesPage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="outdoor" current="safety" />
     </main>
   )
 }

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Zap, Eye, Users, Shield, Leaf, TriangleAlert, Wind } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading, InfoCard,
-  BulletList, IconRow, Divider,
+  BulletList, IconRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -171,6 +171,7 @@ export default function IPI1SafetyGuidelinesPage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="indoor" current="safety" />
     </main>
   )
 }

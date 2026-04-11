@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { ShieldCheck, XCircle, FileText, AlertTriangle, Phone } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading,
-  BulletList, IconRow, Divider,
+  BulletList, IconRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 import DocProductSelector from '../../components/DocProductSelector'
 
@@ -33,7 +34,8 @@ const NOTES = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function WarrantyPage() {
-  const [product, setProduct] = useState(null)
+  const location = useLocation()
+  const [product, setProduct] = useState(location.state?.product ?? null)
 
   useEffect(() => {
     if (!product)    document.title = 'Warranty Information – Select Your MOSCURE Product'
@@ -157,6 +159,7 @@ export default function WarrantyPage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="outdoor" current="warranty" />
     </main>
   )
 }

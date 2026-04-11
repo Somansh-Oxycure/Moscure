@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { MapPin, Anchor, ArrowUpDown, Lightbulb, Sun, Shield } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading, InfoCard,
-  BulletList, IconRow, Divider,
+  BulletList, IconRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 import DocProductSelector from '../../components/DocProductSelector'
 
@@ -39,7 +40,8 @@ const USAGE_TIPS = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function InstallationGuidePage() {
-  const [product, setProduct] = useState(null)
+  const location = useLocation()
+  const [product, setProduct] = useState(location.state?.product ?? null)
 
   useEffect(() => {
     if (!product)    document.title = 'Installation Guide – Select Your MOSCURE Product'
@@ -150,6 +152,7 @@ export default function InstallationGuidePage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="outdoor" current="installation" />
     </main>
   )
 }

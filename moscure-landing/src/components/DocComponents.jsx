@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import { ChevronRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { ChevronRight, BookOpen, Wrench, FileText, ShieldCheck } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -238,5 +238,63 @@ export function IconRow({ icon: Icon, children, accentColor = 'cyan' }) {
 export function Divider() {
   return (
     <div className="h-px bg-gradient-to-r from-transparent via-borderDefault to-transparent my-2" />
+  )
+}
+
+// ─── Doc page mini navigator ──────────────────────────────────────────────────
+const INDOOR_LINKS = [
+  { key: 'user-manual',  label: 'User Manual',  icon: BookOpen,    path: '/ipi1/user-manual' },
+  { key: 'installation', label: 'Installation', icon: Wrench,      path: '/ipi1/installation-guide' },
+  { key: 'warranty',     label: 'Warranty',     icon: FileText,    path: '/ipi1/warranty' },
+  { key: 'safety',       label: 'Safety',       icon: ShieldCheck, path: '/ipi1/safety' },
+]
+const OUTDOOR_LINKS = [
+  { key: 'user-manual',  label: 'User Manual',  icon: BookOpen,    path: '/user-manual' },
+  { key: 'installation', label: 'Installation', icon: Wrench,      path: '/installation-guide' },
+  { key: 'warranty',     label: 'Warranty',     icon: FileText,    path: '/warranty' },
+  { key: 'safety',       label: 'Safety',       icon: ShieldCheck, path: '/safety' },
+]
+
+export function DocPageNav({ product, current }) {
+  const navigate = useNavigate()
+  const links = product === 'indoor' ? INDOOR_LINKS : OUTDOOR_LINKS
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.4, delay: 0.5 }}
+      className="fixed bottom-6 right-6 z-50 flex flex-col gap-1 p-2 rounded-2xl border border-borderDefault bg-background/90 backdrop-blur-md shadow-2xl"
+    >
+      <p className="font-mono text-[9px] text-textMuted uppercase tracking-widest px-2 pt-1 pb-1.5 border-b border-borderDefault">
+        {product === 'indoor' ? 'IPI Indoor' : 'IPO Outdoor'}
+      </p>
+      {links.map(({ key, label, icon: Icon, path }) => {
+        const isActive = key === current
+        return (
+          <button
+            key={key}
+            onClick={() => {
+              if (isActive) return
+              if (product === 'outdoor') {
+                navigate(path, { state: { product: 'outdoor' } })
+              } else {
+                navigate(path)
+              }
+            }}
+            disabled={isActive}
+            className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-left transition-all duration-200 ${
+              isActive
+                ? 'bg-gradientcyan/15 border border-gradientcyan/30 text-gradientcyan cursor-default'
+                : 'text-textMuted hover:bg-surfaceHover hover:text-white cursor-pointer'
+            }`}
+          >
+            <Icon size={13} className="flex-shrink-0" />
+            <span className="font-body text-xs font-medium whitespace-nowrap">{label}</span>
+            {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-gradientcyan" />}
+          </button>
+        )
+      })}
+    </motion.div>
   )
 }

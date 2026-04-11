@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading, InfoCard,
-  BulletList, IconRow, Divider,
+  BulletList, IconRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -158,6 +158,7 @@ export default function IPI1InstallationGuidePage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="indoor" current="installation" />
     </main>
   )
 }

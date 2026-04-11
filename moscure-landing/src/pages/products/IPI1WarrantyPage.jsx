@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ShieldCheck, XCircle, FileText, AlertTriangle, Phone } from 'lucide-react'
 import {
   DocHero, DocSection, SectionHeading,
-  BulletList, IconRow, Divider,
+  BulletList, IconRow, Divider, DocPageNav,
 } from '../../components/DocComponents'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -151,6 +151,7 @@ export default function IPI1WarrantyPage() {
         </DocSection>
 
       </div>
+      <DocPageNav product="indoor" current="warranty" />
     </main>
   )
 }

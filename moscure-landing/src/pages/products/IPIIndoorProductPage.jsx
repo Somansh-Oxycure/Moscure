@@ -102,11 +102,11 @@ const TRUST_BADGES = [
 ]
 
 const DETAIL_IMAGES = [
-  { id: 1, alt: 'How Moscure IPI UV LED Trap Works — 365nm Phototaxis Mechanism',            caption: 'How It Works',              src: decp1 },
-  { id: 2, alt: 'Moscure IPI Coverage Area — 375 sq ft Indoor Protection',                   caption: 'Coverage Explained',         src: decp2 },
-  { id: 3, alt: 'Moscure IPI Chemical-Free vs Traditional Mosquito Coils Comparison',        caption: 'Chemical-Free Advantage',    src: decp3 },
-  { id: 4, alt: 'Moscure IPI Easy Maintenance — Clean Collection Tray',                      caption: 'Easy Maintenance',           src: decp4 },
-  { id: 5, alt: 'Moscure IPI Indoor Trap in use — Real Results from Indian Homes',           caption: 'Real Results',               src: decp5 },
+  { id: 1, alt: 'How Moscure IPI UV LED Trap Works — 365nm Phototaxis Mechanism',                    src: decp1 },
+  { id: 2, alt: 'Moscure IPI Coverage Area — 375 sq ft Indoor Protection',                           src: decp2 },
+  { id: 3, alt: 'Moscure IPI Chemical-Free vs Traditional Mosquito Coils Comparison',           src: decp3 },
+  { id: 4, alt: 'Moscure IPI Easy Maintenance — Clean Collection Tray',                                src: decp4 },
+  { id: 5, alt: 'Moscure IPI Indoor Trap in use — Real Results from Indian Homes',                                 src: decp5 },
 ]
 
 const REVIEWS = [
@@ -724,6 +724,14 @@ export default function IPIIndoorProductPage({ onNavigate }) {
 
             {/* Block 4 — trust badges */}
             <TrustBadgeRow badges={TRUST_BADGES} />
+
+            {/* Warranty note */}
+            <div className="flex items-start gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-gradientcyan shrink-0 mt-0.5" />
+              <p className="font-body text-xs text-textMuted leading-relaxed">
+                <span className="text-white font-medium">1-Year Limited Warranty</span> — free repair or replacement for manufacturing defects. Non-transferable; original proof of purchase required.
+              </p>
+            </div>
 
             {/* Divider */}
             <div className="h-px bg-borderDefault" />
