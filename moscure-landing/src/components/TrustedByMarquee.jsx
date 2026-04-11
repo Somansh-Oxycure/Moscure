@@ -23,7 +23,7 @@ const HOTELS = [
   { name: 'Taj Palace',          location: 'New Delhi, India',               logo: tajLogo,      logoStyle: { height: '90px' } },
   { name: 'The Claridges',       location: 'New Delhi, India',               logo: claridgesLogo,logoStyle: { height: '500px' } },
   { name: 'The Lodhi',           location: 'New Delhi, India',               logo: lodhiLogo,    logoStyle: { height: '540px' } },
-  { name: 'ibis Hotel',          location: 'Golf Course Road, Gurugram, India', logo: ibisLogo,  logoStyle: { height: '108px' } },
+  { name: 'ibis Hotel',          location: 'Golf Course Road, Gurugram, India', logo: ibisLogo,  logoStyle: { height: '508px', maxWidth: '280px' } },
 ]
 
 const CARD_W = 300
@@ -186,7 +186,7 @@ export default function TrustedByMarquee() {
           className="mt-5 max-w-lg mx-auto text-textMuted font-body text-sm leading-relaxed"
         >
           India&apos;s most prestigious hotels choose Moscure for chemical-free,{' '}
-          <span className="text-white font-medium">silent protection</span> — because
+          <span className="text-white font-medium">Silent Protection</span> — because
           their guests deserve nothing less.
         </motion.p>
       </div>

@@ -123,7 +123,7 @@ function WordReveal({ text, className, stagger = 0.025, delay = 0 }) {
 
 function SectionDivider({ number, accent = '#00F5D4' }) {
   return (
-    <div className="flex items-center gap-4 max-w-3xl mx-auto px-6 my-20">
+    <div className="flex items-center gap-4 max-w-3xl mx-auto px-6 my-12">
       <motion.div
         className="flex-1 border-t border-borderDefault"
         initial={{ scaleX: 0 }}
@@ -152,7 +152,7 @@ function SectionDivider({ number, accent = '#00F5D4' }) {
 
 // ─── ChapterHeading ────────────────────────────────────────────────────────────
 
-function ChapterHeading({ number, line1, line2, accentLine = 2, accentColor }) {
+function ChapterHeading({  line1, line2, accentLine = 2, accentColor }) {
   return (
     <motion.div
       custom={0}
@@ -162,9 +162,7 @@ function ChapterHeading({ number, line1, line2, accentLine = 2, accentColor }) {
       viewport={{ once: true, margin: '-60px' }}
       className="max-w-4xl mx-auto px-6 mb-12"
     >
-      <span className="font-mono text-xs text-textMuted uppercase tracking-[0.3em] block mb-4">
-        — {number} —
-      </span>
+      
       <h2 className="font-display leading-none">
         <span className={`block text-5xl md:text-7xl lg:text-8xl ${accentLine === 1 ? '' : 'text-white'}`}
           style={accentLine === 1 ? { color: accentColor } : {}}>
@@ -241,14 +239,109 @@ function CSRRow({ text, index }) {
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
   const [form, setForm] = useState({ name: '', phone: '', email: '', city: '', problem: '' })
+  const [errors, setErrors] = useState({})
+  const [sending, setSending] = useState(false)
 
-  const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
+  const validate = () => {
+    const e = {}
+    if (!form.name.trim()) e.name = "Name is required"
+    if (!form.phone.trim()) e.phone = "Phone number is required"
+    if (!form.city.trim()) e.city = "City is required"
+    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      e.email = "Valid email address required"
+    }
+    return e
   }
 
-  const inputClass = 'form-input w-full bg-surfaceHover border border-borderDefault rounded-xl px-4 py-3.5 text-white font-body text-base placeholder-textMuted/60 focus:outline-none focus:border-gradientcyan focus:shadow-[0_0_0_3px_rgba(0,245,212,0.1)] transition-all duration-200'
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setForm(f => ({ ...f, [name]: value }))
+    if (errors[name]) {
+      setErrors(prev => {
+        const next = { ...prev }
+        delete next[name]
+        return next
+      })
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const validationErrors = validate()
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+
+    setSending(true)
+
+    try {
+      const formattedMessage = `🚨 MOSCURE SERVICE REQUEST (AREA VISIT)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 Request Received: ${new Date().toLocaleString("en-IN", {
+timeZone: "Asia/Kolkata",
+dateStyle: "medium",
+timeStyle: "short"
+})}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 CUSTOMER LOCATION DETAILS
+
+• Name: ${form.name}
+• Phone: ${form.phone}
+• Email: ${form.email || "Not provided"}
+• City / Area: ${form.city}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🦟 PROBLEM REPORTED
+
+${form.problem || "No problem description provided"}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📞 NEXT STEP
+
+Customer is expecting:
+• Callback
+• Area visit
+• Free assessment
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚡ PRIORITY: HIGH
+This is a potential on-ground service lead.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Source: Moscure “Problem in Your Area” Form
+      `
+      const res = await fetch("https://formspree.io/f/mqegrprd", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          message: formattedMessage,
+        }),
+      })
+
+      if (res.ok) {
+        setSubmitted(true)
+        setErrors({})
+        setForm({ name: '', phone: '', email: '', city: '', problem: '' })
+      } else {
+        alert("Failed to send message.")
+      }
+    } catch (error) {
+      alert("Something went wrong.")
+    } finally {
+      setSending(false)
+    }
+  }
+
+  const inputClass = (field) =>
+    `w-full bg-surfaceHover border border-borderDefault rounded-xl px-4 py-3.5 text-white font-body text-base placeholder-textMuted/60 focus:outline-none transition-all duration-200 ${
+      errors[field]
+        ? "border-gradientpink/70 focus:border-gradientpink focus:ring-2 focus:ring-gradientpink/15"
+        : "focus:border-gradientcyan focus:shadow-[0_0_0_3px_rgba(0,245,212,0.1)]"
+    }`
+
   const labelClass = 'block font-mono text-xs uppercase tracking-wider text-textMuted mb-1.5'
 
   const fieldVariants = {
@@ -295,37 +388,43 @@ function ContactForm() {
               <motion.div variants={fieldVariants}>
                 <label className={labelClass}>Full Name *</label>
                 <input name="name" required value={form.name} onChange={handleChange}
-                  placeholder="Your full name" className={inputClass} />
+                  placeholder="Your full name" className={inputClass('name')} />
+                {errors.name && <p className="text-gradientpink text-xs mt-1">{errors.name}</p>}
               </motion.div>
               <motion.div variants={fieldVariants}>
                 <label className={labelClass}>Phone Number *</label>
                 <input name="phone" required value={form.phone} onChange={handleChange}
-                  placeholder="+91  XXXXX XXXXX" className={inputClass} />
+                  placeholder="+91  XXXXX XXXXX" className={inputClass('phone')} />
+                {errors.phone && <p className="text-gradientpink text-xs mt-1">{errors.phone}</p>}
               </motion.div>
               <motion.div variants={fieldVariants}>
                 <label className={labelClass}>Email Address</label>
                 <input name="email" type="email" value={form.email} onChange={handleChange}
-                  placeholder="you@example.com" className={inputClass} />
+                  placeholder="you@example.com" className={inputClass('email')} />
+                {errors.email && <p className="text-gradientpink text-xs mt-1">{errors.email}</p>}
               </motion.div>
               <motion.div variants={fieldVariants}>
                 <label className={labelClass}>City / Area *</label>
                 <input name="city" required value={form.city} onChange={handleChange}
-                  placeholder="Delhi, Mumbai, Bengaluru…" className={inputClass} />
+                  placeholder="Delhi, Mumbai, Bengaluru…" className={inputClass('city')} />
+                {errors.city && <p className="text-gradientpink text-xs mt-1">{errors.city}</p>}
               </motion.div>
               <motion.div variants={fieldVariants}>
                 <label className={labelClass}>Describe the Problem</label>
                 <textarea name="problem" rows={4} value={form.problem} onChange={handleChange}
                   placeholder="Describe the mosquito problem in your area…"
-                  className={`${inputClass} resize-none`} />
+                  className={`${inputClass('problem')} resize-none`} />
+                {errors.problem && <p className="text-gradientpink text-xs mt-1">{errors.problem}</p>}
               </motion.div>
               <motion.div variants={{ ...fieldVariants, visible: { ...fieldVariants.visible, transition: { delay: 0.5, duration: 0.4 } } }}>
                 <motion.button
                   type="submit"
+                  disabled={sending}
                   whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0,245,212,0.4)' }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4 mt-1"
+                  className="w-full bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4 mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  CONTACT US — WE'LL HELP →
+                  {sending ? "SENDING..." : "CONTACT US — WE'LL HELP →"}
                 </motion.button>
                 <p className="font-body text-xs text-textMuted italic mt-3 text-center">
                   * We'll never share your details.
@@ -362,7 +461,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           HERO — About Moscure
       ════════════════════════════════════════════════════════════ */}
-      <section id="about-hero" className="relative min-h-screen flex items-end pb-24 md:pb-36 pt-40 overflow-hidden">
+      <section id="about-hero" className="relative min-h-screen flex items-end pb-16 md:pb-24 pt-32 overflow-hidden">
         {/* Ambient glows */}
         <div className="absolute inset-0 pointer-events-none">
           <div
@@ -453,24 +552,18 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 1 — Opening: "The Acceptance"
       ════════════════════════════════════════════════════════════ */}
-      <section id="opening" className="relative min-h-screen flex items-center py-32 overflow-hidden">
+      <SectionDivider number="01" accent="white" />
+
+      <section id="opening" className="relative min-h-screen flex items-center py-16 overflow-hidden">
         {/* Background vignette */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[500px]"
             style={{ background: 'radial-gradient(ellipse at top right, rgba(255,77,109,0.04) 0%, transparent 65%)' }} />
         </div>
 
+
         <div className="relative max-w-3xl mx-auto px-6 w-full">
-          {/* Chapter number */}
-          <motion.span
-            custom={0}
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="font-mono text-xs text-textMuted uppercase tracking-[0.3em] block mb-8"
-          >
-            — 01 —
-          </motion.span>
+          
 
           {/* Heading */}
           <motion.div
@@ -491,6 +584,7 @@ export default function AboutPageV2({ onNavigate }) {
               </div>
             ))}
           </motion.div>
+          
 
           {/* Draw-in rule */}
           <motion.div
@@ -537,7 +631,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 2 — "The Shift"
       ════════════════════════════════════════════════════════════ */}
-      <section id="shift" className="relative py-20 overflow-hidden">
+      <section id="shift" className="relative py-12 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-0 w-[400px] h-[400px] -translate-y-1/2"
             style={{ background: 'radial-gradient(ellipse at left, rgba(255,214,10,0.03) 0%, transparent 65%)' }} />
@@ -545,7 +639,6 @@ export default function AboutPageV2({ onNavigate }) {
 
         <div className="relative max-w-3xl mx-auto px-6">
           <ChapterHeading
-            number="02"
             line1="THE SHIFT"
             line2="FROM ACCEPTANCE TO ACTION"
             accentLine={2}
@@ -599,7 +692,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 3 — "Rethinking the Problem"
       ════════════════════════════════════════════════════════════ */}
-      <section id="rethink" className="relative py-20">
+      <section id="rethink" className="relative py-12">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="03"
@@ -632,12 +725,11 @@ export default function AboutPageV2({ onNavigate }) {
               viewport={{ once: true, margin: '-60px' }}
               className="border-l-2 border-gradientcyan pl-6 flex items-center"
             >
-              <p className="font-display text-3xl md:text-5xl text-gradientcyan leading-tight">
+              <p className="font-display  md:text-4xl text-gradientcyan  leading-tight">
                 "How do we eliminate them — safely, effectively, and continuously?"
               </p>
             </motion.div>
           </div>
-
           <div className="flex flex-col gap-8 max-w-2xl">
             <WordReveal
               text="That question led to years of research, experimentation, and refinement."
@@ -663,7 +755,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 4 — "When Innovation Became Responsibility"
       ════════════════════════════════════════════════════════════ */}
-      <section id="responsibility" className="relative py-20">
+      <section id="responsibility" className="relative py-12">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="04"
@@ -680,7 +772,7 @@ export default function AboutPageV2({ onNavigate }) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
-            className="realization-strip bg-surface border-y border-borderDefault py-8 my-12 -mx-6 px-6"
+            className="realization-strip border-borderDefault py-8 my-12 -mx-6 px-6"
           >
             <div className="max-w-2xl mx-auto text-center">
               <p className="font-body text-xl md:text-2xl text-white font-medium leading-snug">
@@ -729,7 +821,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — "A Commitment Beyond Business"
       ════════════════════════════════════════════════════════════ */}
-      <section id="commitment" className="relative py-20">
+      <section id="commitment" className="relative py-12">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="05"
@@ -774,7 +866,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 6 — "The Future We Are Building"
       ════════════════════════════════════════════════════════════ */}
-      <section id="future" className="relative py-20">
+      <section id="future" className="relative py-12">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="06"
@@ -816,9 +908,7 @@ export default function AboutPageV2({ onNavigate }) {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="mt-14 text-center"
           >
-            <p className="font-body text-2xl md:text-3xl text-white font-light italic max-w-2xl mx-auto">
-              A world where safety is not a compromise — but a given.
-            </p>
+            
             <motion.div
               className="h-px bg-gradientcyan mx-auto mt-4"
               initial={{ width: 0 }}
@@ -833,7 +923,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 7 — CSR Initiatives
       ════════════════════════════════════════════════════════════ */}
-      <section id="csr" className="py-20 bg-surface border-y border-borderDefault">
+      <section id="csr" className="py-12 bg-surface border-y border-borderDefault">
         <div className="max-w-4xl mx-auto px-6">
           {/* Label */}
           <motion.p
@@ -872,7 +962,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 8 — Contact Form
       ════════════════════════════════════════════════════════════ */}
-      <section id="contact" className="relative py-24 md:py-32 overflow-hidden">
+      <section id="contact" className="relative py-16 md:py-24 overflow-hidden">
         {/* Background glows */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-0 w-[500px] h-[500px]"
@@ -894,9 +984,9 @@ export default function AboutPageV2({ onNavigate }) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
-            className="font-mono text-xs uppercase tracking-widest text-gradientcyan mb-6 text-center"
+            className="font-mono text-s uppercase tracking-widest text-gradientcyan mb-6 text-center"
           >
-            📞 REACH OUT
+            📞 REACH US OUT
           </motion.p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -914,16 +1004,15 @@ export default function AboutPageV2({ onNavigate }) {
               </p>
 
               <h2 className="font-display text-5xl md:text-7xl text-white leading-none mb-2">
-                IF THERE ARE<br />
-                PROBLEMS IN<br />
-                <span className="text-gradientcyan">YOUR AREA</span>
+                Mosquito Problems<br />
+                <span className="text-gradientcyan">IN YOUR AREA?</span>
               </h2>
 
-              <p className="font-body text-lg text-white/80 leading-loose mt-6 mb-2">
-                If there are any problems in your area of mosquitoes, contact us.
-              </p>
-              <p className="font-body text-lg text-white/80 leading-loose mb-8">
-                We'll help you and your loved ones be protected.
+              <h3 className="font-display text-4xl text-white leading-none mb-3">
+                We Can Help!
+              </h3>
+              <p className="font-body text-lg text-white/80 leading-normal  mb-4">
+                If you're facing mosquito issues in your area, we're here to provide effective, chemical-free solutions.
               </p>
 
               <p className="font-display text-5xl text-gradientpink mb-4">Call us Now.</p>

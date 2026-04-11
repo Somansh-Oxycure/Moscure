@@ -115,7 +115,7 @@ export default function Navbar({ onNavigate }) {
               whileTap={{ scale: 0.97 }}
               className="hidden md:inline-flex items-center gap-2 bg-gradientcyan text-background font-bold font-mono text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-gradientcyan/30 transition-shadow duration-300"
             >
-              BUY NOW
+              Browse
               <span className="text-base leading-none">→</span>
             </motion.button>
 
@@ -167,7 +167,7 @@ export default function Navbar({ onNavigate }) {
                   onClick={() => { onNavigate?.('product'); setMobileOpen(false) }}
                   className="w-full text-center bg-gradientcyan text-background font-bold font-mono text-sm px-6 py-3 rounded-full"
                 >
-                  BUY NOW →
+                  Discover Moscure →
                 </button>
               </li>
             </ul>

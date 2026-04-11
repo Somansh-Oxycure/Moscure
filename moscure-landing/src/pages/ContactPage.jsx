@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef } from "react";
 import {
   motion,
   AnimatePresence,
@@ -6,14 +6,24 @@ import {
   useScroll,
   useTransform,
   useSpring,
-} from 'framer-motion'
+} from "framer-motion";
 import {
-  Mail, Phone, MapPin, Clock, Send,
-  ChevronDown, CheckCircle2, User,
-  Smartphone, MessageSquare,
-  ArrowRight, Shield, Headphones, Trophy,
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Send,
+  ChevronDown,
+  CheckCircle2,
+  User,
+  Smartphone,
+  MessageSquare,
+  ArrowRight,
+  Shield,
+  Headphones,
+  Trophy,
   FileText,
-} from 'lucide-react'
+} from "lucide-react";
 
 // ─── Animation Variants ───────────────────────────────────────────────────────
 
@@ -24,133 +34,141 @@ const fadeUp = {
     y: 0,
     transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
   }),
-}
+};
 
 const wordVariants = {
   hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-}
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 const staggerWords = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.12 } },
-}
+};
 
 const staggerContainer = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1 } },
-}
+};
 
 const itemFade = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-}
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 // ─── Static Data ──────────────────────────────────────────────────────────────
 
 const CONTACT_INFO = [
   {
-    id: 'email',
+    id: "email",
     icon: Mail,
-    label: 'EMAIL US',
-    value: 'operations@moscure.com',
+    label: "EMAIL US",
+    value: "operations@moscure.com",
     sub: "We'll respond within 24 hours",
-    color: '#00F5D4',
-    href: 'mailto:operations@moscure.com',
+    color: "#00F5D4",
+    href: "mailto:operations@moscure.com",
   },
   {
-    id: 'phone',
+    id: "phone",
     icon: Phone,
-    label: 'CALL US',
-    value: '+91-8010111177',
-    sub: 'Mon–Sat, 9 AM – 6 PM IST',
-    color: '#FFD60A',
-    href: 'tel:+918010111177',
+    label: "CALL US",
+    value: "+91-8010111177",
+    sub: "Mon–Sat, 9 AM – 6 PM IST",
+    color: "#FFD60A",
+    href: "tel:+918010111177",
   },
   {
-    id: 'location',
+    id: "location",
     icon: MapPin,
-    label: 'VISIT US',
-    value: 'Gurugram, Haryana',
-    sub: 'India',
-    color: '#FF4D6D',
+    label: "VISIT US",
+    value: "Gurugram, Haryana",
+    sub: "India",
+    color: "#FF4D6D",
     href: null,
   },
   {
-    id: 'hours',
+    id: "hours",
     icon: Clock,
-    label: 'BUSINESS HOURS',
-    value: 'Mon–Fri: 9 AM – 6 PM',
-    sub: 'Sat: 10 AM – 4 PM  ·  Sun: Closed',
-    color: '#00F5D4',
+    label: "BUSINESS HOURS",
+    value: "Mon–Fri: 9 AM – 6 PM",
+    sub: "Sat: 10 AM – 4 PM  ·  Sun: Closed",
+    color: "#00F5D4",
     href: null,
   },
-]
+];
 
 const SUBJECT_OPTIONS = [
-  'Product Enquiry',
-  'Order & Delivery',
-  'Installation Help',
-  'Warranty & Returns',
-  'Bulk / B2B Orders',
-  'Partnership',
-  'Other',
-]
+  "Product Enquiry",
+  "Order & Delivery",
+  "Installation Help",
+  "Warranty & Returns",
+  "Bulk / B2B Orders",
+  "Partnership",
+  "Other",
+];
 
 const FAQ_DATA = [
   {
-    q: 'Is there a warranty on the product?',
+    q: "Is there a warranty on the product?",
     a: "Every Moscure device comes with a comprehensive 2-year manufacturer's warranty covering manufacturing defects and performance issues.",
-    accent: '#FFD60A',
+    accent: "#FFD60A",
   },
   {
-    q: 'How do I install Moscure?',
-    a: 'Installation takes less than 5 minutes. Simply place it in the desired location, plug it in, and it begins working immediately. No wires, no chemicals, no setup hassle.',
-    accent: '#FF4D6D',
+    q: "How do I install Moscure?",
+    a: "Installation takes less than 5 minutes. Simply place it in the desired location, plug it in, and it begins working immediately. No wires, no chemicals, no setup hassle.",
+    accent: "#FF4D6D",
   },
   {
-    q: 'Can I return the product if not satisfied?',
+    q: "Can I return the product if not satisfied?",
     a: "We offer a 30-day money-back guarantee, no questions asked. Simply contact us and we'll arrange a hassle-free pickup.",
-    accent: '#00F5D4',
+    accent: "#00F5D4",
   },
   {
-    q: 'Is Moscure safe for children and pets?',
-    a: '100%. Moscure uses only MLID and Phototaxis light to attract insects — zero chemicals, zero smoke, zero toxins. Specifically designed for homes with babies, toddlers, and pets.',
-    accent: '#FFD60A',
+    q: "Is Moscure safe for children and pets?",
+    a: "100%. Moscure uses only MLID and Phototaxis light to attract insects — zero chemicals, zero smoke, zero toxins. Specifically designed for homes with babies, toddlers, and pets.",
+    accent: "#FFD60A",
   },
   {
-    q: 'Can I use Moscure outdoors?',
-    a: 'Yes. The Moscure IPO model is IP-rated for outdoor use and covers up to 3230 sq ft, making it perfect for gardens, terraces, and open spaces.',
-    accent: '#FF4D6D',
+    q: "Can I use Moscure outdoors?",
+    a: "Yes. The Moscure IPO model is IP-rated for outdoor use and covers up to 3230 sq ft, making it perfect for gardens, terraces, and open spaces.",
+    accent: "#FF4D6D",
   },
   {
-    q: 'Does Moscure kill mosquitoes or just repel them?',
-    a: 'Moscure primarily repels mosquitoes, but some variants may also help reduce mosquito presence over time through continuous MLID and Phototaxis trapping.',
-    accent: '#00F5D4',
+    q: "Does Moscure kill mosquitoes or just repel them?",
+    a: "Moscure primarily repels mosquitoes, but some variants may also help reduce mosquito presence over time through continuous MLID and Phototaxis trapping.",
+    accent: "#00F5D4",
   },
   {
-    q: 'Does it work against all types of mosquitoes?',
-    a: 'Yes, Moscure is designed to be effective against common mosquito species, including those that cause dengue and malaria.',
-    accent: '#FFD60A',
+    q: "Does it work against all types of mosquitoes?",
+    a: "Yes, Moscure is designed to be effective against common mosquito species, including those that cause dengue and malaria.",
+    accent: "#FFD60A",
   },
   {
-    q: 'What makes Moscure different from other repellents?',
-    a: 'Moscure focuses on a balance of safety, effectiveness, and user comfort. With zero chemicals, 24/7 passive protection, and up to 3230 sq ft coverage, it is designed for everyday use — safe for kids, pets, and the whole family.',
-    accent: '#FF4D6D',
+    q: "What makes Moscure different from other repellents?",
+    a: "Moscure focuses on a balance of safety, effectiveness, and user comfort. With zero chemicals, 24/7 passive protection, and up to 3230 sq ft coverage, it is designed for everyday use — safe for kids, pets, and the whole family.",
+    accent: "#FF4D6D",
   },
-]
+];
 
 const HERO_STATS = [
-  { value: '< 24h',  label: 'Response Time',    color: '#00F5D4' },
-  { value: '6 Days', label: 'Support Available', color: '#FFD60A' },
-  { value: '2 Yrs',  label: 'Product Warranty',  color: '#FF4D6D' },
-]
+  { value: "< 24h", label: "Response Time", color: "#00F5D4" },
+  { value: "6 Days", label: "Support Available", color: "#FFD60A" },
+  { value: "2 Yrs", label: "Product Warranty", color: "#FF4D6D" },
+];
 
 const TRUST_ITEMS = [
-  { icon: Shield,     label: 'Chemical-Free Product',     color: '#00F5D4' },
-  { icon: Headphones, label: 'Dedicated Customer Support', color: '#FFD60A' },
-  { icon: Trophy,     label: '30-Day Money-Back Guarantee', color: '#FF4D6D' },
-]
+  { icon: Shield, label: "Chemical-Free Product", color: "#00F5D4" },
+  { icon: Headphones, label: "Dedicated Customer Support", color: "#FFD60A" },
+  { icon: Trophy, label: "30-Day Money-Back Guarantee", color: "#FF4D6D" },
+];
 
 // ─── FormField ────────────────────────────────────────────────────────────────
 
@@ -176,34 +194,37 @@ function FormField({ icon: Icon, label, error, children }) {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
 
 // ─── FaqItem ──────────────────────────────────────────────────────────────────
 
 function FaqItem({ item, index }) {
-  const [open, setOpen] = useState(false)
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
       ref={ref}
       initial="hidden"
-      animate={inView ? 'visible' : 'hidden'}
+      animate={inView ? "visible" : "hidden"}
       variants={itemFade}
       custom={index * 0.06}
       className="border border-borderDefault rounded-2xl overflow-hidden bg-surface"
     >
       <button
         type="button"
-        onClick={() => setOpen(v => !v)}
+        onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between px-6 py-5 text-left group hover:bg-surfaceHover transition-colors duration-200"
       >
         <div className="flex items-center gap-3">
           <span
             className="w-1.5 h-1.5 rounded-full shrink-0 mt-0.5"
-            style={{ backgroundColor: item.accent, boxShadow: `0 0 6px ${item.accent}80` }}
+            style={{
+              backgroundColor: item.accent,
+              boxShadow: `0 0 6px ${item.accent}80`,
+            }}
           />
           <span className="font-body text-[15px] text-textPrimary font-medium group-hover:text-white transition-colors">
             {item.q}
@@ -223,55 +244,63 @@ function FaqItem({ item, index }) {
           <motion.div
             key="answer"
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            style={{ overflow: 'hidden' }}
+            style={{ overflow: "hidden" }}
           >
             <div className="px-6 pb-5">
               <div
                 className="border-l-2 pl-4 ml-4"
                 style={{ borderColor: item.accent }}
               >
-                <p className="font-body text-sm text-textMuted leading-relaxed">{item.a}</p>
+                <p className="font-body text-sm text-textMuted leading-relaxed">
+                  {item.a}
+                </p>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.div>
-  )
+  );
 }
 
 // ─── BottomCtaSection ─────────────────────────────────────────────────────────
 
 function BottomCtaSection({ onNavigate }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="contact-cta" className="py-24 relative overflow-hidden noise-overlay">
+    <section
+      id="contact-cta"
+      className="py-24 relative overflow-hidden noise-overlay"
+    >
       {/* Background glow blend */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,245,212,0.05) 0%, rgba(255,77,109,0.03) 50%, transparent 80%)',
+            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,245,212,0.05) 0%, rgba(255,77,109,0.03) 50%, transparent 80%)",
         }}
       />
       {/* Large decorative question mark */}
       <div
         className="absolute right-8 top-1/2 -translate-y-1/2 font-display select-none pointer-events-none leading-none"
-        style={{ fontSize: '18rem', color: 'rgba(255,255,255,0.018)' }}
+        style={{ fontSize: "18rem", color: "rgba(255,255,255,0.018)" }}
       >
         ?
       </div>
 
-      <div ref={ref} className="max-w-4xl mx-auto px-6 md:px-12 text-center relative z-10">
+      <div
+        ref={ref}
+        className="max-w-4xl mx-auto px-6 md:px-12 text-center relative z-10"
+      >
         <motion.div
           variants={fadeUp}
           initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          animate={inView ? "visible" : "hidden"}
           custom={0}
           className="mb-8"
         >
@@ -284,14 +313,14 @@ function BottomCtaSection({ onNavigate }) {
           <motion.div
             variants={staggerWords}
             initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
+            animate={inView ? "visible" : "hidden"}
           >
-            {["CAN'T FIND", 'YOUR ANSWER?'].map((word, i) => (
+            {["CAN'T FIND", "YOUR ANSWER?"].map((word, i) => (
               <div key={word} className="overflow-hidden">
                 <motion.span
                   variants={wordVariants}
                   className={`block font-display leading-none tracking-tight text-5xl md:text-7xl ${
-                    i === 1 ? 'gradient-text-cyan-pink' : 'text-textPrimary'
+                    i === 1 ? "gradient-text-cyan-pink" : "text-textPrimary"
                   }`}
                 >
                   {word}
@@ -304,32 +333,37 @@ function BottomCtaSection({ onNavigate }) {
         <motion.p
           variants={fadeUp}
           initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          animate={inView ? "visible" : "hidden"}
           custom={0.4}
           className="mt-6 font-body text-base text-textMuted max-w-lg mx-auto leading-relaxed"
         >
-          Our team personally handles every inquiry.{' '}
+          Our team personally handles every inquiry.{" "}
           <br className="hidden md:block" />
-          No bots. No scripts. Just people who care about your family&apos;s safety.
+          No bots. No scripts. Just people who care about your family&apos;s
+          safety.
         </motion.p>
 
         {/* Buttons */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          animate={inView ? "visible" : "hidden"}
           className="mt-10 flex flex-wrap justify-center gap-4"
         >
           <motion.button
             variants={itemFade}
             type="button"
-            onClick={() => document.getElementById('contact-main')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() =>
+              document
+                .getElementById("contact-main")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-mono text-sm uppercase tracking-widest text-background font-bold transition-all duration-300"
             style={{
-              background: 'linear-gradient(135deg, #00F5D4, #FFD60A)',
-              boxShadow: '0 0 30px rgba(0,245,212,0.3)',
+              background: "linear-gradient(135deg, #00F5D4, #FFD60A)",
+              boxShadow: "0 0 30px rgba(0,245,212,0.3)",
             }}
           >
             <Mail size={16} />
@@ -339,8 +373,11 @@ function BottomCtaSection({ onNavigate }) {
           <motion.button
             variants={itemFade}
             type="button"
-            onClick={() => onNavigate?.('product')}
-            whileHover={{ scale: 1.04, backgroundColor: 'rgba(255,255,255,0.06)' }}
+            onClick={() => onNavigate?.("product")}
+            whileHover={{
+              scale: 1.04,
+              backgroundColor: "rgba(255,255,255,0.06)",
+            }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-mono text-sm uppercase tracking-widest text-white border border-white/20 bg-transparent transition-all duration-300"
           >
@@ -352,7 +389,7 @@ function BottomCtaSection({ onNavigate }) {
         <motion.div
           variants={fadeUp}
           initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          animate={inView ? "visible" : "hidden"}
           custom={0.6}
           className="mt-8"
         >
@@ -366,101 +403,163 @@ function BottomCtaSection({ onNavigate }) {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── ContactPage ──────────────────────────────────────────────────────────────
 
 export default function ContactPage({ onNavigate }) {
   const [formData, setFormData] = useState({
-    name: '', email: '', phone: '', city: '', subject: '', message: '',
-  })
-  const [errors, setErrors]     = useState({})
-  const [submitted, setSubmitted] = useState(false)
-  const [sending, setSending]   = useState(false)
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
+    subject: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  const heroRef  = useRef(null)
-  const heroInView = useInView(heroRef, { once: true, margin: '-100px' })
+  const heroRef = useRef(null);
+  const heroInView = useInView(heroRef, { once: true, margin: "-100px" });
 
-  const formRef  = useRef(null)
-  const formInView = useInView(formRef, { once: true, margin: '-80px' })
+  const formRef = useRef(null);
+  const formInView = useInView(formRef, { once: true, margin: "-80px" });
 
-  const infoRef  = useRef(null)
-  const infoInView = useInView(infoRef, { once: true, margin: '-80px' })
+  const infoRef = useRef(null);
+  const infoInView = useInView(infoRef, { once: true, margin: "-80px" });
 
-  const faqRef   = useRef(null)
-  const faqInView  = useInView(faqRef, { once: true, margin: '-80px' })
+  const faqRef = useRef(null);
+  const faqInView = useInView(faqRef, { once: true, margin: "-80px" });
 
   // ── Scroll-sync: right column rises gently to meet the left ─────────────
-  const sectionRef = useRef(null)
+  const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start 0.85', 'end end'],
-  })
-  const rawInfoY = useTransform(scrollYProgress, [0, 0.35], [48, 0])
-  const infoY    = useSpring(rawInfoY, { stiffness: 60, damping: 18, restDelta: 0.001 })
+    offset: ["start 0.85", "end end"],
+  });
+  const rawInfoY = useTransform(scrollYProgress, [0, 0.35], [48, 0]);
+  const infoY = useSpring(rawInfoY, {
+    stiffness: 60,
+    damping: 18,
+    restDelta: 0.001,
+  });
 
   // ── Validation ──────────────────────────────────────────────────────────────
   const validate = () => {
-    const e = {}
-    if (!formData.name.trim()) e.name = 'Name is required'
-    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      e.email = 'Valid email address required'
+    const e = {};
+    if (!formData.name.trim()) e.name = "Name is required";
+    if (
+      !formData.email.trim() ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+    ) {
+      e.email = "Valid email address required";
     }
-    if (!formData.subject) e.subject = 'Please select a subject'
+    if (!formData.subject) e.subject = "Please select a subject";
     if (!formData.message.trim() || formData.message.trim().length < 10) {
-      e.message = 'Message must be at least 10 characters'
+      e.message = "Message must be at least 10 characters";
     }
-    return e
-  }
+    return e;
+  };
 
   const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => {
-        const next = { ...prev }
-        delete next[field]
-        return next
-      })
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
     }
-  }
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const validationErrors = validate()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-      return
+      setErrors(validationErrors);
+      return;
     }
-    setSending(true)
-    const subject = encodeURIComponent(
-      `[Moscure Inquiry] ${formData.subject} — ${formData.name}`
-    )
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\n` +
-      `Email: ${formData.email}\n` +
-      `Phone: ${formData.phone || 'Not provided'}\n` +
-      `City: ${formData.city || 'Not provided'}\n` +
-      `Subject: ${formData.subject}\n\n` +
-      `Message:\n${formData.message}`
-    )
-    window.location.href = `mailto:webdeveloper@oxycure.in?subject=${subject}&body=${body}`
-    setTimeout(() => {
-      setSending(false)
-      setSubmitted(true)
-    }, 800)
-  }
+
+    setSending(true);
+
+    try {
+      const formattedMessage = `🚀 NEW MOSCURE INQUIRY
+
+━━━━━━━━━━━━━━━━━━━━━━
+📅 Received: ${new Date().toLocaleString("en-IN", {
+  timeZone: "Asia/Kolkata",
+  dateStyle: "medium",
+  timeStyle: "short"
+})}
+━━━━━━━━━━━━━━━━━━━━━━
+
+👤 CUSTOMER DETAILS
+
+• Name: ${formData.name}
+• Email: ${formData.email}
+• Phone: ${formData.phone || "Not provided"}
+• City: ${formData.city || "Not provided"}
+
+━━━━━━━━━━━━━━━━━━━━━━
+📌 INQUIRY DETAILS
+
+• Subject: ${formData.subject}
+━━━━━━━━━━━━━━━━━━━━━━
+📝 MESSAGE
+
+${formData.message}
+
+━━━━━━━━━━━━━━━━━━━━━━
+⚡ ACTION REQUIRED
+Follow up with this lead as soon as possible.
+
+━━━━━━━━━━━━━━━━━━━━━━
+Source: Moscure Website Contact Form
+      `;
+      const res = await fetch("https://formspree.io/f/mqegrprd", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          message: formattedMessage,
+        }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        setErrors({});
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          city: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        alert("Failed to send message.");
+      }
+    } catch (error) {
+      alert("Something went wrong.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   const inputClass = (field) =>
     `w-full bg-[#1C1C1C] border rounded-xl px-4 py-3.5 font-body text-sm text-white placeholder:text-white/30 focus:outline-none transition-all duration-200 contact-input ${
       errors[field]
-        ? 'border-gradientpink/70 focus:border-gradientpink focus:ring-2 focus:ring-gradientpink/15'
-        : 'border-white/10 hover:border-white/20 focus:border-gradientcyan/70 focus:ring-2 focus:ring-gradientcyan/10'
-    }`
+        ? "border-gradientpink/70 focus:border-gradientpink focus:ring-2 focus:ring-gradientpink/15"
+        : "border-white/10 hover:border-white/20 focus:border-gradientcyan/70 focus:ring-2 focus:ring-gradientcyan/10"
+    }`;
 
   return (
     <div className="bg-background text-textPrimary min-h-screen">
-
       {/* ════════════════════════════════════════════════════════════════════ */}
       {/* SECTION 1 — HERO                                                    */}
       {/* ════════════════════════════════════════════════════════════════════ */}
@@ -474,7 +573,7 @@ export default function ContactPage({ onNavigate }) {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,245,212,0.07) 0%, transparent 70%)',
+              "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,245,212,0.07) 0%, transparent 70%)",
           }}
         />
         {/* Diagonal hatching */}
@@ -482,7 +581,7 @@ export default function ContactPage({ onNavigate }) {
           className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage:
-              'repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255,255,255,0.012) 30px, rgba(255,255,255,0.012) 31px)',
+              "repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255,255,255,0.012) 30px, rgba(255,255,255,0.012) 31px)",
           }}
         />
 
@@ -505,14 +604,14 @@ export default function ContactPage({ onNavigate }) {
             <motion.div
               variants={staggerWords}
               initial="hidden"
-              animate={heroInView ? 'visible' : 'hidden'}
+              animate={heroInView ? "visible" : "hidden"}
             >
-              {["LET'S", 'CONNECT'].map((word, i) => (
+              {["LET'S", "CONNECT"].map((word, i) => (
                 <div key={word} className="overflow-hidden leading-none">
                   <motion.span
                     variants={wordVariants}
                     className={`block font-display text-8xl md:text-[10rem] lg:text-[11rem] tracking-tight ${
-                      i === 1 ? 'gradient-text-yellow-cyan' : 'text-textPrimary'
+                      i === 1 ? "gradient-text-yellow-cyan" : "text-textPrimary"
                     }`}
                   >
                     {word}
@@ -526,7 +625,7 @@ export default function ContactPage({ onNavigate }) {
           <motion.p
             variants={fadeUp}
             initial="hidden"
-            animate={heroInView ? 'visible' : 'hidden'}
+            animate={heroInView ? "visible" : "hidden"}
             custom={0.4}
             className="mt-6 text-center font-body text-base md:text-lg text-textMuted max-w-xl mx-auto leading-relaxed"
           >
@@ -538,7 +637,7 @@ export default function ContactPage({ onNavigate }) {
           <motion.div
             variants={staggerContainer}
             initial="hidden"
-            animate={heroInView ? 'visible' : 'hidden'}
+            animate={heroInView ? "visible" : "hidden"}
             className="mt-12 flex flex-wrap justify-center gap-4"
           >
             {HERO_STATS.map((stat, i) => (
@@ -572,22 +671,27 @@ export default function ContactPage({ onNavigate }) {
         {/* Ambient side glows */}
         <div
           className="absolute left-0 top-1/3 w-80 h-80 pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(0,245,212,0.04) 0%, transparent 70%)' }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(0,245,212,0.04) 0%, transparent 70%)",
+          }}
         />
         <div
           className="absolute right-0 bottom-1/3 w-80 h-80 pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(255,77,109,0.04) 0%, transparent 70%)' }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255,77,109,0.04) 0%, transparent 70%)",
+          }}
         />
 
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 xl:gap-14 items-start">
-
             {/* ── FORM — sticky so it stays pinned while right column scrolls ── */}
             <motion.div
               ref={formRef}
               variants={fadeUp}
               initial="hidden"
-              animate={formInView ? 'visible' : 'hidden'}
+              animate={formInView ? "visible" : "hidden"}
               custom={0}
               className="lg:sticky lg:top-28"
             >
@@ -599,11 +703,12 @@ export default function ContactPage({ onNavigate }) {
                       📋 Send a Message
                     </span>
                     <h2 className="mt-2 font-display text-4xl md:text-5xl text-white leading-none">
-                      WRITE TO{' '}
+                      WRITE TO{" "}
                       <span className="gradient-text-cyan-pink">US</span>
                     </h2>
                     <p className="mt-2 font-body text-sm text-textMuted">
-                      Fill in your details and we&apos;ll get back to you within 24 hours.
+                      Fill in your details and we&apos;ll get back to you within
+                      24 hours.
                     </p>
                   </div>
 
@@ -621,18 +726,28 @@ export default function ContactPage({ onNavigate }) {
                         <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
-                          transition={{ type: 'spring', stiffness: 180, damping: 14, delay: 0.1 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 180,
+                            damping: 14,
+                            delay: 0.1,
+                          }}
                           className="w-20 h-20 rounded-full flex items-center justify-center"
                           style={{
-                            background: 'rgba(0,245,212,0.12)',
-                            border: '2px solid rgba(0,245,212,0.4)',
-                            boxShadow: '0 0 40px rgba(0,245,212,0.2)',
+                            background: "rgba(0,245,212,0.12)",
+                            border: "2px solid rgba(0,245,212,0.4)",
+                            boxShadow: "0 0 40px rgba(0,245,212,0.2)",
                           }}
                         >
-                          <CheckCircle2 size={36} className="text-gradientcyan" />
+                          <CheckCircle2
+                            size={36}
+                            className="text-gradientcyan"
+                          />
                         </motion.div>
 
-                        <h3 className="font-display text-3xl text-white mt-2">MESSAGE SENT!</h3>
+                        <h3 className="font-display text-3xl text-white mt-2">
+                          MESSAGE SENT!
+                        </h3>
                         <p className="font-body text-sm text-textMuted max-w-sm leading-relaxed">
                           Thank you for reaching out. Our team will be in touch
                           within 24 hours.
@@ -640,8 +755,15 @@ export default function ContactPage({ onNavigate }) {
                         <button
                           type="button"
                           onClick={() => {
-                            setSubmitted(false)
-                            setFormData({ name: '', email: '', phone: '', city: '', subject: '', message: '' })
+                            setSubmitted(false);
+                            setFormData({
+                              name: "",
+                              email: "",
+                              phone: "",
+                              city: "",
+                              subject: "",
+                              message: "",
+                            });
                           }}
                           className="mt-4 font-mono text-xs uppercase tracking-widest text-textMuted hover:text-white border border-borderDefault hover:border-white/30 rounded-full px-6 py-2.5 transition-colors duration-200"
                         >
@@ -661,61 +783,95 @@ export default function ContactPage({ onNavigate }) {
                       >
                         {/* Row 1: Name + Email */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                          <FormField icon={User} label="Full Name *" error={errors.name}>
+                          <FormField
+                            icon={User}
+                            label="Full Name *"
+                            error={errors.name}
+                          >
                             <input
                               type="text"
                               placeholder="Your full name"
                               value={formData.name}
-                              onChange={e => handleChange('name', e.target.value)}
-                              className={inputClass('name')}
+                              onChange={(e) =>
+                                handleChange("name", e.target.value)
+                              }
+                              className={inputClass("name")}
                             />
                           </FormField>
 
-                          <FormField icon={Mail} label="Email Address *" error={errors.email}>
+                          <FormField
+                            icon={Mail}
+                            label="Email Address *"
+                            error={errors.email}
+                          >
                             <input
                               type="email"
                               placeholder="you@example.com"
                               value={formData.email}
-                              onChange={e => handleChange('email', e.target.value)}
-                              className={inputClass('email')}
+                              onChange={(e) =>
+                                handleChange("email", e.target.value)
+                              }
+                              className={inputClass("email")}
                             />
                           </FormField>
                         </div>
 
                         {/* Row 2: Phone + City */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                          <FormField icon={Smartphone} label="Phone Number" error={errors.phone}>
+                          <FormField
+                            icon={Smartphone}
+                            label="Phone Number"
+                            error={errors.phone}
+                          >
                             <input
                               type="tel"
                               placeholder="+91 XXXXX XXXXX"
                               value={formData.phone}
-                              onChange={e => handleChange('phone', e.target.value)}
-                              className={inputClass('phone')}
+                              onChange={(e) =>
+                                handleChange("phone", e.target.value)
+                              }
+                              className={inputClass("phone")}
                             />
                           </FormField>
 
-                          <FormField icon={MapPin} label="City" error={errors.city}>
+                          <FormField
+                            icon={MapPin}
+                            label="City"
+                            error={errors.city}
+                          >
                             <input
                               type="text"
                               placeholder="Your city"
                               value={formData.city}
-                              onChange={e => handleChange('city', e.target.value)}
-                              className={inputClass('city')}
+                              onChange={(e) =>
+                                handleChange("city", e.target.value)
+                              }
+                              className={inputClass("city")}
                             />
                           </FormField>
                         </div>
 
                         {/* Subject */}
-                        <FormField icon={FileText} label="Subject *" error={errors.subject}>
+                        <FormField
+                          icon={FileText}
+                          label="Subject *"
+                          error={errors.subject}
+                        >
                           <div className="relative">
                             <select
                               value={formData.subject}
-                              onChange={e => handleChange('subject', e.target.value)}
-                              className={`${inputClass('subject')} appearance-none pr-10 contact-select`}
+                              onChange={(e) =>
+                                handleChange("subject", e.target.value)
+                              }
+                              className={`${inputClass("subject")} appearance-none pr-10 contact-select`}
                             >
-                              <option value="" disabled>Select a subject...</option>
-                              {SUBJECT_OPTIONS.map(opt => (
-                                <option key={opt} value={opt}>{opt}</option>
+                              <option value="" disabled>
+                                Select a subject...
+                              </option>
+                              {SUBJECT_OPTIONS.map((opt) => (
+                                <option key={opt} value={opt}>
+                                  {opt}
+                                </option>
                               ))}
                             </select>
                             <ChevronDown
@@ -726,13 +882,19 @@ export default function ContactPage({ onNavigate }) {
                         </FormField>
 
                         {/* Message */}
-                        <FormField icon={MessageSquare} label="Message *" error={errors.message}>
+                        <FormField
+                          icon={MessageSquare}
+                          label="Message *"
+                          error={errors.message}
+                        >
                           <textarea
                             rows={5}
                             placeholder="Tell us how we can help you..."
                             value={formData.message}
-                            onChange={e => handleChange('message', e.target.value)}
-                            className={`${inputClass('message')} resize-none`}
+                            onChange={(e) =>
+                              handleChange("message", e.target.value)
+                            }
+                            className={`${inputClass("message")} resize-none`}
                           />
                           <p className="text-right font-mono text-[10px] text-white/30 -mt-1">
                             {formData.message.length} chars
@@ -748,16 +910,22 @@ export default function ContactPage({ onNavigate }) {
                           className="mt-2 w-full flex items-center justify-center gap-3 py-4 rounded-full font-mono text-sm uppercase tracking-widest text-background font-bold transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                           style={{
                             background: sending
-                              ? 'rgba(0,245,212,0.35)'
-                              : 'linear-gradient(135deg, #00F5D4, #FFD60A)',
-                            boxShadow: sending ? 'none' : '0 0 30px rgba(0,245,212,0.3)',
+                              ? "rgba(0,245,212,0.35)"
+                              : "linear-gradient(135deg, #00F5D4, #FFD60A)",
+                            boxShadow: sending
+                              ? "none"
+                              : "0 0 30px rgba(0,245,212,0.3)",
                           }}
                         >
                           {sending ? (
                             <>
                               <motion.div
                                 animate={{ rotate: 360 }}
-                                transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+                                transition={{
+                                  repeat: Infinity,
+                                  duration: 0.8,
+                                  ease: "linear",
+                                }}
                                 className="w-4 h-4 border-2 border-background/40 border-t-background rounded-full"
                               />
                               Sending...
@@ -791,14 +959,14 @@ export default function ContactPage({ onNavigate }) {
               <motion.div
                 variants={fadeUp}
                 initial="hidden"
-                animate={infoInView ? 'visible' : 'hidden'}
+                animate={infoInView ? "visible" : "hidden"}
                 custom={0}
               >
                 <span className="font-mono text-[10px] uppercase tracking-widest text-gradientcyan">
                   📍 Our Details
                 </span>
                 <h2 className="mt-2 font-display text-4xl md:text-5xl text-white leading-none">
-                  FIND US{' '}
+                  FIND US{" "}
                   <span className="gradient-text-pink-yellow">HERE</span>
                 </h2>
                 <p className="mt-2 font-body text-sm text-textMuted">
@@ -810,11 +978,11 @@ export default function ContactPage({ onNavigate }) {
               <motion.div
                 variants={staggerContainer}
                 initial="hidden"
-                animate={infoInView ? 'visible' : 'hidden'}
+                animate={infoInView ? "visible" : "hidden"}
                 className="flex flex-col gap-3"
               >
                 {CONTACT_INFO.map((item, i) => {
-                  const Icon = item.icon
+                  const Icon = item.icon;
                   const inner = (
                     <motion.div
                       key={item.id}
@@ -823,7 +991,7 @@ export default function ContactPage({ onNavigate }) {
                       whileHover={{ x: 4 }}
                       transition={{ duration: 0.2 }}
                       className="bg-surface border border-borderDefault rounded-2xl p-4 flex items-center gap-4 group hover:border-white/15 transition-colors duration-200"
-                      style={{ cursor: item.href ? 'pointer' : 'default' }}
+                      style={{ cursor: item.href ? "pointer" : "default" }}
                     >
                       {/* Icon badge */}
                       <div
@@ -839,8 +1007,10 @@ export default function ContactPage({ onNavigate }) {
 
                       {/* Text — min-w-0 prevents flex overflow */}
                       <div className="min-w-0 flex-1">
-                        <p className="font-mono text-[9px] uppercase tracking-widest mb-0.5"
-                          style={{ color: item.color, opacity: 0.75 }}>
+                        <p
+                          className="font-mono text-[9px] uppercase tracking-widest mb-0.5"
+                          style={{ color: item.color, opacity: 0.75 }}
+                        >
                           {item.label}
                         </p>
                         <p className="font-body text-[13px] font-semibold text-white leading-tight break-words">
@@ -859,7 +1029,7 @@ export default function ContactPage({ onNavigate }) {
                         />
                       )}
                     </motion.div>
-                  )
+                  );
 
                   return item.href ? (
                     <a key={item.id} href={item.href} className="block">
@@ -867,7 +1037,7 @@ export default function ContactPage({ onNavigate }) {
                     </a>
                   ) : (
                     <div key={item.id}>{inner}</div>
-                  )
+                  );
                 })}
               </motion.div>
 
@@ -875,7 +1045,7 @@ export default function ContactPage({ onNavigate }) {
               <motion.div
                 variants={fadeUp}
                 initial="hidden"
-                animate={infoInView ? 'visible' : 'hidden'}
+                animate={infoInView ? "visible" : "hidden"}
                 custom={0.5}
                 className="animated-border"
               >
@@ -885,9 +1055,12 @@ export default function ContactPage({ onNavigate }) {
                   </p>
                   <div className="flex flex-col gap-3">
                     {TRUST_ITEMS.map((trust, i) => {
-                      const Icon = trust.icon
+                      const Icon = trust.icon;
                       return (
-                        <div key={trust.label} className="flex items-center gap-3 group">
+                        <div
+                          key={trust.label}
+                          className="flex items-center gap-3 group"
+                        >
                           <div
                             className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105"
                             style={{
@@ -901,13 +1074,12 @@ export default function ContactPage({ onNavigate }) {
                             {trust.label}
                           </span>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 </div>
               </motion.div>
             </motion.div>
-
           </div>
         </div>
       </section>
@@ -921,16 +1093,19 @@ export default function ContactPage({ onNavigate }) {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,214,10,0.04) 0%, transparent 70%)',
+              "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,214,10,0.04) 0%, transparent 70%)",
           }}
         />
 
-        <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10" ref={faqRef}>
+        <div
+          className="max-w-4xl mx-auto px-6 md:px-12 relative z-10"
+          ref={faqRef}
+        >
           {/* Section heading */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
-            animate={faqInView ? 'visible' : 'hidden'}
+            animate={faqInView ? "visible" : "hidden"}
             custom={0}
             className="text-center mb-14"
           >
@@ -942,14 +1117,16 @@ export default function ContactPage({ onNavigate }) {
               <motion.div
                 variants={staggerWords}
                 initial="hidden"
-                animate={faqInView ? 'visible' : 'hidden'}
+                animate={faqInView ? "visible" : "hidden"}
               >
-                {['FREQUENTLY', 'ASKED'].map((word, i) => (
+                {["FREQUENTLY", "ASKED"].map((word, i) => (
                   <div key={word} className="overflow-hidden">
                     <motion.span
                       variants={wordVariants}
                       className={`block font-display leading-none tracking-tight text-6xl md:text-8xl ${
-                        i === 1 ? 'gradient-text-pink-yellow' : 'text-textPrimary'
+                        i === 1
+                          ? "gradient-text-pink-yellow"
+                          : "text-textPrimary"
                       }`}
                     >
                       {word}
@@ -962,7 +1139,7 @@ export default function ContactPage({ onNavigate }) {
             <motion.p
               variants={fadeUp}
               initial="hidden"
-              animate={faqInView ? 'visible' : 'hidden'}
+              animate={faqInView ? "visible" : "hidden"}
               custom={0.3}
               className="mt-4 font-body text-sm text-textMuted max-w-md mx-auto leading-relaxed"
             >
@@ -984,5 +1161,5 @@ export default function ContactPage({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════════════ */}
       <BottomCtaSection onNavigate={onNavigate} />
     </div>
-  )
+  );
 }

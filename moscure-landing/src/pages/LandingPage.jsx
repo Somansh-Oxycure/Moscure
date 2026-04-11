@@ -90,11 +90,11 @@ function HeroSection({ onNavigate }) {
             >
               <motion.h1
                 className="font-display leading-none tracking-wide"
-                style={{ fontSize: 'clamp(64px, 9vw, 120px)' }}
+                
               >
-                <motion.span variants={wordVariants} className="block text-white heading-glow">CATCH</motion.span>
-                <motion.span variants={wordVariants} className="block gradient-text-full italic">EVERY</motion.span>
-                <motion.span variants={wordVariants} className="block text-white heading-glow">MOSQUITO</motion.span>
+                <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block text-white heading-glow">ELIMINATE</motion.span>
+                <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block gradient-text-full italic">MOSQUITO</motion.span>
+                <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block text-gradientpink heading-glow">DANGER</motion.span>
               </motion.h1>
             </motion.div>
 
@@ -103,13 +103,13 @@ function HeroSection({ onNavigate }) {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="mt-6 text-textMuted font-body text-base md:text-lg leading-relaxed max-w-md"
+              className=" text-textMuted font-body text-base md:text-lg leading-relaxed max-w-md"
             >
-              The ultimate defense against Dengue, Malaria and Chikungunya.{' '}
-              <span className="text-white font-medium">Moscure</span> is the
-              scientifically proven, chemical-free solution trusted by thousands
-              of Indian families.
+              <span className="text-white font-medium">Moscure</span> 
+              {' '}eliminates mosquito threats everywhere—scientifically proven and certified indoor and outdoor protection for <span className="text-white font-body">Homes, Offces</span> {' '} and <span className="text-white font-body">Public spaces</span> 
             </motion.p>
+              
+              
 
             <motion.div
               custom={0.9}
@@ -377,7 +377,7 @@ function DiseasesSection({ onNavigate }) {
             className="max-w-lg text-textMuted font-body text-sm leading-relaxed"
           >
             Mosquitoes are the{' '}
-            <span className="text-gradientpink font-semibold">deadliest animals on Earth</span>. In
+            <span className="text-gradientpink font-semibold">Deadliest Animals on Earth</span>. In
             India, the threat is real and growing. Don&apos;t be a statistic.
           </motion.p>
         </div>
@@ -762,8 +762,8 @@ export default function LandingPage({ onNavigate }) {
       <HeroSection onNavigate={onNavigate} />
       <BrandValuesTicker />
       <DiseasesSection onNavigate={onNavigate} />
-      <ComparisonSection onNavigate={onNavigate} />
       <TrustedByMarquee />
+      <ComparisonSection onNavigate={onNavigate} />
       <FeaturesSection onNavigate={onNavigate} />
       <CTASection onNavigate={onNavigate} />
     </main>
