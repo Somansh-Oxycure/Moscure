@@ -26,7 +26,7 @@ const PRODUCT = {
   id:          'ipi-indoor',
   sku:         'MOSCURE-IPI-001',
   name:        'IPI Indoor Mosquito & Insect Trap',
-  fullTitle:   'IPI Indoor Mosquito & Insect Trap 365nm UV LED | Silent Electric Bug Zapper | Covers 375 sq ft | Odor-Free, Chemical-Free | Safe for Kids & Pets | 1.5W Compact Fly Killer | 280g Lightweight',
+  fullTitle:   'IPI Indoor Mosquito & Insect Trap 365nm UV LED | Silent Electric Bug Zapper | Covers 400 sq ft | Odor-Free, Chemical-Free | Safe for Kids & Pets | 1.5W Compact Fly Killer | 280g Lightweight',
   brand:       'Moscure',
   originalPrice: 3299,
   price:       2199,
@@ -70,8 +70,8 @@ const PRODUCT_BULLETS = [
   },
   {
     icon: Maximize2,
-    highlight: 'Indoor Coverage up to 375 sq ft',
-    text: 'Covers up to 35 m² (375 sq ft), making it perfect for bedrooms, living rooms, nurseries, kitchens & office spaces.',
+    highlight: 'Indoor Coverage up to 400 sq ft',
+    text: 'Covers up to 40 m² (400 sq ft), making it perfect for bedrooms, living rooms, nurseries, kitchens & office spaces.',
   },
   {
     icon: Zap,
@@ -104,7 +104,7 @@ const TRUST_BADGES = [
 
 const DETAIL_IMAGES = [
   { id: 1, alt: 'How Moscure IPI UV LED Trap Works — 365nm Phototaxis Mechanism',                    src: decp1 },
-  { id: 2, alt: 'Moscure IPI Coverage Area — 375 sq ft Indoor Protection',                           src: decp2 },
+  { id: 2, alt: 'Moscure IPI Coverage Area — 400 sq ft Indoor Protection',                           src: decp2 },
   { id: 3, alt: 'Moscure IPI Chemical-Free vs Traditional Mosquito Coils Comparison',           src: decp3 },
   { id: 4, alt: 'Moscure IPI Easy Maintenance — Clean Collection Tray',                                src: decp4 },
   { id: 5, alt: 'Moscure IPI Indoor Trap in use — Real Results from Indian Homes',                                 src: decp5 },
@@ -147,7 +147,7 @@ const RATING_BREAKDOWN = [
 
 const TICKER_ITEMS = [
   '✓ 365nm UV LED Technology',
-  '✓ Covers 375 Sq Ft',
+  '✓ Covers 400 Sq Ft',
   '✓ 280g Lightweight',
   '✓ 1.5W Energy Efficient',
   '✓ Catches Dengue & Malaria Vectors',
@@ -163,7 +163,7 @@ const SCHEMA_JSON = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Moscure IPI Indoor Mosquito & Insect Trap',
-  description: '365nm UV LED silent mosquito trap. Covers 375 sq ft. Chemical-free, safe for kids & pets.',
+  description: '365nm UV LED silent mosquito trap. Covers 400 sq ft. Chemical-free, safe for kids & pets.',
   brand: { '@type': 'Brand', name: 'Moscure' },
   sku: 'MOSCURE-IPI-001',
   mpn: 'IPI-001',
@@ -540,10 +540,10 @@ export default function IPIIndoorProductPage({ onNavigate }) {
       el.setAttribute('content', content)
     }
 
-    setMeta('description', 'Moscure IPI Indoor Mosquito & Insect Trap uses 365nm UV LED technology to silently attract and trap mosquitoes, flies & gnats. Covers 375 sq ft. 100% chemical-free, safe for kids & pets. Energy efficient 1.5W. Buy now at ₹3,299.')
-    setMeta('keywords', 'indoor mosquito trap India, UV mosquito killer, chemical free bug zapper, dengue malaria mosquito trap, silent mosquito catcher, mosquito trap kids safe, Moscure IPI, mosquito trap 375 sq ft, electric insect trap India')
+    setMeta('description', 'Moscure IPI Indoor Mosquito & Insect Trap uses 365nm UV LED technology to silently attract and trap mosquitoes, flies & gnats. Covers 400 sq ft. 100% chemical-free, safe for kids & pets. Energy efficient 1.5W. Buy now at ₹3,299.')
+    setMeta('keywords', 'indoor mosquito trap India, UV mosquito killer, chemical free bug zapper, dengue malaria mosquito trap, silent mosquito catcher, mosquito trap kids safe, Moscure IPI, mosquito trap 400 sq ft, electric insect trap India')
     setMeta('og:title', 'Moscure IPI Indoor Mosquito Trap — ₹3,299', true)
-    setMeta('og:description', 'Silent, chemical-free UV LED mosquito trap. Safe for kids & pets. Covers 375 sq ft.', true)
+    setMeta('og:description', 'Silent, chemical-free UV LED mosquito trap. Safe for kids & pets. Covers 400 sq ft.', true)
     setMeta('og:url', 'https://moscure.in/products/moscure-ipi-indoor-mosquito-trap', true)
     setMeta('og:type', 'product', true)
 
@@ -766,7 +766,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
               </motion.button>
 
               <motion.a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPI — Chemical-Free Indoor Mosquito Trap. UV LED, 375 sq ft coverage. ₹3,299')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipi-indoor-mosquito-trap')}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPI — Chemical-Free Indoor Mosquito Trap. UV LED, 400 sq ft coverage. ₹3,299')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipi-indoor-mosquito-trap')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05, borderColor: '#00F5D4' }}

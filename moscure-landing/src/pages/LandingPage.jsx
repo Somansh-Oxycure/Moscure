@@ -231,7 +231,7 @@ function HeroSection({ onNavigate }) {
             >
               <div className="font-mono text-[10px] text-gradientcyan/70 uppercase tracking-widest mb-1">Coverage up to</div>
               <div className="flex items-baseline gap-1">
-                <span className="font-display text-4xl text-gradientcyan leading-none">3230</span>
+                <span className="font-display text-4xl text-gradientcyan leading-none">3500</span>
                 <span className="font-mono text-xs text-textMuted uppercase tracking-wider">sq.ft</span>
               </div>
             </motion.div>
@@ -740,7 +740,7 @@ function CTASection({ onNavigate }) {
           {[
             { value: '10,000+', label: 'Families Protected' },
             { value: '100%', label: 'Chemical Free' },
-            { value: '3230', label: 'Sq ft Coverage' },
+            { value: '3500', label: 'Sq ft Coverage' },
             { value: '24/7', label: 'Silent Protection' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">

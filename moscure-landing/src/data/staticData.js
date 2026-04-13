@@ -47,7 +47,7 @@ export const COMPARISON_DATA = [
     id: 'coverage',
     criteria: 'Coverage Area',
     others: 'Limited to ~150 sq ft',
-    moscure: 'Up to 3230 sq ft',
+    moscure: 'Up to 3500 sq ft',
   },
   {
     id: 'children',
@@ -162,7 +162,7 @@ export const PRODUCTS_DATA = [
     imageFile: 'product-indoor',
     imageLabel: '[ MC-IPI 1 Image ]',
     specs: [
-      { label: 'Coverage', value: '375 sq ft' },
+      { label: 'Coverage', value: '400 sq ft' },
       { label: 'MLID Wavelength', value: '365 nm (UV-A)' },
       { label: 'Power', value: 'DC 5V / 0.3A — 1.5W' },
       { label: 'Dimensions', value: '11.9 × 11.9 × 17.8 cm' },
@@ -189,7 +189,7 @@ export const PRODUCTS_DATA = [
     imageFile: 'product-outdoor',
     imageLabel: '[ IPO Unit Image ]',
     specs: [
-      { label: 'Coverage', value: '3230 sq ft' },
+      { label: 'Coverage', value: '3500 sq ft' },
       { label: 'MLID Wavelength', value: '365 nm (UV-A)' },
       { label: 'Power', value: '9W (Energy-Efficient)' },
       { label: 'Dimensions', value: '11.9 × 11.9 × 17.8 cm' },
@@ -197,7 +197,7 @@ export const PRODUCTS_DATA = [
       { label: 'Water Resistant', value: 'Yes (IPX4)' },
     ],
     fullDescription:
-      'The Moscure IPO Unit is purpose-built for outdoor protection. 365 nm UV-A LED technology lures all major mosquito species into the trap — no chemicals, no odour. Water-resistant construction with included hanging mount lets you deploy it in gardens, balconies, and patios for up to 3230 sq ft of coverage. Energy-efficient at just 9W.',
+      'The Moscure IPO Unit is purpose-built for outdoor protection. 365 nm UV-A LED technology lures all major mosquito species into the trap — no chemicals, no odour. Water-resistant construction with included hanging mount lets you deploy it in gardens, balconies, and patios for up to 3500 sq ft of coverage. Energy-efficient at just 9W.',
   },
 ]
 
@@ -205,7 +205,7 @@ export const PRODUCTS_DATA = [
 export const STATS_DATA = [
   { id: 's1', stat: 100, suffix: '%', label: 'Lab Tested',accent: 'gradientcyan'   },
   { id: 's2', stat: 95,  suffix: '%', label: 'Catch Rate',accent: 'gradientyellow' },
-  { id: 's3', stat: 3230, suffix: '', prefix: 'Coverage up to', label: 'sq ft',          accent: 'gradientpink'   },
+  { id: 's3', stat: 3500, suffix: '', prefix: 'Coverage up to', label: 'sq ft',          accent: 'gradientpink'   },
   { id: 's4', stat: 24,  suffix: '/7',prefix:' ', label: 'Non-Stop Protection', accent: 'gradientcyan'   },
 ]
 

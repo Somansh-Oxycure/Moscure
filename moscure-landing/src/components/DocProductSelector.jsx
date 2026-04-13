@@ -10,7 +10,7 @@ const PRODUCTS = [
     badge: 'INDOOR',
     name: 'IPI 1',
     fullName: 'IPI Indoor Mosquito & Insect Trap',
-    desc: '365nm UV · 375 sq ft · 1.5W USB · Portable · Silent fan suction',
+    desc: '365nm UV · 400 sq ft · 1.5W USB · Portable · Silent fan suction',
     img: indoorImg,
   },
   {
@@ -18,7 +18,7 @@ const PRODUCTS = [
     badge: 'OUTDOOR',
     name: 'IPO 1',
     fullName: 'IPO Outdoor Mosquito & Insect Trap',
-    desc: '365nm UV · 3,230 sq ft · 9W · Water-resistant · Hangable',
+    desc: '365nm UV · 3,500 sq ft · 9W · Water-resistant · Hangable',
     img: outdoorImg,
   },
 ]

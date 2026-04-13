@@ -52,7 +52,7 @@ const ADVANTAGE_TABLE = {
       health: ['100% Chemical & Smoke-Free', 'Safe for Kids & Pets', 'Continuous 24/7 Protection'],
       application: 'Indoor & Outdoor',
       waterResistant: true,
-      coverage: 'Large (up to 3230 sq ft)',
+      coverage: 'Large (up to 3500 sq ft)',
     },
     {
       id: 'racket',
@@ -185,7 +185,7 @@ const HERO_STATS = [
 const WHY_MOSCURE = [
   {
     id: 1,
-    stat: '0',
+    stat: '0%',
     statSuffix: ' Chemicals',
     label: 'vs. Toxic Alternatives',
     description:
@@ -196,8 +196,8 @@ const WHY_MOSCURE = [
   },
   {
     id: 2,
-    stat: '300',
-    statSuffix: ' sq.m',
+    stat: 'upto 3500',
+    statSuffix: ' sq.ft',
     label: 'vs. Single-Room Solutions',
     description:
       'Liquid vaporisers and coils protect a single small zone. Moscure covers your entire garden, terrace, or outdoor space. One device. Total coverage — inside and out.',
@@ -239,7 +239,7 @@ const SCORE_CRITERIA = [
 
 const CTA_PILLS = [
   'Chemical-Free',
-  'Covers 3230 sq ft',
+  'Covers 3500 sq ft',
   'Child & Pet Safe',
   'Indoor & Outdoor',
   '24/7 Protection',

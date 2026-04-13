@@ -138,7 +138,7 @@ const FAQ_DATA = [
   },
   {
     q: "Can I use Moscure outdoors?",
-    a: "Yes. The Moscure IPO model is IP-rated for outdoor use and covers up to 3230 sq ft, making it perfect for gardens, terraces, and open spaces.",
+    a: "Yes. The Moscure IPO model is IP-rated for outdoor use and covers up to 3500 sq ft, making it perfect for gardens, terraces, and open spaces.",
     accent: "#FF4D6D",
   },
   {
@@ -153,7 +153,7 @@ const FAQ_DATA = [
   },
   {
     q: "What makes Moscure different from other repellents?",
-    a: "Moscure focuses on a balance of safety, effectiveness, and user comfort. With zero chemicals, 24/7 passive protection, and up to 3230 sq ft coverage, it is designed for everyday use — safe for kids, pets, and the whole family.",
+    a: "Moscure focuses on a balance of safety, effectiveness, and user comfort. With zero chemicals, 24/7 passive protection, and up to 3500 sq ft coverage, it is designed for everyday use — safe for kids, pets, and the whole family.",
     accent: "#FF4D6D",
   },
 ];

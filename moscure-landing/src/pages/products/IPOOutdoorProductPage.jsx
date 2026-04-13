@@ -27,7 +27,7 @@ const PRODUCT = {
   id:          'ipo-outdoor',
   sku:         'MOSCURE-IPO-001',
   name:        'IPO Outdoor Mosquito & Insect Trap',
-  fullTitle:   'IPO Outdoor Mosquito & Insect Trap | 365nm UV LED Trap | Covers 3230 sq ft | Water Resistant, Hangable, Safe & Odor-Free Bug Zapper | 9W Energy-Efficient',
+  fullTitle:   'IPO Outdoor Mosquito & Insect Trap | 365nm UV LED Trap | Covers 3500 sq ft | Water Resistant, Hangable, Safe & Odor-Free Bug Zapper | 9W Energy-Efficient',
   brand:       'Moscure',
   originalPrice: 21599,
   price:       19500,
@@ -73,8 +73,8 @@ const PRODUCT_BULLETS = [
   },
   {
     icon: Maximize2,
-    highlight: 'Wide Outdoor Coverage — 3230 sq ft',
-    text: 'Effectively protects up to 3230 sq ft, ideal for gardens, patios, balconies & semi-outdoor areas.',
+    highlight: 'Wide Outdoor Coverage — 3500 sq ft',
+    text: 'Effectively protects up to 3500 sq ft, ideal for gardens, patios, balconies & semi-outdoor areas.',
   },
   {
     icon: Zap,
@@ -100,14 +100,14 @@ const PRODUCT_BULLETS = [
 
 const TRUST_BADGES = [
   { icon: Droplets,   label: 'Water Resistant'       },
-  { icon: Wind,       label: '3230 sq ft Coverage'        },
+  { icon: Wind,       label: '3500 sq ft Coverage'        },
   { icon: ShieldCheck, label: '100% Chemical-Free'   },
   { icon: Clock,      label: '24/7 Outdoor Guard'     },
 ]
 
 const DETAIL_IMAGES = [
   { id: 1, alt: 'How Moscure IPO Outdoor UV LED Trap Works — 365nm Phototaxis Mechanism',               src: decp1 },
-  { id: 2, alt: 'Moscure IPO Outdoor Coverage Area — 3230 sq ft Garden & Patio Protection',            src: decp2 },
+  { id: 2, alt: 'Moscure IPO Outdoor Coverage Area — 3500 sq ft Garden & Patio Protection',            src: decp2 },
   { id: 3, alt: 'Moscure IPO Water Resistant Housing — Built for Indian Monsoon Conditions',  src: decp3 },
   { id: 4, alt: 'Moscure IPO Hanging Installation Guide — Garden, Patio, Balcony Setup',       src: decp4 },
   { id: 5, alt: 'Moscure IPO Outdoor Trap Real Results — Effective Mosquito Control',            src: decp5 },
@@ -150,7 +150,7 @@ const RATING_BREAKDOWN = [
 
 const TICKER_ITEMS = [
   '✓ 365nm UV LED Technology',
-  '✓ Covers 3230 sq ft Outdoors',
+  '✓ Covers up to 3500 sq ft Outdoors',
   '✓ Water Resistant Housing',
   '✓ Hangable Design', 
   '✓ 9W Energy Efficient',
@@ -166,7 +166,7 @@ const SCHEMA_JSON = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Moscure IPO Outdoor Mosquito & Insect Trap',
-  description: '365nm UV LED outdoor mosquito trap. Covers 3230 sq ft. Water resistant, hangable. Chemical-free, safe odor-free.',
+  description: '365nm UV LED outdoor mosquito trap. Covers up to 3500 sq ft. Water resistant, hangable. Chemical-free, safe odor-free.',
   brand: { '@type': 'Brand', name: 'Moscure' },
   sku: 'MOSCURE-IPO-001',
   mpn: 'IPO-001',
@@ -530,7 +530,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
       title: document.title,
     }
 
-    document.title = 'Moscure IPO Outdoor Mosquito Trap | UV LED Bug Zapper | 3230 sq ft Coverage | ₹21,599'
+    document.title = 'Moscure IPO Outdoor Mosquito Trap | UV LED Bug Zapper | 3500 sq ft Coverage | ₹21,599'
 
     const setMeta = (name, content, prop = false) => {
       const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
@@ -543,10 +543,10 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
       el.setAttribute('content', content)
     }
 
-    setMeta('description', 'Moscure IPO Outdoor Mosquito & Insect Trap uses 365nm UV LED technology to silently trap mosquitoes & flying insects across 3230 sq ft. Water resistant, hangable design. 100% chemical-free. Buy now at ₹21,599.')
-    setMeta('keywords', 'outdoor mosquito trap India, UV mosquito killer outdoor, water resistant bug zapper, garden mosquito trap, patio mosquito catcher, dengue malaria mosquito trap outdoor, Moscure IPO, 3230 sq ft outdoor insect trap, hangable mosquito trap India')
+    setMeta('description', 'Moscure IPO Outdoor Mosquito & Insect Trap uses 365nm UV LED technology to silently trap mosquitoes & flying insects across 3500 sq ft. Water resistant, hangable design. 100% chemical-free. Buy now at ₹21,599.')
+    setMeta('keywords', 'outdoor mosquito trap India, UV mosquito killer outdoor, water resistant bug zapper, garden mosquito trap, patio mosquito catcher, dengue malaria mosquito trap outdoor, Moscure IPO, 3500 sq ft outdoor insect trap, hangable mosquito trap India')
     setMeta('og:title', 'Moscure IPO Outdoor Mosquito Trap — ₹21,599', true)
-    setMeta('og:description', 'Water resistant, hangable UV LED mosquito trap. Covers 3230 sq ft. Chemical-free, monsoon ready.', true)
+    setMeta('og:description', 'Water resistant, hangable UV LED mosquito trap. Covers 3500 sq ft. Chemical-free, monsoon ready.', true)
     setMeta('og:url', 'https://moscure.in/products/moscure-ipo-outdoor-mosquito-trap', true)
     setMeta('og:type', 'product', true)
 
@@ -571,7 +571,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
 
   const handleWhatsApp = () => {
     window.open(
-      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3230 sq ft coverage, ₹21,599\nhttps://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')}`,
+      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3500 sq ft coverage, ₹21,599\nhttps://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')}`,
       '_blank',
       'noopener,noreferrer'
     )
@@ -774,7 +774,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
               </motion.button>
 
               <motion.a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPO — Chemical-Free Outdoor Mosquito Trap. UV LED, 3230 sq ft coverage. ₹21,599')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPO — Chemical-Free Outdoor Mosquito Trap. UV LED, 3500 sq ft coverage. ₹21,599')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05, borderColor: '#FFD60A' }}
