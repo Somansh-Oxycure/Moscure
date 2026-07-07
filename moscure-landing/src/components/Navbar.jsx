@@ -76,7 +76,7 @@ export default function Navbar({ onNavigate }) {
           >
             <img
               src={logoImg}
-              alt="Moscure Logo"
+              alt="Moscure organic mosquito trap official logo"
               className="h-24 w-auto object-contain brightness-150"
             />
           </button>

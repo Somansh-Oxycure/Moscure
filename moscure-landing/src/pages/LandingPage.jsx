@@ -82,20 +82,22 @@ function HeroSection({ onNavigate }) {
               </span>
             </motion.div>
 
+            <h1 className="sr-only">Moscure: India's Leading Eco-Friendly & Non-Toxic Mosquito Eliminator</h1>
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
               className="overflow-hidden"
+              aria-hidden="true"
             >
-              <motion.h1
+              <motion.div
                 className="font-display leading-none tracking-wide"
                 
               >
                 <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block text-white heading-glow">ELIMINATE</motion.span>
                 <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block gradient-text-full italic">MOSQUITO</motion.span>
                 <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block text-gradientpink heading-glow">DANGER</motion.span>
-              </motion.h1>
+              </motion.div>
             </motion.div>
 
             <motion.p
@@ -176,7 +178,7 @@ function HeroSection({ onNavigate }) {
             >
               <img
                 src={productImg}
-                alt="Moscure UV LED Mosquito Trap"
+                alt="Moscure UV LED Mosquito Trap - Non-Toxic Organic Mosquito Killer device"
                 className="w-full h-full object-contain p-6 mix-blend-luminosity opacity-80"
                 style={{ backgroundColor: '#0d1a15' }}
               />
@@ -197,7 +199,7 @@ function HeroSection({ onNavigate }) {
             >
               <img
                 src={productImg}
-                alt="Moscure UV LED Mosquito Trap"
+                alt="Moscure UV LED Mosquito Trap - Non-Toxic Organic Mosquito Killer device"
                 className="w-full h-full object-contain p-4"
               />
               <div className="absolute inset-0 overflow-hidden pointer-events-none">

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { writeFileSync, existsSync, mkdirSync } from 'fs'
+import { writeFileSync, existsSync, mkdirSync, readFileSync } from 'fs'
 import puppeteer from 'puppeteer'
 import { preview } from 'vite'
 
@@ -78,11 +78,31 @@ function prerenderPlugin(options) {
   }
 }
 
+function getRoutes() {
+  try {
+    const appContent = readFileSync(resolve('src/App.jsx'), 'utf-8')
+    const routeRegex = /path=["']([^"']+)["']/g
+    const routes = []
+    let match
+    while ((match = routeRegex.exec(appContent)) !== null) {
+      const route = match[1]
+      // Skip wildcard (*) and dynamic routes containing parameters (e.g. :id)
+      if (route !== '*' && !route.includes(':')) {
+        routes.push(route)
+      }
+    }
+    return Array.from(new Set(routes))
+  } catch (error) {
+    console.error('[prerender] Error dynamically reading routes:', error)
+    return ['/']
+  }
+}
+
 export default defineConfig({
   plugins: [
     react(),
     prerenderPlugin({
-      routes: ['/', '/product', '/diseases', '/comparison'],
+      routes: getRoutes(),
     }),
   ],
 })

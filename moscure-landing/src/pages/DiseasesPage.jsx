@@ -397,7 +397,7 @@ function DiseaseCard({ disease, isOpen, onToggle, onNavigate }) {
               >
                 <img
                   src={imgSrc}
-                  alt={`${mosquitoLabel} — ${mosquito}`}
+                  alt={`${mosquitoLabel} ${mosquito} - mosquito-borne disease vector`}
                   className="w-full h-full object-cover"
                   style={{ filter: 'contrast(1.15) saturate(1.1)' }}
                   onError={(e) => { e.currentTarget.style.display = 'none' }}
@@ -483,7 +483,7 @@ function DiseaseCard({ disease, isOpen, onToggle, onNavigate }) {
               <div className="relative mx-6 mt-5 rounded-xl overflow-hidden h-48 md:h-64">
                 <img
                   src={imgDecp}
-                  alt={`${mosquitoLabel} macro photograph`}
+                  alt={`${mosquitoLabel} ${mosquito} vector macro photograph for disease transmission`}
                   className="w-full h-full object-cover"
                   style={{ filter: 'contrast(1.2) saturate(1.1) brightness(0.85)' }}
                   onError={(e) => { e.currentTarget.parentElement.style.display = 'none' }}

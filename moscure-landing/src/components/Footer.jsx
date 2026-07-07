@@ -53,7 +53,7 @@ export default function Footer({ onNavigate }) {
           {/* Col 1 — Brand */}
           <div className="flex flex-col gap-5">
             <button onClick={() => { onNavigate?.('landing'); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="text-left">
-              <img src={logoImg} alt="Moscure" className="h-24 brightness-125 w-auto object-contain" />
+              <img src={logoImg} alt="Moscure organic mosquito trap official logo" className="h-24 brightness-125 w-auto object-contain" />
             </button>
             <p className="font-body text-sm text-textMuted leading-relaxed">
               India&apos;s most effective MLID and Phototaxis technology mosquito trap. Chemical-free,

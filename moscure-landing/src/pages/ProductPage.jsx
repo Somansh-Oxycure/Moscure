@@ -33,7 +33,7 @@ function ProductCard({ product, onNavigate }) {
         <div className="relative h-64 overflow-hidden shrink-0 bg-white">
           <img
             src={imgSrc}
-            alt={product.name}
+            alt={`${product.name} - Moscure organic mosquito trap device`}
             className="w-full h-full object-contain p-8"
           />
           {/* Gradient bleed into card body */}

@@ -37,7 +37,7 @@ const STORY_CHAPTERS = [
       and temporary band-aid solutions that masked the problem while creating new ones.`,
     accent: '#FF4D6D',
     img: imgDengue,
-    imgAlt: 'Mosquito-borne disease crisis in India',
+    imgAlt: 'Dengue mosquito-borne disease crisis in India',
   },
   {
     id: 'idea',
@@ -49,7 +49,7 @@ const STORY_CHAPTERS = [
       the mosquito, not just repel it for a few hours.`,
     accent: '#FFD60A',
     img: productImg,
-    imgAlt: 'Moscure UV-LED mosquito trap device',
+    imgAlt: 'Moscure non-toxic UV-LED mosquito trap device',
   },
   {
     id: 'mission',
@@ -61,7 +61,7 @@ const STORY_CHAPTERS = [
       families, communities, and cities across India.`,
     accent: '#00F5D4',
     img: outdoorImg,
-    imgAlt: 'Moscure outdoor protection for Indian families',
+    imgAlt: 'Moscure outdoor non-toxic mosquito protection for Indian families',
   },
 ]
 
