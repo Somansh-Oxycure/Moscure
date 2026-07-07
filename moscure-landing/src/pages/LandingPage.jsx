@@ -27,7 +27,7 @@ const fadeUp = {
   }),
 }
 
-const BADGE_ITEMS = ['✓ Chemical Free', '✓ Safe for Kids', '✓ MLID LED Proven']
+const BADGE_ITEMS = ['✓ Chemical Free', '✓ Safe for Kids', '✓ MLID Proven']
 
 function HeroSection({ onNavigate }) {
   const sectionRef = useRef(null)
@@ -106,7 +106,7 @@ function HeroSection({ onNavigate }) {
               className=" text-textMuted font-body text-base md:text-lg leading-relaxed max-w-md"
             >
               <span className="text-white font-medium">Moscure</span> 
-              {' '}eliminates mosquito threats everywhere—scientifically proven and certified indoor and outdoor protection for <span className="text-white font-body">Homes, Offces</span> {' '} and <span className="text-white font-body">Public spaces</span> 
+              {' '}eliminates mosquito threats everywhere—scientifically proven and certified indoor and outdoor protection for <span className="text-white font-body">Homes, Offices</span> {' '} and <span className="text-white font-body">Public spaces</span> 
             </motion.p>
               
               
@@ -376,8 +376,8 @@ function DiseasesSection({ onNavigate }) {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="max-w-lg text-textMuted font-body text-sm leading-relaxed"
           >
-            Mosquitoes are the{' '}
-            <span className="text-gradientpink font-semibold">Deadliest Animals on Earth</span>. In
+            Mosquitoes are {' '}
+            <span className="text-gradientpink font-semibold">One of the Deadliest Animals on Earth</span>. In
             India, the threat is real and growing. Don&apos;t be a statistic.
           </motion.p>
         </div>

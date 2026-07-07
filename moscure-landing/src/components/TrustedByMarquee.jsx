@@ -85,7 +85,7 @@ function HotelCard({ hotel, index, isInView }) {
       </div>
 
       {/* Text zone */}
-      <div className="flex flex-col px-6 py-5">
+      <div className="flex flex-col  items-center px-6 py-5">
         <span className="font-body font-semibold text-white/85 text-[15px] leading-snug tracking-wide group-hover:text-white transition-colors duration-300">
           {hotel.name}
         </span>

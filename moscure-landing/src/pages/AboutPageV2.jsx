@@ -123,7 +123,7 @@ function WordReveal({ text, className, stagger = 0.025, delay = 0 }) {
 
 function SectionDivider({ number, accent = '#00F5D4' }) {
   return (
-    <div className="flex items-center gap-4 max-w-3xl mx-auto px-6 my-12">
+    <div className="flex items-center gap-4 max-w-3xl mx-auto px-6 my-6">
       <motion.div
         className="flex-1 border-t border-borderDefault"
         initial={{ scaleX: 0 }}
@@ -160,7 +160,7 @@ function ChapterHeading({  line1, line2, accentLine = 2, accentColor }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-60px' }}
-      className="max-w-4xl mx-auto px-6 mb-12"
+      className="max-w-4xl mx-auto px-6 mb-8"
     >
       
       <h2 className="font-display leading-none">
@@ -490,7 +490,7 @@ export default function AboutPageV2({ onNavigate }) {
             animate="visible"
             className="font-mono text-xs text-gradientcyan uppercase tracking-[0.3em] block mb-10"
           >
-            ⬡ OUR STORY
+             OUR STORY
           </motion.span>
 
           {/* Heading */}
@@ -554,7 +554,7 @@ export default function AboutPageV2({ onNavigate }) {
       ════════════════════════════════════════════════════════════ */}
       <SectionDivider number="01" accent="white" />
 
-      <section id="opening" className="relative min-h-screen flex items-center py-16 overflow-hidden">
+      <section id="opening" className="relative min-h-screen flex items-center py-8 overflow-hidden">
         {/* Background vignette */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[500px]"
@@ -631,7 +631,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 2 — "The Shift"
       ════════════════════════════════════════════════════════════ */}
-      <section id="shift" className="relative py-12 overflow-hidden">
+      <section id="shift" className="relative py-8 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-0 w-[400px] h-[400px] -translate-y-1/2"
             style={{ background: 'radial-gradient(ellipse at left, rgba(255,214,10,0.03) 0%, transparent 65%)' }} />
@@ -651,7 +651,7 @@ export default function AboutPageV2({ onNavigate }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="animated-border rounded-2xl my-16"
+            className="animated-border rounded-2xl my-12"
           >
             <div className="relative bg-surface rounded-2xl px-10 py-10">
               <span className="font-display text-[7rem] leading-none text-gradientyellow/30 absolute -top-4 left-4 select-none">"</span>
@@ -692,7 +692,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 3 — "Rethinking the Problem"
       ════════════════════════════════════════════════════════════ */}
-      <section id="rethink" className="relative py-12">
+      <section id="rethink" className="relative py-8">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="03"
@@ -703,7 +703,7 @@ export default function AboutPageV2({ onNavigate }) {
           />
 
           {/* Two-column prose + question */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
             <div className="flex flex-col gap-6">
               <WordReveal
                 text="We didn't set out to improve what already existed. We stepped back."
@@ -755,7 +755,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 4 — "When Innovation Became Responsibility"
       ════════════════════════════════════════════════════════════ */}
-      <section id="responsibility" className="relative py-12">
+      <section id="responsibility" className="relative py-8">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="04"
@@ -772,7 +772,7 @@ export default function AboutPageV2({ onNavigate }) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
-            className="realization-strip border-borderDefault py-8 my-12 -mx-6 px-6"
+            className="realization-strip border-borderDefault py-8 my-8 -mx-6 px-6"
           >
             <div className="max-w-2xl mx-auto text-center">
               <p className="font-body text-xl md:text-2xl text-white font-medium leading-snug">
@@ -821,7 +821,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 5 — "A Commitment Beyond Business"
       ════════════════════════════════════════════════════════════ */}
-      <section id="commitment" className="relative py-12">
+      <section id="commitment" className="relative py-8">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="05"
@@ -831,7 +831,7 @@ export default function AboutPageV2({ onNavigate }) {
             accentColor="#FFD60A"
           />
 
-          <div className="max-w-2xl mb-12">
+          <div className="max-w-2xl mb-8">
             <WordReveal
               text="Today, our work extends beyond products. We are committed to:"
               className="font-body text-lg md:text-xl text-white/85 leading-[1.9]"
@@ -855,7 +855,7 @@ export default function AboutPageV2({ onNavigate }) {
           {/* Closing line */}
           <WordReveal
             text="Because the real impact of protection is not measured in units sold — but in risks reduced, and lives made safer."
-            className="font-body text-lg md:text-xl text-white/80 italic text-center max-w-2xl mx-auto mt-14 leading-relaxed"
+            className="font-body text-lg md:text-xl text-white/80 italic text-center max-w-2xl mx-auto mt-10 leading-relaxed"
             stagger={0.04}
           />
         </div>
@@ -866,7 +866,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 6 — "The Future We Are Building"
       ════════════════════════════════════════════════════════════ */}
-      <section id="future" className="relative py-12">
+      <section id="future" className="relative py-8">
         <div className="relative max-w-4xl mx-auto px-6">
           <ChapterHeading
             number="06"
@@ -906,7 +906,7 @@ export default function AboutPageV2({ onNavigate }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-14 text-center"
+            className="mt-10 text-center"
           >
             
             <motion.div
@@ -923,7 +923,7 @@ export default function AboutPageV2({ onNavigate }) {
       {/* ════════════════════════════════════════════════════════════
           SECTION 7 — CSR Initiatives
       ════════════════════════════════════════════════════════════ */}
-      <section id="csr" className="py-12 bg-surface border-y border-borderDefault">
+      <section id="csr" className="py-8 bg-surface border-y border-borderDefault">
         <div className="max-w-4xl mx-auto px-6">
           {/* Label */}
           <motion.p
@@ -989,7 +989,7 @@ export default function AboutPageV2({ onNavigate }) {
             📞 REACH US OUT
           </motion.p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
             {/* Left — emotional copy */}
             <motion.div

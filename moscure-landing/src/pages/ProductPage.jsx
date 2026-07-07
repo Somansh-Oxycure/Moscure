@@ -116,7 +116,7 @@ function ProductsHeroSection({ onNavigate }) {
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }} className="font-body text-textMuted text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Advanced mosquito-catching technology tested on all disease-carrying species in India.
+            Advanced mosquito-trapping technology tested on all disease-carrying species in India.
             Safe, effective, and reliable protection for indoor and outdoor environments.
           </motion.p>
         </div>

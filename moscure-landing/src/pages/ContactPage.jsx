@@ -486,49 +486,27 @@ export default function ContactPage({ onNavigate }) {
     setSending(true);
 
     try {
-      const formattedMessage = `🚀 NEW MOSCURE INQUIRY
+      // Send structured JSON to the server-side PHP endpoint which handles HubSpot integration.
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        city: formData.city || null,
+        subject: formData.subject,
+        message: formData.message,
+      };
 
-━━━━━━━━━━━━━━━━━━━━━━
-📅 Received: ${new Date().toLocaleString("en-IN", {
-  timeZone: "Asia/Kolkata",
-  dateStyle: "medium",
-  timeStyle: "short"
-})}
-━━━━━━━━━━━━━━━━━━━━━━
-
-👤 CUSTOMER DETAILS
-
-• Name: ${formData.name}
-• Email: ${formData.email}
-• Phone: ${formData.phone || "Not provided"}
-• City: ${formData.city || "Not provided"}
-
-━━━━━━━━━━━━━━━━━━━━━━
-📌 INQUIRY DETAILS
-
-• Subject: ${formData.subject}
-━━━━━━━━━━━━━━━━━━━━━━
-📝 MESSAGE
-
-${formData.message}
-
-━━━━━━━━━━━━━━━━━━━━━━
-⚡ ACTION REQUIRED
-Follow up with this lead as soon as possible.
-
-━━━━━━━━━━━━━━━━━━━━━━
-Source: Moscure Website Contact Form
-      `;
-      const res = await fetch("https://formspree.io/f/mqegrprd", {
+      const res = await fetch("./contact.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
-          message: formattedMessage,
-        }),
+        body: JSON.stringify(payload),
       });
+
+      // Try to parse JSON response without throwing
+      const data = await res.json().catch(() => null);
 
       if (res.ok) {
         setSubmitted(true);
@@ -542,7 +520,8 @@ Source: Moscure Website Contact Form
           message: "",
         });
       } else {
-        alert("Failed to send message.");
+        const msg = data && data.error ? data.error : "Failed to send message.";
+        alert(msg);
       }
     } catch (error) {
       alert("Something went wrong.");
