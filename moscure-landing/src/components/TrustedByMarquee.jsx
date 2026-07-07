@@ -5,25 +5,25 @@ import tajLogo from '../assets/Taj_Hotels_logo.svg'
 import oberoiLogo from '../assets/Oberoi_Hotels__Resorts_Logo.svg'
 import leelaLogo from '../assets/The_Leela_Palaces_Hotels_and_Resorts_Logo.svg'
 import tridentLogo from '../assets/Trident_svg.svg'
-import karmaLogo from '../assets/Karma_Lakeland.png'
-import marriottLogo from '../assets/jw-marriott-logo.png'
+import karmaLogo from '../assets/Karma_Lakeland.webp'
+import marriottLogo from '../assets/jw-marriott-logo.webp'
 import shangrilaLogo from '../assets/shangri-la-2-logo-png-transparent.svg'
-import claridgesLogo from '../assets/The_Claridges.png'
+import claridgesLogo from '../assets/The_Claridges.webp'
 import lodhiLogo from '../assets/The_Lodhi.svg'
 import ibisLogo from '../assets/Ibis_Hotel_Logo .svg'
 
 const HOTELS = [
-  { name: 'The Leela Palace',    location: 'New Delhi, India',               logo: leelaLogo,    logoStyle: { height: '600px' } },
-  { name: 'The Oberoi',          location: 'Gurugram, India',                logo: oberoiLogo,   logoStyle: { height: '200px' } },
-  { name: 'Trident',             location: 'Gurugram, India',                logo: tridentLogo,  logoStyle: { height: '120px' } },
-  { name: 'Karma Lakelands',     location: 'Gurugram, India',                logo: karmaLogo,    logoStyle: { height: '130px' } },
-  { name: 'The Leela Ambience',  location: 'Gurugram, India',                logo: leelaLogo,    logoStyle: { height: '600px' } },
-  { name: 'JW Marriott Hotel',   location: 'Aerocity, New Delhi, India',     logo: marriottLogo, logoStyle: { height: '360px' } },
-  { name: 'Shangri-La Eros',     location: 'New Delhi, India',               logo: shangrilaLogo,logoStyle: { height: '270px' } },
-  { name: 'Taj Palace',          location: 'New Delhi, India',               logo: tajLogo,      logoStyle: { height: '90px' } },
-  { name: 'The Claridges',       location: 'New Delhi, India',               logo: claridgesLogo,logoStyle: { height: '500px' } },
-  { name: 'The Lodhi',           location: 'New Delhi, India',               logo: lodhiLogo,    logoStyle: { height: '540px' } },
-  { name: 'ibis Hotel',          location: 'Golf Course Road, Gurugram, India', logo: ibisLogo,  logoStyle: { height: '508px', maxWidth: '280px' } },
+  { name: 'The Leela Palace', location: 'New Delhi, India', logo: leelaLogo, logoStyle: { height: '600px' } },
+  { name: 'The Oberoi', location: 'Gurugram, India', logo: oberoiLogo, logoStyle: { height: '200px' } },
+  { name: 'Trident', location: 'Gurugram, India', logo: tridentLogo, logoStyle: { height: '120px' } },
+  { name: 'Karma Lakelands', location: 'Gurugram, India', logo: karmaLogo, logoStyle: { height: '130px' } },
+  { name: 'The Leela Ambience', location: 'Gurugram, India', logo: leelaLogo, logoStyle: { height: '600px' } },
+  { name: 'JW Marriott Hotel', location: 'Aerocity, New Delhi, India', logo: marriottLogo, logoStyle: { height: '360px' } },
+  { name: 'Shangri-La Eros', location: 'New Delhi, India', logo: shangrilaLogo, logoStyle: { height: '270px' } },
+  { name: 'Taj Palace', location: 'New Delhi, India', logo: tajLogo, logoStyle: { height: '90px' } },
+  { name: 'The Claridges', location: 'New Delhi, India', logo: claridgesLogo, logoStyle: { height: '500px' } },
+  { name: 'The Lodhi', location: 'New Delhi, India', logo: lodhiLogo, logoStyle: { height: '540px' } },
+  { name: 'ibis Hotel', location: 'Golf Course Road, Gurugram, India', logo: ibisLogo, logoStyle: { height: '508px', maxWidth: '280px' } },
 ]
 
 const CARD_W = 300

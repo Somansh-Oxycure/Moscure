@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, useInView, animate } from 'framer-moti
 import { X, Check, Shield, Wind, Zap, Droplets } from 'lucide-react'
 import { BRAND_VALUES, DISEASES_DATA, COMPARISON_DATA, FEATURES_DATA } from '../data/staticData'
 import TrustedByMarquee from '../components/TrustedByMarquee'
-import productImg from '../assets/product.png'
+import productImg from '../assets/product.webp'
 import mosquitoSvg from '../assets/mosquito-silhouette.svg'
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
@@ -92,7 +92,7 @@ function HeroSection({ onNavigate }) {
             >
               <motion.div
                 className="font-display leading-none tracking-wide"
-                
+
               >
                 <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block text-white heading-glow">ELIMINATE</motion.span>
                 <motion.span variants={wordVariants} style={{ fontSize: 'clamp(64px, 9vw, 120px)' }} className="block gradient-text-full italic">MOSQUITO</motion.span>
@@ -107,11 +107,11 @@ function HeroSection({ onNavigate }) {
               animate="visible"
               className=" text-textMuted font-body text-base md:text-lg leading-relaxed max-w-md"
             >
-              <span className="text-white font-medium">Moscure</span> 
-              {' '}eliminates mosquito threats everywhere—scientifically proven and certified indoor and outdoor protection for <span className="text-white font-body">Homes, Offices</span> {' '} and <span className="text-white font-body">Public spaces</span> 
+              <span className="text-white font-medium">Moscure</span>
+              {' '}eliminates mosquito threats everywhere—scientifically proven and certified indoor and outdoor protection for <span className="text-white font-body">Homes, Offices</span> {' '} and <span className="text-white font-body">Public spaces</span>
             </motion.p>
-              
-              
+
+
 
             <motion.div
               custom={0.9}
@@ -268,9 +268,8 @@ function BrandValuesTicker() {
         {items.map((value, i) => (
           <span key={i} className="flex items-center shrink-0">
             <span
-              className={`font-mono uppercase text-xs tracking-widest whitespace-nowrap px-4 ${
-                i % 3 === 0 ? 'text-gradientcyan' : i % 3 === 1 ? 'text-textMuted' : 'text-gradientyellow'
-              }`}
+              className={`font-mono uppercase text-xs tracking-widest whitespace-nowrap px-4 ${i % 3 === 0 ? 'text-gradientcyan' : i % 3 === 1 ? 'text-textMuted' : 'text-gradientyellow'
+                }`}
             >
               {value}
             </span>
@@ -367,7 +366,7 @@ function DiseasesSection({ onNavigate }) {
           >
             <h2 className="font-display leading-none" style={{ fontSize: 'clamp(56px, 7vw, 100px)' }}>
               <span className="text-white heading-glow">KNOW YOUR</span>
-              
+
               <span className="gradient-text-pink-yellow ml-5">ENEMY</span>
             </h2>
           </motion.div>
@@ -440,7 +439,7 @@ function ComparisonSection({ onNavigate }) {
             style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}
           >
             <span className="text-white heading-glow">WHY MOSCURE</span>
-            
+
             <span className="gradient-text-yellow-cyan ml-4">WINS</span>
           </motion.h2>
 
@@ -605,7 +604,7 @@ function FeaturesSection({ onNavigate }) {
             style={{ fontSize: 'clamp(48px, 6vw, 88px)' }}
           >
             <span className="text-white heading-glow">BUILT</span>
-            
+
             <span className="gradient-text-cyan-pink ml-5">DIFFERENT</span>
           </motion.h2>
 
