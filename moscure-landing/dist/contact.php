@@ -2,8 +2,40 @@
 // contact.php
 // Minimal, secure endpoint to accept contact form JSON and upsert contacts in HubSpot.
 
-// --- Configuration (replace placeholder with your HubSpot private app token) ---
-$HUBSPOT_TOKEN =getenv('HUBSPOT_API_KEY');
+// Load environment variables from .env file if present
+function loadEnv($dir) {
+    $paths = [
+        $dir . '/.env',
+        dirname($dir) . '/.env'
+    ];
+    foreach ($paths as $path) {
+        if (file_exists($path)) {
+            $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line) || strpos($line, '#') === 0) {
+                    continue;
+                }
+                if (strpos($line, '=') !== false) {
+                    list($name, $value) = explode('=', $line, 2);
+                    $name = trim($name);
+                    $value = trim($value);
+                    // Strip quotes if present
+                    if (preg_match('/^([\'"])(.*)\1$/', $value, $matches)) {
+                        $value = $matches[2];
+                    }
+                    putenv(sprintf('%s=%s', $name, $value));
+                    $_ENV[$name] = $value;
+                    $_SERVER[$name] = $value;
+                }
+            }
+            break;
+        }
+    }
+}
+loadEnv(__DIR__);
+
+$HUBSPOT_TOKEN = getenv('HUBSPOT_API_KEY');
 
 // Only allow POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
