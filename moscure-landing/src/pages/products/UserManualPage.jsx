@@ -54,16 +54,19 @@ const FEATURES = [
 ]
 
 const HOW_IT_WORKS = [
-  'The precision-tuned UV LED emits light at the exact wavelength that activates mosquito phototaxis (light-seeking behavior), drawing them from up to several metres away.',
-  'A built-in fan creates a gentle, steady suction airflow that silently pulls approaching mosquitoes through the inlet opening and into the sealed collection container.',
-  'Trapped inside and cut off from air and moisture, mosquitoes die through natural dehydration — effectively and without any chemicals, noise, or zapping.',
+  'The precision-tuned UV LED emits light at the exact wavelength (365nm) that activates mosquito phototaxis — the biological light-seeking behaviour hardwired into mosquitoes. This draws insects from up to several metres away, far more effectively than visible light or generic UV sources.',
+  'A built-in fan creates a gentle, steady suction airflow that silently pulls approaching mosquitoes through the inlet opening and into the sealed collection container below. The fan speed is optimised to attract insects without creating noise or drafts that would disturb sleep or work.',
+  'Trapped inside and cut off from air and moisture, mosquitoes die through natural dehydration within hours — effectively and without any chemicals, noise, or zapping sounds. The sealed container prevents escape and makes emptying clean and mess-free.',
 ]
 
 const MAINTENANCE = [
-  'Clean the collection container at least once per week to maintain peak trapping efficiency.',
-  'Always unplug the device from the power source before starting any cleaning.',
-  'Wash the container with mild soap and lukewarm water — avoid harsh chemicals or abrasives.',
-  'Rinse thoroughly and allow all components to dry completely before reassembling and reconnecting.',
+  'Clean the collection container at least once per week to maintain peak trapping efficiency — a full container reduces airflow and lowers the trap\'s effectiveness.',
+  'Always unplug the device from the power source before starting any cleaning. Never clean the device while it is connected to mains power.',
+  'Slide out the collection tray or container according to the product\'s design. Tap out trapped insects into a bin, then wash the container with mild soap and lukewarm water.',
+  'Avoid using harsh chemicals, bleach, or abrasive scrubbers on any part of the device — these can damage the plastic housing and UV LED coating.',
+  'Rinse all washed components thoroughly with clean water and allow them to dry completely before reassembling and reconnecting to power. Never reassemble damp parts.',
+  'Wipe down the exterior housing with a dry or slightly damp cloth monthly to remove dust build-up around the air intake grilles.',
+  'Inspect the UV LED periodically. If the blue/violet glow appears significantly dimmer than when the device was new, contact Moscure support for assessment.',
 ]
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -74,16 +77,27 @@ export default function UserManualPage() {
 
   useEffect(() => {
     if (!product)    document.title = 'User Manual – Select Your MOSCURE Product'
-    if (product === 'outdoor') document.title = 'User Manual – MOSCURE IPO 1 | Outdoor Mosquito Trap'
-    if (product === 'indoor')  document.title = 'User Manual – MOSCURE IPI 1 | Indoor Mosquito Trap'
+    if (product === 'outdoor') document.title = 'User Manual – MOSCURE IPO 1 | Outdoor Mosquito Trap Guide'
+    if (product === 'indoor')  document.title = 'User Manual – MOSCURE IPI 1 | Indoor Mosquito Trap Guide'
 
     let meta = document.querySelector('meta[name="description"]')
     if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta) }
-    if (!product) meta.content = 'MOSCURE product user manual. Select your indoor or outdoor mosquito trap to view specifications, features, and maintenance guidance.'
-    if (product === 'outdoor') meta.content = 'Complete user manual for the MOSCURE IPO 1 outdoor mosquito trap. Covers product specifications, key features, how it works, and maintenance instructions.'
-    if (product === 'indoor')  meta.content = 'User manual for the MOSCURE IPI 1 indoor mosquito trap. Coming soon.'
+    if (!product) meta.content = 'MOSCURE product user manual. Select your indoor or outdoor mosquito trap to view technical specifications, key features, how it works, and maintenance guidance.'
+    if (product === 'outdoor') meta.content = 'Complete user manual for the MOSCURE IPO 1 outdoor mosquito trap. Learn how 365nm UV phototaxis technology works, product specs, key features, and how to maintain your device for long-term performance.'
+    if (product === 'indoor')  meta.content = 'Complete user manual for the MOSCURE IPI 1 indoor mosquito trap. Learn about UV LED phototaxis technology, technical specs, key features, and step-by-step maintenance instructions.'
 
-    return () => { document.title = 'Moscure' }
+    // Canonical tag
+    let canonical = document.querySelector('link[rel="canonical"]')
+    const canonicalCreated = !canonical
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
+    const prevCanonical = canonical.href
+    canonical.href = 'https://www.moscure.com/user-manual/'
+
+    return () => {
+      document.title = 'Moscure'
+      if (canonicalCreated) canonical.remove()
+      else canonical.href = prevCanonical
+    }
   }, [product])
 
   if (!product) return <DocProductSelector docTitle="User Manual" onSelect={setProduct} indoorPath="/ipi1/user-manual" />

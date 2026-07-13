@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import TrustedByMarquee from '../../components/TrustedByMarquee'
+import { Link } from 'react-router-dom'
 import {
   Shield, HeartPulse, Maximize2, Zap, Battery,
   Droplets, Ruler, ShieldCheck, Wind, Volume2, Clock,
@@ -24,40 +25,40 @@ import decp5 from '../../assets/Outdoor_decp_5.jpg'
 // ─── Static Data ──────────────────────────────────────────────────────────────
 
 const PRODUCT = {
-  id:          'ipo-outdoor',
-  sku:         'MOSCURE-IPO-001',
-  name:        'IPO Outdoor Mosquito & Insect Trap',
-  fullTitle:   'IPO Outdoor Mosquito & Insect Trap | 365nm UV LED Trap | Covers 3500 sq ft | Water Resistant, Hangable, Safe & Odor-Free Bug Zapper | 9W Energy-Efficient',
-  brand:       'Moscure',
+  id: 'ipo-outdoor',
+  sku: 'MOSCURE-IPO-001',
+  name: 'IPO Outdoor Mosquito & Insect Trap',
+  fullTitle: 'IPO Outdoor Mosquito & Insect Trap | 365nm UV LED Trap | Covers 3500 sq ft | Water Resistant, Hangable, Safe & Odor-Free Bug Trapper | 9W Energy-Efficient',
+  brand: 'Moscure',
   originalPrice: 21599,
-  price:       19500,
-  currency:    '₹',
-  inStock:     true,
-  rating:      4.7,
+  price: 19500,
+  currency: '₹',
+  inStock: true,
+  rating: 4.7,
   reviewCount: 98,
-  badge:       'OUTDOOR',
+  badge: 'OUTDOOR',
   accentColor: '#FFD60A',
 }
 
 const PRODUCT_IMAGES = [
-  { id: 1, alt: 'Moscure IPO Outdoor Mosquito Trap — Front View',                  src: img1 },
-  { id: 2, alt: 'Moscure IPO Outdoor — 365nm UV LED Light Active',                 src: img2 },
-  { id: 3, alt: 'Moscure IPO — Water Resistant Outdoor Housing Detail',            src: img3 },
-  { id: 4, alt: 'Moscure IPO — Hanging Installation for Garden & Patio',           src: img4 },
-  { id: 5, alt: 'Moscure IPO — Scale & Size Reference (1,205g)',                   src: img5 },
-  { id: 6, alt: 'Moscure IPO — Placed in Garden / Outdoor Setting',                src: img6 },
+  { id: 1, alt: 'Moscure IPO Outdoor Mosquito Trap — Front View', src: img1 },
+  { id: 2, alt: 'Moscure IPO Outdoor — 365nm UV LED Light Active', src: img2 },
+  { id: 3, alt: 'Moscure IPO — Water Resistant Outdoor Housing Detail', src: img3 },
+  { id: 4, alt: 'Moscure IPO — Hanging Installation for Garden & Patio', src: img4 },
+  { id: 5, alt: 'Moscure IPO — Scale & Size Reference (1,205g)', src: img5 },
+  { id: 6, alt: 'Moscure IPO — Placed in Garden / Outdoor Setting', src: img6 },
 ]
 
 const PRODUCT_SPECS = [
-  { label: 'Brand',               value: 'Moscure'                   },
-  { label: 'Colour',              value: 'Black'                     },
-  { label: 'Material',            value: 'Plastic'                   },
-  { label: 'Product Dimensions',  value: '11.9L × 11.9W × 17.8H cm' },
-  { label: 'Item Weight',         value: '280 Grams'                 },
-  { label: 'Number of Pieces',    value: '1'                         },
-  { label: 'Net Quantity',        value: '1.0 Count'                 },
-  { label: 'Power Source',        value: 'Corded Electric (9W)'      },
-  { label: 'Water Resistant',     value: 'Yes (IPX4)'                       },
+  { label: 'Brand', value: 'Moscure' },
+  { label: 'Colour', value: 'Black' },
+  { label: 'Material', value: 'Plastic' },
+  { label: 'Product Dimensions', value: '11.9L × 11.9W × 17.8H cm' },
+  { label: 'Item Weight', value: '280 Grams' },
+  { label: 'Number of Pieces', value: '1' },
+  { label: 'Net Quantity', value: '1.0 Count' },
+  { label: 'Power Source', value: 'Corded Electric (9W)' },
+  { label: 'Water Resistant', value: 'Yes (IPX4)' },
 ]
 
 const PRODUCT_BULLETS = [
@@ -99,18 +100,18 @@ const PRODUCT_BULLETS = [
 ]
 
 const TRUST_BADGES = [
-  { icon: Droplets,   label: 'Water Resistant'       },
-  { icon: Wind,       label: '3500 sq ft Coverage'        },
-  { icon: ShieldCheck, label: '100% Chemical-Free'   },
-  { icon: Clock,      label: '24/7 Outdoor Guard'     },
+  { icon: Droplets, label: 'Water Resistant' },
+  { icon: Wind, label: '3500 sq ft Coverage' },
+  { icon: ShieldCheck, label: '100% Chemical-Free' },
+  { icon: Clock, label: '24/7 Outdoor Guard' },
 ]
 
 const DETAIL_IMAGES = [
-  { id: 1, alt: 'How Moscure IPO Outdoor UV LED Trap Works — 365nm Phototaxis Mechanism',               src: decp1 },
-  { id: 2, alt: 'Moscure IPO Outdoor Coverage Area — 3500 sq ft Garden & Patio Protection',            src: decp2 },
-  { id: 3, alt: 'Moscure IPO Water Resistant Housing — Built for Indian Monsoon Conditions',  src: decp3 },
-  { id: 4, alt: 'Moscure IPO Hanging Installation Guide — Garden, Patio, Balcony Setup',       src: decp4 },
-  { id: 5, alt: 'Moscure IPO Outdoor Trap Real Results — Effective Mosquito Control',            src: decp5 },
+  { id: 1, alt: 'How Moscure IPO Outdoor UV LED Trap Works — 365nm Phototaxis Mechanism', src: decp1 },
+  { id: 2, alt: 'Moscure IPO Outdoor Coverage Area — 3500 sq ft Garden & Patio Protection', src: decp2 },
+  { id: 3, alt: 'Moscure IPO Water Resistant Housing — Built for Indian Monsoon Conditions', src: decp3 },
+  { id: 4, alt: 'Moscure IPO Hanging Installation Guide — Garden, Patio, Balcony Setup', src: decp4 },
+  { id: 5, alt: 'Moscure IPO Outdoor Trap Real Results — Effective Mosquito Control', src: decp5 },
 ]
 
 const REVIEWS = [
@@ -143,16 +144,16 @@ const REVIEWS = [
 const RATING_BREAKDOWN = [
   { stars: 5, count: 72, percent: 73 },
   { stars: 4, count: 17, percent: 17 },
-  { stars: 3, count:  10, percent:  10 },
-  { stars: 2, count:  0, percent:  0 },
-  { stars: 1, count:  0, percent:  0 },
+  { stars: 3, count: 10, percent: 10 },
+  { stars: 2, count: 0, percent: 0 },
+  { stars: 1, count: 0, percent: 0 },
 ]
 
 const TICKER_ITEMS = [
   '✓ 365nm UV LED Technology',
   '✓ Covers up to 3500 sq ft Outdoors',
   '✓ Water Resistant Housing',
-  '✓ Hangable Design', 
+  '✓ Hangable Design',
   '✓ 9W Energy Efficient',
   '✓ Catches Dengue & Malaria Vectors',
   '✓ No Refills Ever',
@@ -170,17 +171,40 @@ const SCHEMA_JSON = JSON.stringify({
   brand: { '@type': 'Brand', name: 'Moscure' },
   sku: 'MOSCURE-IPO-001',
   mpn: 'IPO-001',
+  url: 'https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap',
   offers: {
     '@type': 'Offer',
     price: '21599',
-    priceCurrency: '',
+    priceCurrency: 'INR',
+    priceValidUntil: '2027-12-31',
     availability: 'https://schema.org/InStock',
+    url: 'https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap',
     seller: { '@type': 'Organization', name: 'Moscure' },
+    hasMerchantReturnPolicy: {
+      '@type': 'MerchantReturnPolicy',
+      applicableCountry: 'IN',
+      returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+      merchantReturnDays: 7,
+      returnMethod: 'https://schema.org/ReturnByMail',
+      returnFees: 'https://schema.org/FreeReturn',
+    },
+    shippingDetails: {
+      '@type': 'OfferShippingDetails',
+      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'INR' },
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 2, unitCode: 'DAY' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY' },
+      },
+    },
   },
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.7',
     reviewCount: '98',
+    bestRating: '5',
+    worstRating: '1',
   },
 })
 
@@ -188,8 +212,8 @@ const SCHEMA_JSON = JSON.stringify({
 
 function StarRating({ rating, size = 'sm' }) {
   const sizeClass = size === 'lg' ? 'w-5 h-5' : size === 'md' ? 'w-4 h-4' : 'w-3.5 h-3.5'
-  const full  = Math.floor(rating)
-  const frac  = rating - full
+  const full = Math.floor(rating)
+  const frac = rating - full
   const empty = 5 - full - (frac > 0 ? 1 : 0)
 
   return (
@@ -258,11 +282,10 @@ function ImageGallery({ images, activeIndex, onSelect }) {
             onClick={() => onSelect(i)}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
-            className={`w-14 h-14 rounded-lg border-2 overflow-hidden cursor-pointer transition-colors shrink-0 ${
-              i === activeIndex
+            className={`w-14 h-14 rounded-lg border-2 overflow-hidden cursor-pointer transition-colors shrink-0 ${i === activeIndex
                 ? 'border-gradientyellow bg-gradientyellow/5'
                 : 'border-borderDefault bg-surface hover:border-white/30'
-            }`}
+              }`}
           >
             {img.src ? (
               <img src={img.src} alt={img.alt} className="w-full h-full object-contain p-1 bg-white" />
@@ -292,9 +315,8 @@ function SpecsTable({ specs }) {
       {visible.map((s, i) => (
         <div
           key={s.label}
-          className={`flex items-center justify-between py-2.5 px-4 border-b border-borderDefault/50 last:border-0 ${
-            i % 2 === 1 ? 'bg-white/[0.02]' : ''
-          }`}
+          className={`flex items-center justify-between py-2.5 px-4 border-b border-borderDefault/50 last:border-0 ${i % 2 === 1 ? 'bg-white/[0.02]' : ''
+            }`}
         >
           <span className="font-body text-sm text-textMuted">{s.label}</span>
           <span className="font-body text-sm text-white font-medium text-right ml-4">{s.value}</span>
@@ -483,9 +505,8 @@ function TrustTicker() {
         {items.map((item, i) => (
           <span key={i} className="flex items-center shrink-0">
             <span
-              className={`font-mono uppercase text-xs tracking-widest whitespace-nowrap px-4 ${
-                i % 2 === 0 ? 'text-gradientyellow' : 'text-textMuted'
-              }`}
+              className={`font-mono uppercase text-xs tracking-widest whitespace-nowrap px-4 ${i % 2 === 0 ? 'text-gradientyellow' : 'text-textMuted'
+                }`}
             >
               {item}
             </span>
@@ -530,7 +551,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
       title: document.title,
     }
 
-    document.title = 'Moscure IPO Outdoor Mosquito Trap | UV LED Bug Zapper | 3500 sq ft Coverage | ₹21,599'
+    document.title = 'Moscure IPO Outdoor Mosquito Trap | UV LED Bug Trapper | 3500 sq ft Coverage | ₹21,599'
 
     const setMeta = (name, content, prop = false) => {
       const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
@@ -544,11 +565,22 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
     }
 
     setMeta('description', 'Moscure IPO Outdoor Mosquito & Insect Trap uses 365nm UV LED technology to silently trap mosquitoes & flying insects across 3500 sq ft. Water resistant, hangable design. 100% chemical-free. Buy now at ₹21,599.')
-    setMeta('keywords', 'outdoor mosquito trap India, UV mosquito killer outdoor, water resistant bug zapper, garden mosquito trap, patio mosquito catcher, dengue malaria mosquito trap outdoor, Moscure IPO, 3500 sq ft outdoor insect trap, hangable mosquito trap India')
+    setMeta('keywords', 'outdoor mosquito trap India, UV mosquito killer outdoor, water resistant bug trapper, garden mosquito trap, patio mosquito catcher, dengue malaria mosquito trap outdoor, Moscure IPO, 3500 sq ft outdoor insect trap, hangable mosquito trap India')
     setMeta('og:title', 'Moscure IPO Outdoor Mosquito Trap — ₹21,599', true)
     setMeta('og:description', 'Water resistant, hangable UV LED mosquito trap. Covers 3500 sq ft. Chemical-free, monsoon ready.', true)
-    setMeta('og:url', 'https://moscure.in/products/moscure-ipo-outdoor-mosquito-trap', true)
+    setMeta('og:url', 'https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap', true)
     setMeta('og:type', 'product', true)
+
+    // Canonical tag
+    let canonical = document.querySelector('link[rel="canonical"]')
+    const canonicalCreated = !canonical
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.rel = 'canonical'
+      document.head.appendChild(canonical)
+    }
+    const prevCanonical = canonical.href
+    canonical.href = 'https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap'
 
     // JSON-LD
     const script = document.createElement('script')
@@ -559,19 +591,21 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
 
     return () => {
       document.title = prev.title
+      if (canonicalCreated) canonical.remove()
+      else canonical.href = prevCanonical
       document.getElementById('ipo-schema')?.remove()
     }
   }, [])
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText('https://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')
+    navigator.clipboard.writeText('https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap')
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   const handleWhatsApp = () => {
     window.open(
-      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3500 sq ft coverage, ₹21,599\nhttps://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')}`,
+      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3500 sq ft coverage, ₹21,599\nhttps://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap')}`,
       '_blank',
       'noopener,noreferrer'
     )
@@ -593,29 +627,33 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
           itemType="https://schema.org/BreadcrumbList"
         >
           <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <button
-              onClick={() => onNavigate?.('landing')}
+            <Link
+              to="/"
+              onClick={(e) => { e.preventDefault(); onNavigate?.('landing') }}
               className="hover:text-white transition-colors"
-              itemProp="name"
+              itemProp="item"
             >
-              Home
-            </button>
+              <span itemProp="name">Home</span>
+            </Link>
             <meta itemProp="position" content="1" />
           </li>
           <li><span className="text-gradientyellow">›</span></li>
           <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <button
-              onClick={() => onNavigate?.('product')}
+            <Link
+              to="/product"
+              onClick={(e) => { e.preventDefault(); onNavigate?.('product') }}
               className="hover:text-white transition-colors"
-              itemProp="name"
+              itemProp="item"
             >
-              Products
-            </button>
+              <span itemProp="name">Products</span>
+            </Link>
             <meta itemProp="position" content="2" />
           </li>
           <li><span className="text-gradientyellow">›</span></li>
-          <li className="text-white" itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <span itemProp="name">IPO Outdoor Mosquito Trap</span>
+          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+            <span itemProp="item" itemScope itemType="https://schema.org/WebPage" id="current-page">
+              <span className="text-white" itemProp="name">IPO Outdoor Mosquito Trap</span>
+            </span>
             <meta itemProp="position" content="3" />
           </li>
         </ol>
@@ -894,7 +932,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
 
           <div>
             <h3 className="font-display text-4xl md:text-5xl text-white leading-none">
-              MOSCURE IPO 
+              MOSCURE IPO
             </h3>
             <p className="font-body text-sm text-textMuted italic mt-2">
               Free delivery on all orders

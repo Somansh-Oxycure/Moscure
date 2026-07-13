@@ -698,8 +698,32 @@ export default function DiseasesPage({ onNavigate }) {
   const [activeDisease, setActiveDisease] = useState('dengue')
 
   useEffect(() => {
-    document.title = 'Mosquito-Borne Diseases in India | Moscure'
-    return () => { document.title = 'Moscure' }
+    document.title = 'Mosquito-Borne Diseases in India | Dengue, Malaria, Chikungunya | Moscure'
+
+    const setMeta = (name, content, prop = false) => {
+      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
+      let el = document.querySelector(selector)
+      if (!el) { el = document.createElement('meta'); prop ? el.setAttribute('property', name) : el.setAttribute('name', name); document.head.appendChild(el) }
+      el.setAttribute('content', content)
+      return el
+    }
+
+    const desc = setMeta('description', 'Learn how mosquito-borne diseases like Dengue, Malaria, and Chikungunya spread across India and how Moscure\'s chemical-free UV mosquito trap protects your family without chemicals, sprays, or coils.')
+    const ogUrl = setMeta('og:url', 'https://www.moscure.com/diseases', true)
+
+    let canonical = document.querySelector('link[rel="canonical"]')
+    const canonicalCreated = !canonical
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
+    const prevCanonical = canonical.href
+    canonical.href = 'https://www.moscure.com/diseases'
+
+    return () => {
+      document.title = 'Moscure'
+      desc.remove()
+      ogUrl.remove()
+      if (canonicalCreated) canonical.remove()
+      else canonical.href = prevCanonical
+    }
   }, [])
 
   const toggleDisease = (id) => {

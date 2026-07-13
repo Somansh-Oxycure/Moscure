@@ -10,25 +10,31 @@ import DocProductSelector from '../../components/DocProductSelector'
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const COVERAGE = [
-  '1-year limited warranty from the date of the original retail purchase.',
-  'Free repair or replacement for defects arising from manufacturing faults or material failures.',
-  'Covers electrical and mechanical failures that occur under stated normal operating conditions.',
+  '1-year limited warranty from the date of the original retail purchase, covering all manufacturing defects.',
+  'Free repair or replacement of defective components arising from manufacturing faults or material failures, at Moscure\'s discretion.',
+  'Covers electrical and mechanical failures that occur under stated normal operating conditions as described in the User Manual.',
+  'Warranty service is fulfilled within 7–14 business days of receiving the defective product at the Moscure service centre.',
+  'If a defective product cannot be repaired, Moscure will replace it with the same or an equivalent model at no additional cost to the customer.',
 ]
 
 const EXCLUSIONS = [
-  'Physical damage caused by misuse, accidents, drops, or negligence.',
-  'Damage resulting from use with an incorrect power supply voltage or non-original adapter.',
-  'Unauthorized modifications, component replacements, or attempts to disassemble the device.',
-  'Cosmetic damage including scratches, dents, and discolouration from normal wear and tear.',
-  "Damage caused by exposure to conditions exceeding the product's rated environmental specifications.",
-  'Loss of performance due to failure to perform regular cleaning and maintenance.',
+  'Physical damage caused by misuse, accidents, drops, liquid spills, or negligence not covered under the warranty.',
+  'Damage resulting from use with an incorrect power supply voltage, overloaded circuits, or non-original power adapters.',
+  'Unauthorized modifications, component replacements, or any attempt to disassemble the device by persons other than Moscure-authorised technicians.',
+  'Cosmetic damage including scratches, dents, discolouration, and surface wear from normal everyday use.',
+  'Damage caused by exposure to conditions exceeding the product\'s rated environmental specifications, such as outdoor use for an indoor-only model.',
+  'Loss of performance due to failure to perform regular cleaning and maintenance as outlined in the User Manual.',
+  'Damage caused by power surges, lightning strikes, acts of nature, or other events beyond reasonable control.',
+  'Products with a damaged, altered, or missing serial number or warranty sticker.',
 ]
 
 const NOTES = [
-  'Keep your original warranty card and proof of purchase in a safe place — these are required for all claims.',
-  'No duplicate warranty card will be issued under any circumstances.',
-  'The warranty is non-transferable and applies exclusively to the original purchaser.',
-  'To initiate a warranty claim, contact Moscure support with your purchase receipt and a description of the issue.',
+  'Keep your original warranty card and proof of purchase (invoice or receipt) in a safe place — these documents are required for all warranty claims to be processed.',
+  'No duplicate warranty card will be issued under any circumstances. Retain your original documentation from the point of purchase.',
+  'The warranty is non-transferable and applies exclusively to the original purchaser. It cannot be transferred if the product is resold or gifted.',
+  'To initiate a warranty claim, contact Moscure support at operations@moscure.com with your purchase receipt, a description of the issue, and clear photos of the defect.',
+  'Moscure reserves the right to inspect the product before approving any warranty claim. Decisions made by Moscure\'s technical team are final.',
+  'Shipping costs to the Moscure service centre are the customer\'s responsibility; return shipping for repaired or replaced products is covered by Moscure.',
 ]
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -38,17 +44,28 @@ export default function WarrantyPage() {
   const [product, setProduct] = useState(location.state?.product ?? null)
 
   useEffect(() => {
-    if (!product)    document.title = 'Warranty Information – Select Your MOSCURE Product'
-    if (product === 'outdoor') document.title = 'Warranty Information – MOSCURE IPO 1'
-    if (product === 'indoor')  document.title = 'Warranty Information – MOSCURE IPI 1'
+    if (!product) document.title = 'Warranty Information – Select Your MOSCURE Product'
+    if (product === 'outdoor') document.title = 'Warranty Information – MOSCURE IPO 1 | 1-Year Limited Warranty'
+    if (product === 'indoor') document.title = 'Warranty Information – MOSCURE IPI 1 | 1-Year Limited Warranty'
 
     let meta = document.querySelector('meta[name="description"]')
     if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta) }
-    if (!product) meta.content = 'MOSCURE product warranty information. Select your mosquito trap to view coverage, exclusions, and claim details.'
-    if (product === 'outdoor') meta.content = 'MOSCURE IPO 1 warranty details — 1-year limited warranty coverage, exclusions, and how to initiate a warranty claim.'
-    if (product === 'indoor')  meta.content = 'MOSCURE IPI 1 warranty information. Coming soon.'
+    if (!product) meta.content = 'MOSCURE product warranty information. Select your indoor or outdoor mosquito trap to view full coverage terms, exclusions, and how to make a warranty claim.'
+    if (product === 'outdoor') meta.content = 'MOSCURE IPO 1 warranty details — 1-year limited warranty covering manufacturing defects. Learn what\'s covered, what\'s not, and how to initiate a warranty claim with proof of purchase.'
+    if (product === 'indoor') meta.content = 'MOSCURE IPI 1 warranty details — 1-year limited warranty covering manufacturing defects. Learn what\'s covered, what\'s not, and how to initiate a warranty claim with proof of purchase.'
 
-    return () => { document.title = 'Moscure' }
+    // Canonical tag
+    let canonical = document.querySelector('link[rel="canonical"]')
+    const canonicalCreated = !canonical
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
+    const prevCanonical = canonical.href
+    canonical.href = 'https://www.moscure.com/warranty/'
+
+    return () => {
+      document.title = 'Moscure'
+      if (canonicalCreated) canonical.remove()
+      else canonical.href = prevCanonical
+    }
   }, [product])
 
   if (!product) return <DocProductSelector docTitle="Warranty Info" onSelect={setProduct} indoorPath="/ipi1/warranty" />
@@ -58,7 +75,7 @@ export default function WarrantyPage() {
       <DocHero
         badge="Warranty · IPO Outdoor"
         title="Warranty Info"
-        subtitle="Your MOSCURE IPO 1 is built to last. Here's exactly what's covered, what's not, and how to make a claim."
+        subtitle="Your MOSCURE IPO 1 is built to last. Here's exactly what's covered, what's excluded, and how to make a claim if you ever need to."
         breadcrumb={[
           { label: 'Home', href: '/' },
           { label: 'IPO 1', href: '/products/moscure-ipo-outdoor-mosquito-trap' },
@@ -71,13 +88,13 @@ export default function WarrantyPage() {
 
         {/* ── Warranty badge ──────────────────────────────────────────────── */}
         <div className="flex items-center gap-5 p-6 rounded-2xl bg-gradientcyan/5 border border-gradientcyan/20 mb-2">
-          <ShieldCheck size={36} className="text-gradientcyan flex-shrink-0" />
+          <ShieldCheck size={36} className="text-gradientcyan flex-shrink-0" aria-hidden="true" />
           <div>
             <div className="font-display text-3xl text-white leading-tight">
               1-Year Limited Warranty
             </div>
             <p className="font-body text-sm text-textMuted mt-1">
-              Coverage begins from the date of original retail purchase.
+              Coverage begins from the date of the original retail purchase. Keep your proof of purchase safe.
             </p>
           </div>
         </div>
@@ -87,7 +104,7 @@ export default function WarrantyPage() {
           <SectionHeading
             icon={ShieldCheck}
             title="What's Covered"
-            subtitle="Defects arising from manufacturing are fully covered at no cost to you."
+            subtitle="Defects arising from manufacturing are fully covered at no cost to you during the warranty period."
           />
           <div className="p-6 rounded-2xl border border-borderDefault bg-surface">
             <BulletList items={COVERAGE} />
@@ -126,7 +143,7 @@ export default function WarrantyPage() {
           <SectionHeading
             icon={FileText}
             title="Important Notes"
-            subtitle="Please read carefully to protect your warranty entitlement."
+            subtitle="Please read carefully to protect your warranty entitlement and understand the claims process."
           />
           <div className="flex flex-col gap-3">
             {NOTES.map((note, i) => (
@@ -138,25 +155,26 @@ export default function WarrantyPage() {
         <Divider />
 
         {/* ── Contact to claim ────────────────────────────────────────────── */}
-        <DocSection>
+        {/* <DocSection>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-2xl border border-borderDefault bg-surface">
             <div className="flex items-center gap-4">
-              <Phone size={20} className="text-gradientcyan flex-shrink-0" />
+              <Phone size={20} className="text-gradientcyan flex-shrink-0" aria-hidden="true" />
               <div>
                 <p className="font-body font-semibold text-white text-sm">Need to make a claim?</p>
                 <p className="font-body text-sm text-textMuted mt-0.5">
-                  Contact our support team with proof of purchase.
+                  Contact our support team with proof of purchase and a description of the defect.
                 </p>
               </div>
             </div>
             <a
               href="mailto:operations@moscure.com"
               className="flex-shrink-0 inline-flex items-center gap-2 bg-gradientcyan/10 border border-gradientcyan/30 text-gradientcyan font-mono text-xs uppercase tracking-widest px-5 py-2.5 rounded-full hover:bg-gradientcyan/20 transition-colors duration-200"
+              aria-label="Email Moscure support to initiate a warranty claim"
             >
               Contact Support →
             </a>
           </div>
-        </DocSection>
+        </DocSection> */}
 
       </div>
       <DocPageNav product="outdoor" current="warranty" />

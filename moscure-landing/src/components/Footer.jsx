@@ -3,27 +3,26 @@ import { Link } from 'react-router-dom'
 import logoImg from '../assets/logo.png'
 
 const QUICK_LINKS = [
-  { label: 'Home',       href: '#home',       page: 'landing' },
-  { label: 'Product',    href: '#products',   page: 'product' },
-  { label: 'Diseases',   href: '#diseases',   page: 'diseases' },
-  { label: 'Comparison', href: '#comparison', page: 'comparison' },
-  { label: 'About Us',   href: '#about-hero', page: 'about' },
-  { label: 'Contact',    href: '#contact-hero', page: 'contact' },
+  { label: 'Home',       href: '/',           page: 'landing' },
+  { label: 'Product',    href: '/product',    page: 'product' },
+  { label: 'Diseases',   href: '/diseases',   page: 'diseases' },
+  { label: 'Comparison', href: '/comparison', page: 'comparison' },
+  { label: 'About Us',   href: '/about',      page: 'about' },
+  { label: 'Contact',    href: '/contact',    page: 'contact' },
 ]
 
 const RESOURCES = [
-  { label: 'User Manual',        to: '/user-manual' },
-  { label: 'Installation Guide', to: '/installation-guide' },
-  { label: 'FAQs',               to: '#' },
-  { label: 'Warranty Info',      to: '/warranty' },
-  { label: 'Safety Guidelines',  to: '/safety' },
+  { label: 'User Manual',        to: '/user-manual/' },
+  { label: 'Installation Guide', to: '/installation-guide/' },
+  { label: 'Warranty Info',      to: '/warranty/' },
+  { label: 'Safety Guidelines',  to: '/safety/' },
 ]
 
 const SOCIALS = [
-  { Icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/mos_cure' },
-  { Icon: Facebook, label: 'Facebook', href: '#' },
-  { Icon: Twitter, label: 'Twitter / X', href: '#' },
-  { Icon: Linkedin, label: 'LinkedIn', href: '#' },
+  { Icon: Instagram, label: 'Follow Moscure on Instagram', href: 'https://www.instagram.com/mos_cure' },
+  { Icon: Facebook,  label: 'Follow Moscure on Facebook',  href: '#' },
+  { Icon: Twitter,   label: 'Follow Moscure on Twitter/X', href: '#' },
+  { Icon: Linkedin,  label: 'Follow Moscure on LinkedIn',  href: '#' },
 ]
 
 export default function Footer({ onNavigate }) {
@@ -52,9 +51,21 @@ export default function Footer({ onNavigate }) {
 
           {/* Col 1 — Brand */}
           <div className="flex flex-col gap-5">
-            <button onClick={() => { onNavigate?.('landing'); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="text-left">
-              <img src={logoImg} alt="Moscure organic mosquito trap official logo" className="h-24 brightness-125 w-auto object-contain" />
-            </button>
+            {/* Crawlable Link instead of button */}
+            <Link
+              to="/"
+              onClick={() => { onNavigate?.('landing'); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+              className="text-left inline-block"
+              aria-label="Moscure — Go to Homepage"
+            >
+              <img
+                src={logoImg}
+                alt="Moscure UV mosquito trap official logo"
+                width={96}
+                height={96}
+                className="h-24 brightness-125 w-auto object-contain"
+              />
+            </Link>
             <p className="font-body text-sm text-textMuted leading-relaxed">
               India&apos;s most effective MLID and Phototaxis technology mosquito trap. Chemical-free,
               family-safe protection against Dengue, Malaria, and Chikungunya.
@@ -66,17 +77,18 @@ export default function Footer({ onNavigate }) {
                   key={label}
                   href={href}
                   aria-label={label}
-                  target='blank'
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 flex items-center justify-center rounded-full border border-borderDefault hover:scale-125 text-gradientcyan transition-all duration-200"
                 >
-                  <Icon size={15} />
+                  <Icon size={15} aria-hidden="true" />
                 </a>
               ))}
             </div>
           </div>
 
           {/* Col 2 — Quick Links */}
-          <div>
+          <nav aria-label="Footer quick links">
             <h4 className="font-mono text-xs uppercase tracking-widest text-white mb-5">
               Quick Links
             </h4>
@@ -93,10 +105,10 @@ export default function Footer({ onNavigate }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Col 3 — Resources */}
-          <div>
+          <nav aria-label="Footer resource links">
             <h4 className="font-mono text-xs uppercase tracking-widest text-white mb-5">
               Resources
             </h4>
@@ -112,7 +124,7 @@ export default function Footer({ onNavigate }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Col 4 — Contact */}
           <div>
@@ -121,32 +133,34 @@ export default function Footer({ onNavigate }) {
             </h4>
             <ul className="flex flex-col gap-4">
               <li className="flex items-start gap-3">
-                <span className="text-base mt-0.5">📍</span>
+                <span className="text-base mt-0.5" aria-hidden="true">📍</span>
                 <span className="font-body text-sm text-textMuted leading-relaxed">
                   DLF Corporate Greens, <br /> Tower No-4, 12th Floor 1207 <br /> to 1212 and 1214 to 1216, <br /> Southern peripheral Rd, Sec-74A, Gurugram, Haryana- <br /> 122004
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-base">📞</span>
+                <span className="text-base" aria-hidden="true">📞</span>
                 <a
                   href="tel:+918010111177"
                   className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors"
+                  aria-label="Call Moscure support: +91 80101 11177"
                 >
                   +91 80101 11177
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-base">✉</span>
+                <span className="text-base" aria-hidden="true">✉</span>
                 <a
                   href="mailto:operations@moscure.com"
                   className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors"
+                  aria-label="Email Moscure at operations@moscure.com"
                 >
                   operations@moscure.com
                 </a>
               </li>
             </ul>
             <a
-              href="#contact-hero"
+              href="/contact"
               onClick={(e) => { e.preventDefault(); onNavigate?.('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
               className="mt-6 inline-flex items-center gap-2 bg-gradientcyan/10 border border-gradientcyan/30 text-gradientcyan font-mono text-xs uppercase tracking-wider px-4 py-2.5 rounded-full hover:bg-gradientcyan/20 transition-colors duration-200"
             >
@@ -164,7 +178,7 @@ export default function Footer({ onNavigate }) {
             <a href="#" className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors">
               Privacy Policy
             </a>
-            <span className="text-borderDefault">·</span>
+            <span className="text-borderDefault" aria-hidden="true">·</span>
             <a href="#" className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors">
               Terms of Service
             </a>

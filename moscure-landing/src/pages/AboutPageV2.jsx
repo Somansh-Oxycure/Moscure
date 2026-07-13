@@ -445,8 +445,32 @@ export default function AboutPageV2({ onNavigate }) {
   const scaleX = useSpring(scrollYProgress, { stiffness: 400, damping: 90 })
 
   useEffect(() => {
-    document.title = 'Our Story | Moscure — Beyond Business'
-    return () => { document.title = 'Moscure' }
+    document.title = 'Our Story | Moscure — Beyond Business, Protecting Families Across India'
+
+    const setMeta = (name, content, prop = false) => {
+      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
+      let el = document.querySelector(selector)
+      if (!el) { el = document.createElement('meta'); prop ? el.setAttribute('property', name) : el.setAttribute('name', name); document.head.appendChild(el) }
+      el.setAttribute('content', content)
+      return el
+    }
+
+    const desc = setMeta('description', 'Discover the Moscure story — an Indian brand built on a mission to protect families from mosquito-borne diseases using 100% chemical-free UV LED technology. Learn about our MLID phototaxis innovation and commitment to family safety.')
+    const ogUrl = setMeta('og:url', 'https://www.moscure.com/about', true)
+
+    let canonical = document.querySelector('link[rel="canonical"]')
+    const canonicalCreated = !canonical
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
+    const prevCanonical = canonical.href
+    canonical.href = 'https://www.moscure.com/about'
+
+    return () => {
+      document.title = 'Moscure'
+      desc.remove()
+      ogUrl.remove()
+      if (canonicalCreated) canonical.remove()
+      else canonical.href = prevCanonical
+    }
   }, [])
 
   return (

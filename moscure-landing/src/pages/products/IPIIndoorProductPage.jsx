@@ -23,38 +23,38 @@ import decp5 from '../../assets/Indoor_decp_5.jpg'
 // ─── Static Data ──────────────────────────────────────────────────────────────
 
 const PRODUCT = {
-  id:          'ipi-indoor',
-  sku:         'MOSCURE-IPI-001',
-  name:        'IPI Indoor Mosquito & Insect Trap',
-  fullTitle:   'IPI Indoor Mosquito & Insect Trap 365nm UV LED | Silent Electric Bug Zapper | Covers 400 sq ft | Odor-Free, Chemical-Free | Safe for Kids & Pets | 1.5W Compact Fly Killer | 280g Lightweight',
-  brand:       'Moscure',
+  id: 'ipi-indoor',
+  sku: 'MOSCURE-IPI-001',
+  name: 'IPI Indoor Mosquito & Insect Trap',
+  fullTitle: 'IPI Indoor Mosquito & Insect Trap 365nm UV LED | Silent Electric Bug Trapper | Covers 400 sq ft | Odor-Free, Chemical-Free | Safe for Kids & Pets | 1.5W Compact Fly Killer | 280g Lightweight',
+  brand: 'Moscure',
   originalPrice: 3299,
-  price:       2199,
-  currency:    '₹',
-  inStock:     true,
-  rating:      4.8,
+  price: 2199,
+  currency: '₹',
+  inStock: true,
+  rating: 4.8,
   reviewCount: 124,
-  badge:       'INDOOR',
+  badge: 'INDOOR',
 }
 
 const PRODUCT_IMAGES = [
-  { id: 1, alt: 'Moscure IPI Indoor Mosquito Trap — Front View',           src: img1 },
-  { id: 2, alt: 'Moscure IPI Indoor — UV LED Light Active',                src: img2 },
-  { id: 3, alt: 'Moscure IPI — Collection Tray Detail',                    src: img3 },
-  { id: 4, alt: 'Moscure IPI — Scale & Size Reference (280g)',             src: img4 },
-  { id: 5, alt: 'Moscure IPI — Placed in Bedroom Setting',                 src: img5 },
+  { id: 1, alt: 'Moscure IPI Indoor Mosquito Trap — Front View', src: img1 },
+  { id: 2, alt: 'Moscure IPI Indoor — UV LED Light Active', src: img2 },
+  { id: 3, alt: 'Moscure IPI — Collection Tray Detail', src: img3 },
+  { id: 4, alt: 'Moscure IPI — Scale & Size Reference (280g)', src: img4 },
+  { id: 5, alt: 'Moscure IPI — Placed in Bedroom Setting', src: img5 },
 ]
 
 const PRODUCT_SPECS = [
-  { label: 'Brand',               value: 'Moscure'                   },
-  { label: 'Colour',              value: 'White'                     },
-  { label: 'Material',            value: 'Plastic'                   },
-  { label: 'Product Dimensions',  value: '11.9L × 11.9W × 17.8H cm' },
-  { label: 'Item Weight',         value: '280 Grams'                 },
-  { label: 'Number of Pieces',    value: '1'                         },
-  { label: 'Net Quantity',        value: '1.0 Count'                 },
-  { label: 'UPC',                 value: '788792950948'              },
-  { label: 'Power Source',        value: 'Corded Electric (1.5W)'    },
+  { label: 'Brand', value: 'Moscure' },
+  { label: 'Colour', value: 'White' },
+  { label: 'Material', value: 'Plastic' },
+  { label: 'Product Dimensions', value: '11.9L × 11.9W × 17.8H cm' },
+  { label: 'Item Weight', value: '280 Grams' },
+  { label: 'Number of Pieces', value: '1' },
+  { label: 'Net Quantity', value: '1.0 Count' },
+  { label: 'UPC', value: '788792950948' },
+  { label: 'Power Source', value: 'Corded Electric (1.5W)' },
 ]
 
 const PRODUCT_BULLETS = [
@@ -96,18 +96,18 @@ const PRODUCT_BULLETS = [
 ]
 
 const TRUST_BADGES = [
-  { icon: ShieldCheck, label: '100% Chemical-Free'   },
-  { icon: Leaf,        label: 'Safe for Kids & Pets' },
-  { icon: Volume2,     label: 'Silent Operation'      },
-  { icon: Clock,       label: '24/7 Protection'       },
+  { icon: ShieldCheck, label: '100% Chemical-Free' },
+  { icon: Leaf, label: 'Safe for Kids & Pets' },
+  { icon: Volume2, label: 'Silent Operation' },
+  { icon: Clock, label: '24/7 Protection' },
 ]
 
 const DETAIL_IMAGES = [
-  { id: 1, alt: 'How Moscure IPI UV LED Trap Works — 365nm Phototaxis Mechanism',                    src: decp1 },
-  { id: 2, alt: 'Moscure IPI Coverage Area — 400 sq ft Indoor Protection',                           src: decp2 },
-  { id: 3, alt: 'Moscure IPI Chemical-Free vs Traditional Mosquito Coils Comparison',           src: decp3 },
-  { id: 4, alt: 'Moscure IPI Easy Maintenance — Clean Collection Tray',                                src: decp4 },
-  { id: 5, alt: 'Moscure IPI Indoor Trap in use — Real Results from Indian Homes',                                 src: decp5 },
+  { id: 1, alt: 'How Moscure IPI UV LED Trap Works — 365nm Phototaxis Mechanism', src: decp1 },
+  { id: 2, alt: 'Moscure IPI Coverage Area — 400 sq ft Indoor Protection', src: decp2 },
+  { id: 3, alt: 'Moscure IPI Chemical-Free vs Traditional Mosquito Coils Comparison', src: decp3 },
+  { id: 4, alt: 'Moscure IPI Easy Maintenance — Clean Collection Tray', src: decp4 },
+  { id: 5, alt: 'Moscure IPI Indoor Trap in use — Real Results from Indian Homes', src: decp5 },
 ]
 
 const REVIEWS = [
@@ -140,9 +140,9 @@ const REVIEWS = [
 const RATING_BREAKDOWN = [
   { stars: 5, count: 89, percent: 72 },
   { stars: 4, count: 24, percent: 19 },
-  { stars: 3, count:  11, percent:  9 },
-  { stars: 2, count:  0, percent:  0 },
-  { stars: 1, count:  0, percent:  0 },
+  { stars: 3, count: 11, percent: 9 },
+  { stars: 2, count: 0, percent: 0 },
+  { stars: 1, count: 0, percent: 0 },
 ]
 
 const TICKER_ITEMS = [
@@ -168,17 +168,40 @@ const SCHEMA_JSON = JSON.stringify({
   sku: 'MOSCURE-IPI-001',
   mpn: 'IPI-001',
   gtin: '788792950948',
+  url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
   offers: {
     '@type': 'Offer',
     price: '3299',
-    priceCurrency: '',
+    priceCurrency: 'INR',
+    priceValidUntil: '2027-12-31',
     availability: 'https://schema.org/InStock',
+    url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
     seller: { '@type': 'Organization', name: 'Moscure' },
+    hasMerchantReturnPolicy: {
+      '@type': 'MerchantReturnPolicy',
+      applicableCountry: 'IN',
+      returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+      merchantReturnDays: 7,
+      returnMethod: 'https://schema.org/ReturnByMail',
+      returnFees: 'https://schema.org/FreeReturn',
+    },
+    shippingDetails: {
+      '@type': 'OfferShippingDetails',
+      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'INR' },
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 2, unitCode: 'DAY' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY' },
+      },
+    },
   },
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
     reviewCount: '124',
+    bestRating: '5',
+    worstRating: '1',
   },
 })
 
@@ -186,8 +209,8 @@ const SCHEMA_JSON = JSON.stringify({
 
 function StarRating({ rating, size = 'sm' }) {
   const sizeClass = size === 'lg' ? 'w-5 h-5' : size === 'md' ? 'w-4 h-4' : 'w-3.5 h-3.5'
-  const full  = Math.floor(rating)
-  const frac  = rating - full
+  const full = Math.floor(rating)
+  const frac = rating - full
   const empty = 5 - full - (frac > 0 ? 1 : 0)
 
   return (
@@ -253,11 +276,10 @@ function ImageGallery({ images, activeIndex, onSelect }) {
             onClick={() => onSelect(i)}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
-            className={`w-14 h-14 rounded-lg border-2 overflow-hidden cursor-pointer transition-colors shrink-0 ${
-              i === activeIndex
+            className={`w-14 h-14 rounded-lg border-2 overflow-hidden cursor-pointer transition-colors shrink-0 ${i === activeIndex
                 ? 'border-gradientcyan bg-gradientcyan/5'
                 : 'border-borderDefault bg-surface hover:border-white/30'
-            }`}
+              }`}
           >
             {img.src ? (
               <img src={img.src} alt={img.alt} className="w-full h-full object-contain p-1 bg-white" />
@@ -287,9 +309,8 @@ function SpecsTable({ specs }) {
       {visible.map((s, i) => (
         <div
           key={s.label}
-          className={`flex items-center justify-between py-2.5 px-4 border-b border-borderDefault/50 last:border-0 ${
-            i % 2 === 1 ? 'bg-white/[0.02]' : ''
-          }`}
+          className={`flex items-center justify-between py-2.5 px-4 border-b border-borderDefault/50 last:border-0 ${i % 2 === 1 ? 'bg-white/[0.02]' : ''
+            }`}
         >
           <span className="font-body text-sm text-textMuted">{s.label}</span>
           <span className="font-body text-sm text-white font-medium text-right ml-4">{s.value}</span>
@@ -478,9 +499,8 @@ function TrustTicker() {
         {items.map((item, i) => (
           <span key={i} className="flex items-center shrink-0">
             <span
-              className={`font-mono uppercase text-xs tracking-widest whitespace-nowrap px-4 ${
-                i % 2 === 0 ? 'text-gradientcyan' : 'text-textMuted'
-              }`}
+              className={`font-mono uppercase text-xs tracking-widest whitespace-nowrap px-4 ${i % 2 === 0 ? 'text-gradientcyan' : 'text-textMuted'
+                }`}
             >
               {item}
             </span>
@@ -527,7 +547,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
       keywords: document.querySelector('meta[name="keywords"]')?.getAttribute('content'),
     }
 
-    document.title = 'Moscure IPI Indoor Mosquito Trap | UV LED Bug Zapper | Chemical-Free | ₹3,299'
+    document.title = 'Moscure IPI Indoor Mosquito Trap | UV LED Bug Trapper | Chemical-Free | ₹3,299'
 
     const setMeta = (name, content, prop = false) => {
       const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
@@ -541,11 +561,22 @@ export default function IPIIndoorProductPage({ onNavigate }) {
     }
 
     setMeta('description', 'Moscure IPI Indoor Mosquito & Insect Trap uses 365nm UV LED technology to silently attract and trap mosquitoes, flies & gnats. Covers 400 sq ft. 100% chemical-free, safe for kids & pets. Energy efficient 1.5W. Buy now at ₹3,299.')
-    setMeta('keywords', 'indoor mosquito trap India, UV mosquito killer, chemical free bug zapper, dengue malaria mosquito trap, silent mosquito catcher, mosquito trap kids safe, Moscure IPI, mosquito trap 400 sq ft, electric insect trap India')
+    setMeta('keywords', 'indoor mosquito trap India, UV mosquito killer, chemical free bug Trapper, dengue malaria mosquito trap, silent mosquito catcher, mosquito trap kids safe, Moscure IPI, mosquito trap 400 sq ft, electric insect trap India')
     setMeta('og:title', 'Moscure IPI Indoor Mosquito Trap — ₹3,299', true)
     setMeta('og:description', 'Silent, chemical-free UV LED mosquito trap. Safe for kids & pets. Covers 400 sq ft.', true)
-    setMeta('og:url', 'https://moscure.in/products/moscure-ipi-indoor-mosquito-trap', true)
+    setMeta('og:url', 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap', true)
     setMeta('og:type', 'product', true)
+
+    // Canonical tag
+    let canonical = document.querySelector('link[rel="canonical"]')
+    const canonicalCreated = !canonical
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.rel = 'canonical'
+      document.head.appendChild(canonical)
+    }
+    const prevCanonical = canonical.href
+    canonical.href = 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap'
 
     // JSON-LD
     const script = document.createElement('script')
@@ -557,19 +588,21 @@ export default function IPIIndoorProductPage({ onNavigate }) {
     return () => {
       document.title = prev.title
       if (prev.desc) setMeta('description', prev.desc)
+      if (canonicalCreated) canonical.remove()
+      else canonical.href = prevCanonical
       document.getElementById('ipi-schema')?.remove()
     }
   }, [])
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText('https://moscure.in/products/moscure-ipi-indoor-mosquito-trap')
+    navigator.clipboard.writeText('https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap')
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   const handleWhatsApp = () => {
     window.open(
-      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPI Indoor Mosquito Trap — Chemical-Free, UV LED, ₹3,299\nhttps://moscure.in/products/moscure-ipi-indoor-mosquito-trap')}`,
+      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPI Indoor Mosquito Trap — Chemical-Free, UV LED, ₹3,299\nhttps://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap')}`,
       '_blank',
       'noopener,noreferrer'
     )
@@ -587,25 +620,29 @@ export default function IPIIndoorProductPage({ onNavigate }) {
       >
         <ol className="flex items-center gap-2 font-mono text-xs text-textMuted" itemScope itemType="https://schema.org/BreadcrumbList">
           <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <button
-              onClick={() => onNavigate?.('landing')}
+            <Link
+              to="/"
+              onClick={(e) => { e.preventDefault(); onNavigate?.('landing') }}
               className="hover:text-white transition-colors"
-              itemProp="name"
-            >Home</button>
+              itemProp="item"
+            ><span itemProp="name">Home</span></Link>
             <meta itemProp="position" content="1" />
           </li>
           <li><span className="text-gradientcyan">›</span></li>
           <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <button
-              onClick={() => onNavigate?.('product')}
+            <Link
+              to="/product"
+              onClick={(e) => { e.preventDefault(); onNavigate?.('product') }}
               className="hover:text-white transition-colors"
-              itemProp="name"
-            >Products</button>
+              itemProp="item"
+            ><span itemProp="name">Products</span></Link>
             <meta itemProp="position" content="2" />
           </li>
           <li><span className="text-gradientcyan">›</span></li>
-          <li className="text-white" itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <span itemProp="name">IPI Indoor Mosquito Trap</span>
+          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+            <span itemProp="item" itemScope itemType="https://schema.org/WebPage" id="current-page">
+              <span className="text-white" itemProp="name">IPI Indoor Trap</span>
+            </span>
             <meta itemProp="position" content="3" />
           </li>
         </ol>
@@ -707,7 +744,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
             <div className="flex flex-col gap-3" ref={ctaRef}>
               <motion.a
                 href="https://www.amazon.in/Moscure-Mosquito-Odor-Free-Chemical-Free-Lightweight/dp/B0GCF5LM5B/ref=sr_1_1_sspa?sr=8-1-spons&aref=LNbvtfqxv6&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1"
-              target='blank'
+                target='blank'
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0, 245, 212, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center gap-2 bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4 w-full"
@@ -884,7 +921,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
 
           <div>
             <h3 className="font-display text-4xl md:text-5xl text-white leading-none">
-              MOSCURE IPI 
+              MOSCURE IPI
             </h3>
             <p className="font-body text-sm text-textMuted italic mt-2">
               Free delivery on all orders

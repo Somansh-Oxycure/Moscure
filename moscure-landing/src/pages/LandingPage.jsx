@@ -59,8 +59,10 @@ function HeroSection({ onNavigate }) {
       >
         <img
           src={mosquitoSvg}
-          alt=""
+          alt="Moscure Chemical-Free Protection mosquito illustration"
           aria-hidden="true"
+          width={400}
+          height={400}
           className="w-full opacity-[0.06] text-gradientcyan"
           style={{ filter: 'invert(1)' }}
         />
@@ -121,10 +123,12 @@ function HeroSection({ onNavigate }) {
               className="mt-8 flex flex-wrap items-center gap-4"
             >
               <motion.a
-                onClick={() => onNavigate('product')}
+                href="/product"
+                onClick={(e) => { e.preventDefault(); onNavigate('product') }}
                 whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0,245,212,0.4)' }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-2 bg-gradientcyan text-background font-bold font-mono text-sm px-8 py-4 rounded-full shadow-lg shadow-gradientcyan/20 transition-all"
+                aria-label="Buy Moscure mosquito trap — view all products"
               >
                 BUY NOW <span className="text-base">→</span>
               </motion.a>
@@ -179,6 +183,8 @@ function HeroSection({ onNavigate }) {
               <img
                 src={productImg}
                 alt="Moscure UV LED Mosquito Trap - Non-Toxic Organic Mosquito Killer device"
+                width={600}
+                height={600}
                 className="w-full h-full object-contain p-6 mix-blend-luminosity opacity-80"
                 style={{ backgroundColor: '#0d1a15' }}
               />
@@ -200,6 +206,8 @@ function HeroSection({ onNavigate }) {
               <img
                 src={productImg}
                 alt="Moscure UV LED Mosquito Trap - Non-Toxic Organic Mosquito Killer device"
+                width={600}
+                height={600}
                 className="w-full h-full object-contain p-4"
               />
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -324,7 +332,7 @@ function DiseaseCard({ disease, index }) {
         style={{ background: `linear-gradient(90deg, ${disease.gradientFrom}, ${disease.gradientTo})`, boxShadow: `0 0 12px ${disease.color}60` }}
       />
       <div className="absolute bottom-2 right-2 w-32 h-40 pointer-events-none select-none opacity-[0.04] group-hover:opacity-[0.07] transition-opacity duration-500">
-        <img src={mosquitoSvg} alt="" aria-hidden="true" className="w-full h-full" style={{ filter: 'invert(1)' }} />
+        <img src={mosquitoSvg} alt="Moscure Chemical-Free Protection mosquito illustration" aria-hidden="true" className="w-full h-full" style={{ filter: 'invert(1)' }} />
       </div>
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"

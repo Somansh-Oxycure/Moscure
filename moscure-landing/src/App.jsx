@@ -65,9 +65,13 @@ function AppInner() {
         <Route path="/products/moscure-ipi-indoor-mosquito-trap" element={<IPIIndoorProductPage onNavigate={handleNavigate} />} />
         <Route path="/products/moscure-ipo-outdoor-mosquito-trap" element={<IPOOutdoorProductPage onNavigate={handleNavigate} />} />
         <Route path="/user-manual" element={<UserManualPage />} />
+        <Route path="/user-manual/" element={<UserManualPage />} />
         <Route path="/installation-guide" element={<InstallationGuidePage />} />
+        <Route path="/installation-guide/" element={<InstallationGuidePage />} />
         <Route path="/warranty" element={<WarrantyPage />} />
+        <Route path="/warranty/" element={<WarrantyPage />} />
         <Route path="/safety" element={<SafetyGuidelinesPage />} />
+        <Route path="/safety/" element={<SafetyGuidelinesPage />} />
         <Route path="/ipi1/user-manual" element={<IPI1UserManualPage />} />
         <Route path="/ipi1/installation-guide" element={<IPI1InstallationGuidePage />} />
         <Route path="/ipi1/warranty" element={<IPI1WarrantyPage />} />

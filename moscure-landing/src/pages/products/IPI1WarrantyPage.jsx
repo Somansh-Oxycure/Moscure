@@ -130,8 +130,8 @@ export default function IPI1WarrantyPage() {
         <Divider />
 
         {/* ── Contact to claim ────────────────────────────────────────────── */}
-        <DocSection>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-2xl border border-borderDefault bg-surface">
+        {/* <DocSection> */}
+        {/* <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-2xl border border-borderDefault bg-surface">
             <div className="flex items-center gap-4">
               <Phone size={20} className="text-gradientcyan flex-shrink-0" />
               <div>
@@ -147,8 +147,8 @@ export default function IPI1WarrantyPage() {
             >
               Contact Support →
             </a>
-          </div>
-        </DocSection>
+          </div> */}
+        {/* </DocSection> */}
 
       </div>
       <DocPageNav product="indoor" current="warranty" />

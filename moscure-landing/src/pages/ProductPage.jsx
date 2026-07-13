@@ -34,6 +34,8 @@ function ProductCard({ product, onNavigate }) {
           <img
             src={imgSrc}
             alt={`${product.name} - Moscure organic mosquito trap device`}
+            width={400}
+            height={256}
             className="w-full h-full object-contain p-8"
           />
           {/* Gradient bleed into card body */}
@@ -540,6 +542,48 @@ function BottomCTASection({ onNavigate }) {
 // ─────────────────────────────────────────────────────────
 
 export default function ProductPage({ onNavigate }) {
+  useEffect(() => {
+    const prevTitle = document.title
+    document.title = 'Moscure Products — IPI Indoor & IPO Outdoor UV Mosquito Traps | Buy Online India'
+
+    const setMeta = (name, content, prop = false) => {
+      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
+      let el = document.querySelector(selector)
+      if (!el) {
+        el = document.createElement('meta')
+        prop ? el.setAttribute('property', name) : el.setAttribute('name', name)
+        document.head.appendChild(el)
+      }
+      el.setAttribute('content', content)
+      return el
+    }
+
+    const desc = setMeta('description', 'Shop Moscure\'s UV LED mosquito traps — the IPI Indoor Trap (covers 400 sq ft) and IPO Outdoor Trap (covers 3500 sq ft). 100% chemical-free, safe for kids & pets. India\'s leading MLID phototaxis mosquito protection.')
+    const ogTitle = setMeta('og:title', 'Moscure Products — IPI Indoor & IPO Outdoor UV Mosquito Traps', true)
+    const ogDesc = setMeta('og:description', 'Browse Moscure\'s chemical-free UV mosquito traps for indoor and outdoor use. Safe for kids and pets. Buy online in India.', true)
+    const ogUrl = setMeta('og:url', 'https://www.moscure.com/product', true)
+
+    // Canonical tag
+    let canonical = document.querySelector('link[rel="canonical"]')
+    const canonicalCreated = !canonical
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.rel = 'canonical'
+      document.head.appendChild(canonical)
+    }
+    const prevCanonical = canonical.href
+    canonical.href = 'https://www.moscure.com/product'
+
+    return () => {
+      document.title = prevTitle
+      desc.remove()
+      ogTitle.remove()
+      ogDesc.remove()
+      ogUrl.remove()
+      if (canonicalCreated) canonical.remove()
+      else canonical.href = prevCanonical
+    }
+  }, [])
   return (
     <main>
       <ProductsHeroSection onNavigate={onNavigate} />

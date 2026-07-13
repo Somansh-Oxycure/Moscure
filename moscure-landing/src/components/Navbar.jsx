@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import logoImg from '../assets/logo.png'
 
 const NAV_LINKS = [
-  { label: 'HOME',       href: '#home',        page: 'landing' },
-  { label: 'PRODUCT',    href: '#products',    page: 'product' },
-  { label: 'DISEASES',   href: '#hero',        page: 'diseases' },
-  { label: 'COMPARISON', href: '#comparison',  page: 'comparison' },
-  { label: 'ABOUT US',   href: '#about-hero',  page: 'about' },
-  { label: 'CONTACT',    href: '#contact-hero', page: 'contact' },
+  { label: 'HOME',       href: '/',          page: 'landing' },
+  { label: 'PRODUCT',    href: '/product',   page: 'product' },
+  { label: 'DISEASES',   href: '/diseases',  page: 'diseases' },
+  { label: 'COMPARISON', href: '/comparison', page: 'comparison' },
+  { label: 'ABOUT US',   href: '/about',     page: 'about' },
+  { label: 'CONTACT',    href: '/contact',   page: 'contact' },
 ]
 
 export default function Navbar({ onNavigate }) {
@@ -26,34 +26,15 @@ export default function Navbar({ onNavigate }) {
 
   const handleLinkClick = (link, e) => {
     setMobileOpen(false)
-    if (link.page === 'product') {
-      e.preventDefault()
-      onNavigate?.('product')
-    } else if (link.page === 'diseases') {
-      e.preventDefault()
-      onNavigate?.('diseases')
-    } else if (link.page === 'comparison') {
-      e.preventDefault()
-      onNavigate?.('comparison')
-    } else if (link.page === 'about') {
-      e.preventDefault()
-      onNavigate?.('about')
-    } else if (link.page === 'contact') {
-      e.preventDefault()
-      onNavigate?.('contact')
-    } else if (location.pathname !== '/') {
-      e.preventDefault()
-      onNavigate?.('landing')
-    }
+    // Allow normal navigation — href is already the real URL
+    // Only prevent default if we want to use the onNavigate handler for SPA routing
+    e.preventDefault()
+    onNavigate?.(link.page)
   }
 
   const isActiveLink = (link) => {
-    if (link.page === 'product') return location.pathname === '/product'
-    if (link.page === 'diseases') return location.pathname === '/diseases'
-    if (link.page === 'comparison') return location.pathname === '/comparison'
-    if (link.page === 'about') return location.pathname === '/about'
-    if (link.page === 'contact') return location.pathname === '/contact'
-    return location.pathname === '/' && link.label === 'HOME'
+    if (link.page === 'landing') return location.pathname === '/'
+    return location.pathname.startsWith(link.href) && link.href !== '/'
   }
 
   return (
@@ -69,20 +50,24 @@ export default function Navbar({ onNavigate }) {
         }`}
       >
         <div className="max-w-7xl mx-auto mt-4 mb-2 px-6 md:px-12 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <button
+          {/* Logo — crawlable Link instead of button */}
+          <Link
+            to="/"
             onClick={() => onNavigate?.('landing')}
             className="flex items-center self-center gap-3 group shrink-0"
+            aria-label="Moscure — Go to Homepage"
           >
             <img
               src={logoImg}
-              alt="Moscure organic mosquito trap official logo"
+              alt="Moscure UV mosquito trap official logo"
+              width={96}
+              height={96}
               className="h-24 w-auto object-contain brightness-150"
             />
-          </button>
+          </Link>
 
           {/* Desktop nav links */}
-          <ul className="hidden lg:flex items-center gap-1">
+          <ul className="hidden lg:flex items-center gap-1" role="navigation" aria-label="Main navigation">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
                 <a
@@ -93,6 +78,7 @@ export default function Navbar({ onNavigate }) {
                       ? 'text-gradientcyan'
                       : 'text-textMuted hover:text-white'
                   }`}
+                  aria-current={isActiveLink(link) ? 'page' : undefined}
                 >
                   {link.label}
                   <span
@@ -109,19 +95,20 @@ export default function Navbar({ onNavigate }) {
 
           {/* CTA + hamburger */}
           <div className="flex items-center gap-4">
-            <motion.button
+            <Link
+              to="/product"
               onClick={() => onNavigate?.('product')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="hidden md:inline-flex items-center gap-2 bg-gradientcyan text-background font-bold font-mono text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-gradientcyan/30 transition-shadow duration-300"
+              className="hidden md:inline-flex items-center gap-2 bg-gradientcyan text-background font-bold font-mono text-sm px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-gradientcyan/30 hover:scale-105 active:scale-97 transition-all duration-300"
+              aria-label="Browse Moscure mosquito trap products"
             >
               Browse
               <span className="text-base leading-none">→</span>
-            </motion.button>
+            </Link>
 
             <button
               onClick={() => setMobileOpen((o) => !o)}
-              aria-label="Toggle menu"
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileOpen}
               className="lg:hidden p-2 text-textMuted hover:text-white transition-colors"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -141,7 +128,7 @@ export default function Navbar({ onNavigate }) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed top-16 left-0 right-0 z-40 bg-surface/95 backdrop-blur-md border-b border-borderDefault overflow-hidden lg:hidden"
           >
-            <ul className="flex flex-col px-6 py-4 gap-1">
+            <ul className="flex flex-col px-6 py-4 gap-1" role="navigation" aria-label="Mobile navigation">
               {NAV_LINKS.map((link, i) => (
                 <motion.li
                   key={link.label}
@@ -157,18 +144,21 @@ export default function Navbar({ onNavigate }) {
                         ? 'text-gradientcyan'
                         : 'text-textMuted hover:text-gradientcyan'
                     }`}
+                    aria-current={isActiveLink(link) ? 'page' : undefined}
                   >
                     {link.label}
                   </a>
                 </motion.li>
               ))}
               <li className="pt-4 pb-2">
-                <button
+                <Link
+                  to="/product"
                   onClick={() => { onNavigate?.('product'); setMobileOpen(false) }}
-                  className="w-full text-center bg-gradientcyan text-background font-bold font-mono text-sm px-6 py-3 rounded-full"
+                  className="block w-full text-center bg-gradientcyan text-background font-bold font-mono text-sm px-6 py-3 rounded-full"
+                  aria-label="Discover Moscure mosquito trap products"
                 >
                   Discover Moscure →
-                </button>
+                </Link>
               </li>
             </ul>
           </motion.div>
