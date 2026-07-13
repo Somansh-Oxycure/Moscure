@@ -538,7 +538,7 @@ export default function ContactPage({ onNavigate }) {
         message: formData.message,
       };
 
-      const res = await fetch("./contact.php", {
+      const res = await fetch("/contact.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
