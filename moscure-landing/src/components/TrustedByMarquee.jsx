@@ -70,6 +70,8 @@ function HotelCard({ hotel, index, isInView }) {
           <img
             src={hotel.logo}
             alt={`${hotel.name} - Hotel partner using Moscure mosquito trap`}
+            width={200}
+            height={100}
             className="w-auto object-contain opacity-75 group-hover:opacity-100 transition-all duration-500"
             style={{
               filter: 'invert(1) brightness(10) saturate(0)',

@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { motion, useInView, useMotionValue, animate } from 'framer-motion'
+import { Helmet } from 'react-helmet-async'
 import {
   Target, Wind, Shield, Volume2, CloudRain, Droplets, CheckCircle2,
   FlaskConical, ShieldCheck,
@@ -76,8 +77,10 @@ function ProductCard({ product, onNavigate }) {
           </div>
 
           {/* CTA — solid accent fill */}
-          <motion.button
-            onClick={() => {
+          <motion.a
+            href={product.id === 'indoor' ? '/products/moscure-ipi-indoor-mosquito-trap' : '/products/moscure-ipo-outdoor-mosquito-trap'}
+            onClick={(e) => {
+              e.preventDefault();
               if (product.id === 'indoor' && onNavigate) {
                 onNavigate('ipiIndoor')
               } else if (product.id === 'outdoor' && onNavigate) {
@@ -86,11 +89,11 @@ function ProductCard({ product, onNavigate }) {
             }}
             whileHover={{ scale: 1.03, boxShadow: `0 0 24px ${product.accentColor}45` }}
             whileTap={{ scale: 0.97 }}
-            className="w-full py-3 rounded-full font-mono text-sm font-bold text-background transition-shadow"
+            className="w-full py-3 rounded-full font-mono text-sm font-bold text-background transition-shadow block text-center"
             style={{ backgroundColor: product.accentColor }}
           >
             VIEW DETAILS →
-          </motion.button>
+          </motion.a>
         </div>
       </div>
     </motion.div>
@@ -527,10 +530,14 @@ function BottomCTASection({ onNavigate }) {
             className="bg-gradientcyan text-background font-bold font-mono text-sm px-8 py-3.5 rounded-full transition-shadow duration-300">
             SHOP NOW →
           </motion.a>
-          <motion.button onClick={() => onNavigate?.('landing')} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-            className="border border-white/20 text-textMuted hover:text-white font-mono text-sm px-8 py-3.5 rounded-full transition-colors">
+          <motion.a 
+            href="/"
+            onClick={(e) => { e.preventDefault(); onNavigate?.('landing'); }}
+            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+            className="border border-white/20 text-textMuted hover:text-white font-mono text-sm px-8 py-3.5 rounded-full transition-colors inline-block"
+          >
             ← BACK TO HOME
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>
@@ -542,50 +549,17 @@ function BottomCTASection({ onNavigate }) {
 // ─────────────────────────────────────────────────────────
 
 export default function ProductPage({ onNavigate }) {
-  useEffect(() => {
-    const prevTitle = document.title
-    document.title = 'Moscure Products — IPI Indoor & IPO Outdoor UV Mosquito Traps | Buy Online India'
 
-    const setMeta = (name, content, prop = false) => {
-      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
-      let el = document.querySelector(selector)
-      if (!el) {
-        el = document.createElement('meta')
-        prop ? el.setAttribute('property', name) : el.setAttribute('name', name)
-        document.head.appendChild(el)
-      }
-      el.setAttribute('content', content)
-      return el
-    }
-
-    const desc = setMeta('description', 'Shop Moscure\'s UV LED mosquito traps — the IPI Indoor Trap (covers 400 sq ft) and IPO Outdoor Trap (covers 3500 sq ft). 100% chemical-free, safe for kids & pets. India\'s leading MLID phototaxis mosquito protection.')
-    const ogTitle = setMeta('og:title', 'Moscure Products — IPI Indoor & IPO Outdoor UV Mosquito Traps', true)
-    const ogDesc = setMeta('og:description', 'Browse Moscure\'s chemical-free UV mosquito traps for indoor and outdoor use. Safe for kids and pets. Buy online in India.', true)
-    const ogUrl = setMeta('og:url', 'https://www.moscure.com/product', true)
-
-    // Canonical tag
-    let canonical = document.querySelector('link[rel="canonical"]')
-    const canonicalCreated = !canonical
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.rel = 'canonical'
-      document.head.appendChild(canonical)
-    }
-    const prevCanonical = canonical.href
-    canonical.href = 'https://www.moscure.com/product'
-
-    return () => {
-      document.title = prevTitle
-      desc.remove()
-      ogTitle.remove()
-      ogDesc.remove()
-      ogUrl.remove()
-      if (canonicalCreated) canonical.remove()
-      else canonical.href = prevCanonical
-    }
-  }, [])
   return (
     <main>
+      <Helmet>
+        <title>Moscure Products — IPI Indoor & IPO Outdoor UV Mosquito Traps | Buy Online India</title>
+        <meta name="description" content="Shop Moscure\'s UV LED mosquito traps — the IPI Indoor Trap (covers 400 sq ft) and IPO Outdoor Trap (covers 3500 sq ft). 100% chemical-free, safe for kids & pets. India\'s leading MLID phototaxis mosquito protection." />
+        <meta property="og:title" content="Moscure Products — IPI Indoor & IPO Outdoor UV Mosquito Traps" />
+        <meta property="og:description" content="Browse Moscure\'s chemical-free UV mosquito traps for indoor and outdoor use. Safe for kids and pets. Buy online in India." />
+        <meta property="og:url" content="https://www.moscure.com/product" />
+        <link rel="canonical" href="https://www.moscure.com/product" />
+      </Helmet>
       <ProductsHeroSection onNavigate={onNavigate} />
       <TestedSpeciesSection />
       <FeaturesGridSection />

@@ -386,6 +386,8 @@ function ChapterCard({ chapter, index }) {
         <img
           src={chapter.img}
           alt={chapter.imgAlt}
+          width={600}
+          height={337}
           className="w-full h-full object-cover"
           style={{ opacity: 0.85 }}
         />
@@ -610,7 +612,7 @@ export default function AboutPage({ onNavigate }) {
 
         {/* Decorative mosquito silhouette */}
         <div className="absolute bottom-0 right-0 w-64 md:w-[28rem] pointer-events-none select-none opacity-[0.04]">
-          <img src={mosquitoSvg} alt="" aria-hidden="true" className="w-full" style={{ filter: 'invert(1)' }} />
+          <img src={mosquitoSvg} alt="" aria-hidden="true" width={400} height={400} className="w-full" style={{ filter: 'invert(1)' }} />
         </div>
 
         {/* MOSCURE watermark */}

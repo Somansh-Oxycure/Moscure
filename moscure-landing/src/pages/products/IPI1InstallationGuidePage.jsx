@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async';
 import {
   MapPin, ArrowUpDown, Plug, Lightbulb, Sun,
   Battery, Smartphone, Monitor,
@@ -48,19 +49,12 @@ const USAGE_TIPS = [
 export default function IPI1InstallationGuidePage() {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    document.title = 'Installation Guide – MOSCURE IPI 1 | USB Mosquito Trap Setup'
-
-    let meta = document.querySelector('meta[name="description"]')
-    if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta) }
-    meta.content =
-      'Step-by-step installation guide for the MOSCURE IPI 1 USB mosquito trap. Ideal placement, height recommendations, power setup options, and best usage tips.'
-
-    return () => { document.title = 'Moscure' }
-  }, [])
+  
 
   return (
-    <main>
+    <main>      <Helmet>
+        <title>Installation Guide – MOSCURE IPI 1 | USB Mosquito Trap Setup</title>
+      </Helmet>
       <DocHero
         badge="IPI Indoor · Setup"
         title="Installation Guide"

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { Helmet } from 'react-helmet-async';
 import {
   motion,
   AnimatePresence,
@@ -433,47 +434,7 @@ export default function ContactPage({ onNavigate }) {
   const faqRef = useRef(null);
   const faqInView = useInView(faqRef, { once: true, margin: "-80px" });
 
-  useEffect(() => {
-    const prevTitle = document.title
-    document.title = 'Contact Moscure — Get Support, Warranty Claims & Product Enquiries | India'
-
-    const setMeta = (name, content, prop = false) => {
-      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
-      let el = document.querySelector(selector)
-      if (!el) {
-        el = document.createElement('meta')
-        prop ? el.setAttribute('property', name) : el.setAttribute('name', name)
-        document.head.appendChild(el)
-      }
-      el.setAttribute('content', content)
-      return el
-    }
-
-    const desc = setMeta('description', 'Contact Moscure for product support, warranty claims, installation help, and bulk/B2B enquiries. Reach us at operations@moscure.com or call +91 80101 11177. Mon–Sat, 9 AM – 6 PM IST.')
-    const ogTitle = setMeta('og:title', 'Contact Moscure — Support, Warranty & Enquiries', true)
-    const ogDesc = setMeta('og:description', 'Get in touch with Moscure for product support, warranty, or any enquiries. Email, call, or fill out our contact form.', true)
-    const ogUrl = setMeta('og:url', 'https://www.moscure.com/contact', true)
-
-    let canonical = document.querySelector('link[rel="canonical"]')
-    const canonicalCreated = !canonical
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.rel = 'canonical'
-      document.head.appendChild(canonical)
-    }
-    const prevCanonical = canonical.href
-    canonical.href = 'https://www.moscure.com/contact'
-
-    return () => {
-      document.title = prevTitle
-      desc.remove()
-      ogTitle.remove()
-      ogDesc.remove()
-      ogUrl.remove()
-      if (canonicalCreated) canonical.remove()
-      else canonical.href = prevCanonical
-    }
-  }, [])
+  
 
   // ── Scroll-sync: right column rises gently to meet the left ─────────────
   const sectionRef = useRef(null);
@@ -574,13 +535,21 @@ export default function ContactPage({ onNavigate }) {
 
   const inputClass = (field) =>
     `w-full bg-[#1C1C1C] border rounded-xl px-4 py-3.5 font-body text-sm text-white placeholder:text-white/30 focus:outline-none transition-all duration-200 contact-input ${
-      errors[field]
+          errors[field]
         ? "border-gradientpink/70 focus:border-gradientpink focus:ring-2 focus:ring-gradientpink/15"
         : "border-white/10 hover:border-white/20 focus:border-gradientcyan/70 focus:ring-2 focus:ring-gradientcyan/10"
     }`;
 
   return (
     <div className="bg-background text-textPrimary min-h-screen">
+      <Helmet>
+        <title>Contact Moscure — Get Support, Warranty Claims & Product Enquiries | India</title>
+        <meta name="description" content="Contact Moscure for product support, warranty claims, installation help, and bulk/B2B enquiries. Reach us at operations@moscure.com or call +91 80101 11177. Mon–Sat, 9 AM – 6 PM IST." />
+        <meta property="og:title" content="Contact Moscure — Support, Warranty & Enquiries" />
+        <meta property="og:description" content="Get in touch with Moscure for product support, warranty, or any enquiries. Email, call, or fill out our contact form." />
+        <meta property="og:url" content="https://www.moscure.com/contact" />
+        <link rel="canonical" href="https://www.moscure.com/contact" />
+      </Helmet>
       {/* ════════════════════════════════════════════════════════════════════ */}
       {/* SECTION 1 — HERO                                                    */}
       {/* ════════════════════════════════════════════════════════════════════ */}

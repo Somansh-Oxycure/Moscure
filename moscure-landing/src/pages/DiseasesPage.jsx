@@ -13,6 +13,7 @@ import imgChikungunya      from '../assets/Chikungunya,jpg.jpg'
 import imgChikungunyaDecp  from '../assets/Chikungunya_decp.jpg'
 import imgJE            from '../assets/Japanese_Encephalitis.jpg'
 import imgJEDecp        from '../assets/Japanese_Encephalitis_decp.jpg'
+import { Helmet } from 'react-helmet-async';
 
 // ─── Local mosquito images ────────────────────────────────────────────────────
 const MOSQUITO_IMAGES = {
@@ -398,6 +399,8 @@ function DiseaseCard({ disease, isOpen, onToggle, onNavigate }) {
                 <img
                   src={imgSrc}
                   alt={`${mosquitoLabel} ${mosquito} - mosquito-borne disease vector`}
+                  width={96}
+                  height={96}
                   className="w-full h-full object-cover"
                   style={{ filter: 'contrast(1.15) saturate(1.1)' }}
                   onError={(e) => { e.currentTarget.style.display = 'none' }}
@@ -484,6 +487,8 @@ function DiseaseCard({ disease, isOpen, onToggle, onNavigate }) {
                 <img
                   src={imgDecp}
                   alt={`${mosquitoLabel} ${mosquito} vector macro photograph for disease transmission`}
+                  width={800}
+                  height={400}
                   className="w-full h-full object-cover"
                   style={{ filter: 'contrast(1.2) saturate(1.1) brightness(0.85)' }}
                   onError={(e) => { e.currentTarget.parentElement.style.display = 'none' }}
@@ -697,34 +702,7 @@ function ProtectionStepCard({ step, index, onNavigate }) {
 export default function DiseasesPage({ onNavigate }) {
   const [activeDisease, setActiveDisease] = useState('dengue')
 
-  useEffect(() => {
-    document.title = 'Mosquito-Borne Diseases in India | Dengue, Malaria, Chikungunya | Moscure'
-
-    const setMeta = (name, content, prop = false) => {
-      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
-      let el = document.querySelector(selector)
-      if (!el) { el = document.createElement('meta'); prop ? el.setAttribute('property', name) : el.setAttribute('name', name); document.head.appendChild(el) }
-      el.setAttribute('content', content)
-      return el
-    }
-
-    const desc = setMeta('description', 'Learn how mosquito-borne diseases like Dengue, Malaria, and Chikungunya spread across India and how Moscure\'s chemical-free UV mosquito trap protects your family without chemicals, sprays, or coils.')
-    const ogUrl = setMeta('og:url', 'https://www.moscure.com/diseases', true)
-
-    let canonical = document.querySelector('link[rel="canonical"]')
-    const canonicalCreated = !canonical
-    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
-    const prevCanonical = canonical.href
-    canonical.href = 'https://www.moscure.com/diseases'
-
-    return () => {
-      document.title = 'Moscure'
-      desc.remove()
-      ogUrl.remove()
-      if (canonicalCreated) canonical.remove()
-      else canonical.href = prevCanonical
-    }
-  }, [])
+  
 
   const toggleDisease = (id) => {
     setActiveDisease((prev) => (prev === id ? null : id))
@@ -732,6 +710,12 @@ export default function DiseasesPage({ onNavigate }) {
 
   return (
     <div className="bg-background text-textPrimary min-h-screen relative">
+      <Helmet>
+        <title>Mosquito-Borne Diseases in India | Dengue, Malaria, Chikungunya | Moscure</title>
+        <meta name="description" content="Learn how mosquito-borne diseases like Dengue, Malaria, and Chikungunya spread across India and how Moscure's chemical-free UV mosquito trap protects your family without chemicals, sprays, or coils." />
+        <meta property="og:url" content="https://www.moscure.com/diseases" />
+        <link rel="canonical" href="https://www.moscure.com/diseases" />
+      </Helmet>
       {/* Subtle scan-line texture — full page */}
       <div className="fixed inset-0 scanlines pointer-events-none z-0" />
 

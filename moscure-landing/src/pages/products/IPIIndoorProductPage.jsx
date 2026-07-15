@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import {
   Shield, HeartPulse, Maximize2, Zap, Battery,
@@ -161,48 +162,79 @@ const TICKER_ITEMS = [
 // ─── JSON-LD Schema ───────────────────────────────────────────────────────────
 const SCHEMA_JSON = JSON.stringify({
   '@context': 'https://schema.org',
-  '@type': 'Product',
-  name: 'Moscure IPI Indoor Mosquito & Insect Trap',
-  description: '365nm UV LED silent mosquito trap. Covers 400 sq ft. Chemical-free, safe for kids & pets.',
-  brand: { '@type': 'Brand', name: 'Moscure' },
-  sku: 'MOSCURE-IPI-001',
-  mpn: 'IPI-001',
-  gtin: '788792950948',
-  url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
-  offers: {
-    '@type': 'Offer',
-    price: '3299',
-    priceCurrency: 'INR',
-    priceValidUntil: '2027-12-31',
-    availability: 'https://schema.org/InStock',
-    url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
-    seller: { '@type': 'Organization', name: 'Moscure' },
-    hasMerchantReturnPolicy: {
-      '@type': 'MerchantReturnPolicy',
-      applicableCountry: 'IN',
-      returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-      merchantReturnDays: 7,
-      returnMethod: 'https://schema.org/ReturnByMail',
-      returnFees: 'https://schema.org/FreeReturn',
-    },
-    shippingDetails: {
-      '@type': 'OfferShippingDetails',
-      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'INR' },
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'IN' },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 2, unitCode: 'DAY' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY' },
+  '@graph': [
+    {
+      '@type': 'Product',
+      name: 'Moscure IPI Indoor Mosquito & Insect Trap',
+      description: '365nm UV LED silent mosquito trap. Covers 400 sq ft. Chemical-free, safe for kids & pets.',
+      image: [
+        'https://www.moscure.com/assets/product-indoor.png'
+      ],
+      brand: { '@type': 'Brand', name: 'Moscure' },
+      sku: 'MOSCURE-IPI-001',
+      mpn: 'IPI-001',
+      gtin: '788792950948',
+      url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
+      offers: {
+        '@type': 'Offer',
+        price: '3299',
+        priceCurrency: 'INR',
+        priceValidUntil: '2027-12-31',
+        availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
+        url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
+        seller: { '@type': 'Organization', name: 'Moscure' },
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'IN',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 7,
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn',
+        },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'INR' },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 2, unitCode: 'DAY' },
+            transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY' },
+          },
+        },
+      },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.8',
+        reviewCount: '124',
+        bestRating: '5',
+        worstRating: '1',
       },
     },
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    reviewCount: '124',
-    bestRating: '5',
-    worstRating: '1',
-  },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://www.moscure.com/'
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Products',
+          item: 'https://www.moscure.com/product'
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'IPI Indoor Trap',
+          item: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap'
+        }
+      ]
+    }
+  ]
 })
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -253,6 +285,8 @@ function ImageGallery({ images, activeIndex, onSelect }) {
                 <img
                   src={active.src}
                   alt={active.alt}
+                  width={600}
+                  height={600}
                   className="w-full h-full object-contain p-4"
                 />
               ) : (
@@ -282,7 +316,7 @@ function ImageGallery({ images, activeIndex, onSelect }) {
               }`}
           >
             {img.src ? (
-              <img src={img.src} alt={img.alt} className="w-full h-full object-contain p-1 bg-white" />
+              <img src={img.src} alt={img.alt} width={100} height={100} className="w-full h-full object-contain p-1 bg-white" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-textMuted font-mono text-xs">
                 {i + 1}
@@ -468,6 +502,8 @@ function DetailImageBlock({ image, index }) {
           src={image.src}
           alt={image.alt}
           loading="lazy"
+          width={800}
+          height={450}
           className="w-full rounded-2xl"
         />
       ) : (
@@ -539,61 +575,6 @@ export default function IPIIndoorProductPage({ onNavigate }) {
     return () => clearInterval(timer)
   }, [])
 
-  // SEO: inject meta tags + JSON-LD
-  useEffect(() => {
-    const prev = {
-      title: document.title,
-      desc: document.querySelector('meta[name="description"]')?.getAttribute('content'),
-      keywords: document.querySelector('meta[name="keywords"]')?.getAttribute('content'),
-    }
-
-    document.title = 'Moscure IPI Indoor Mosquito Trap | UV LED Bug Trapper | Chemical-Free | ₹3,299'
-
-    const setMeta = (name, content, prop = false) => {
-      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
-      let el = document.querySelector(selector)
-      if (!el) {
-        el = document.createElement('meta')
-        prop ? el.setAttribute('property', name) : el.setAttribute('name', name)
-        document.head.appendChild(el)
-      }
-      el.setAttribute('content', content)
-    }
-
-    setMeta('description', 'Moscure IPI Indoor Mosquito & Insect Trap uses 365nm UV LED technology to silently attract and trap mosquitoes, flies & gnats. Covers 400 sq ft. 100% chemical-free, safe for kids & pets. Energy efficient 1.5W. Buy now at ₹3,299.')
-    setMeta('keywords', 'indoor mosquito trap India, UV mosquito killer, chemical free bug Trapper, dengue malaria mosquito trap, silent mosquito catcher, mosquito trap kids safe, Moscure IPI, mosquito trap 400 sq ft, electric insect trap India')
-    setMeta('og:title', 'Moscure IPI Indoor Mosquito Trap — ₹3,299', true)
-    setMeta('og:description', 'Silent, chemical-free UV LED mosquito trap. Safe for kids & pets. Covers 400 sq ft.', true)
-    setMeta('og:url', 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap', true)
-    setMeta('og:type', 'product', true)
-
-    // Canonical tag
-    let canonical = document.querySelector('link[rel="canonical"]')
-    const canonicalCreated = !canonical
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.rel = 'canonical'
-      document.head.appendChild(canonical)
-    }
-    const prevCanonical = canonical.href
-    canonical.href = 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap'
-
-    // JSON-LD
-    const script = document.createElement('script')
-    script.type = 'application/ld+json'
-    script.id = 'ipi-schema'
-    script.textContent = SCHEMA_JSON
-    document.head.appendChild(script)
-
-    return () => {
-      document.title = prev.title
-      if (prev.desc) setMeta('description', prev.desc)
-      if (canonicalCreated) canonical.remove()
-      else canonical.href = prevCanonical
-      document.getElementById('ipi-schema')?.remove()
-    }
-  }, [])
-
   const handleCopyLink = () => {
     navigator.clipboard.writeText('https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap')
     setCopied(true)
@@ -610,6 +591,19 @@ export default function IPIIndoorProductPage({ onNavigate }) {
 
   return (
     <>
+      <Helmet>
+        <title>Moscure IPI Indoor Mosquito Trap | UV LED Bug Trapper | Chemical-Free | ₹3,299</title>
+        <meta name="description" content="Moscure IPI Indoor Mosquito & Insect Trap uses 365nm UV LED technology to silently attract and trap mosquitoes, flies & gnats. Covers 400 sq ft. 100% chemical-free, safe for kids & pets. Energy efficient 1.5W. Buy now at ₹3,299." />
+        <meta name="keywords" content="indoor mosquito trap India, UV mosquito killer, chemical free bug Trapper, dengue malaria mosquito trap, silent mosquito catcher, mosquito trap kids safe, Moscure IPI, mosquito trap 400 sq ft, electric insect trap India" />
+        <meta property="og:title" content="Moscure IPI Indoor Mosquito Trap — ₹3,299" />
+        <meta property="og:description" content="Silent, chemical-free UV LED mosquito trap. Safe for kids & pets. Covers 400 sq ft." />
+        <meta property="og:url" content="https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap" />
+        <meta property="og:type" content="product" />
+        <link rel="canonical" href="https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap" />
+        <script type="application/ld+json" id="ipi-schema">
+          {SCHEMA_JSON}
+        </script>
+      </Helmet>
       {/* ── Breadcrumb ──────────────────────────────────────────────── */}
       <motion.nav
         initial={{ opacity: 0, y: -8 }}
@@ -618,32 +612,31 @@ export default function IPIIndoorProductPage({ onNavigate }) {
         aria-label="Breadcrumb"
         className="max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-4"
       >
-        <ol className="flex items-center gap-2 font-mono text-xs text-textMuted" itemScope itemType="https://schema.org/BreadcrumbList">
-          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+        <ol className="flex items-center gap-2 font-mono text-xs text-textMuted">
+          <li>
             <Link
               to="/"
               onClick={(e) => { e.preventDefault(); onNavigate?.('landing') }}
               className="hover:text-white transition-colors"
-              itemProp="item"
-            ><span itemProp="name">Home</span></Link>
-            <meta itemProp="position" content="1" />
+            >
+              <span>Home</span>
+            </Link>
           </li>
           <li><span className="text-gradientcyan">›</span></li>
-          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+          <li>
             <Link
               to="/product"
               onClick={(e) => { e.preventDefault(); onNavigate?.('product') }}
               className="hover:text-white transition-colors"
-              itemProp="item"
-            ><span itemProp="name">Products</span></Link>
-            <meta itemProp="position" content="2" />
+            >
+              <span>Products</span>
+            </Link>
           </li>
           <li><span className="text-gradientcyan">›</span></li>
-          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <span itemProp="item" itemScope itemType="https://schema.org/WebPage" id="current-page">
-              <span className="text-white" itemProp="name">IPI Indoor Trap</span>
+          <li>
+            <span id="current-page">
+              <span className="text-white">IPI Indoor Trap</span>
             </span>
-            <meta itemProp="position" content="3" />
           </li>
         </ol>
       </motion.nav>

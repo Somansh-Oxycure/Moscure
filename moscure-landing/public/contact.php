@@ -2,7 +2,6 @@
 // contact.php
 // Minimal, secure endpoint to accept contact form JSON and upsert contacts in HubSpot.
 
-// Load environment variables from .env file if present
 function loadEnv($dir) {
     $paths = [
         $dir . '/.env',
@@ -20,7 +19,6 @@ function loadEnv($dir) {
                     list($name, $value) = explode('=', $line, 2);
                     $name = trim($name);
                     $value = trim($value);
-                    // Strip quotes if present
                     if (preg_match('/^([\'"])(.*)\1$/', $value, $matches)) {
                         $value = $matches[2];
                     }
@@ -37,7 +35,6 @@ loadEnv(__DIR__);
 
 $HUBSPOT_TOKEN = getenv('HUBSPOT_API_KEY');
 
-// Only allow POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     header('Content-Type: application/json');
@@ -45,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Require JSON
 $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 if (stripos($contentType, 'application/json') === false) {
     http_response_code(400);
@@ -63,16 +59,12 @@ if (!is_array($data)) {
     exit;
 }
 
-// Basic validation
 $errors = [];
-if (empty($data['name']) || trim($data['name']) === '')
-    $errors[] = 'name';
-if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL))
-    $errors[] = 'email';
-if (empty($data['subject']))
-    $errors[] = 'subject';
-if (empty($data['message']) || strlen(trim($data['message'])) < 10)
-    $errors[] = 'message';
+if (empty($data['name']) || trim($data['name']) === '') $errors[] = 'name';
+if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'email';
+if (empty($data['subject'])) $errors[] = 'subject';
+if (empty($data['message']) || strlen(trim($data['message'])) < 10) $errors[] = 'message';
+
 if (!empty($errors)) {
     http_response_code(422);
     header('Content-Type: application/json');
@@ -80,7 +72,6 @@ if (!empty($errors)) {
     exit;
 }
 
-// Prepare HubSpot contact properties
 $nameParts = preg_split('/\s+/', trim($data['name']), 2);
 $firstname = $nameParts[0] ?? '';
 $lastname = $nameParts[1] ?? '';
@@ -90,18 +81,16 @@ $properties = [
     'lastname' => $lastname,
     'phone' => $data['phone'] ?? '',
     'city' => $data['city'] ?? '',
-    // Use the built-in 'description' property to store subject + message.
-    'description' => "Subject: " . ($data['subject'] ?? '') . "\n\n" . ($data['message'] ?? ''),
+//    'description' => "Subject: " . ($data['subject'] ?? '') . "\n\n" . ($data['message'] ?? ''),
 ];
 
-// Shared cURL headers
 $headers = [
     "Authorization: Bearer {$HUBSPOT_TOKEN}",
     'Content-Type: application/json',
     'Accept: application/json',
 ];
 
-// 1) Search for existing contact by email
+// 1) Search for existing contact
 $searchUrl = 'https://api.hubapi.com/crm/v3/objects/contacts/search';
 $searchBody = json_encode([
     'filterGroups' => [['filters' => [['propertyName' => 'email', 'operator' => 'EQ', 'value' => $data['email']]]]],
@@ -116,19 +105,6 @@ curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $searchBody);
 $searchResp = curl_exec($ch);
 $searchCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-header('Content-Type: application/json');
-echo json_encode([
-    "search_status" => $searchCode,
-    "search_response" => json_decode($searchResp, true)
-]);
-exit;
-if ($searchResp === false) {
-    curl_close($ch);
-    http_response_code(500);
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Internal server error']);
-    exit;
-}
 $searchData = json_decode($searchResp, true);
 curl_close($ch);
 
@@ -147,28 +123,19 @@ if ($searchCode >= 200 && $searchCode < 300 && !empty($searchData['results'])) {
     $updateCode = curl_getinfo($ch2, CURLINFO_HTTP_CODE);
     curl_close($ch2);
 
-    if ($updateResp === false || $updateCode >= 400) {
-
+    header('Content-Type: application/json');
+    if ($updateCode >= 400) {
         http_response_code(502);
-
-        echo json_encode([
-            "error" => "Failed to update contact",
-            "hubspot_status" => $updateCode,
-            "hubspot_response" => json_decode($updateResp, true),
-            "curl_error" => curl_error($ch2)
-        ]);
-
+        echo json_encode(["error" => "Failed to update contact", "hubspot_status" => $updateCode]);
         exit;
-
     }
 
     http_response_code(200);
-    header('Content-Type: application/json');
     echo json_encode(['success' => true, 'action' => 'updated', 'id' => $contactId]);
     exit;
 }
 
-// 3) Create a new contact
+// 3) Create a new contact if it didn't exist
 $createUrl = 'https://api.hubapi.com/crm/v3/objects/contacts';
 $createBody = json_encode(['properties' => $properties]);
 
@@ -179,26 +146,17 @@ curl_setopt($ch3, CURLOPT_POST, true);
 curl_setopt($ch3, CURLOPT_POSTFIELDS, $createBody);
 $createResp = curl_exec($ch3);
 $createCode = curl_getinfo($ch3, CURLINFO_HTTP_CODE);
+$createData = json_decode($createResp, true);
 curl_close($ch3);
 
-if ($createResp === false || $createCode >= 400) {
+header('Content-Type: application/json');
+if ($createCode >= 400) {
     http_response_code(502);
-
-    echo json_encode([
-        "error" => "Failed to create contact",
-        "hubspot_status" => $createCode,
-        "hubspot_response" => json_decode($createResp, true),
-        "curl_error" => curl_error($ch3)
-    ]);
-
+    echo json_encode(["error" => "Failed to create contact", "hubspot_status" => $createCode]);
     exit;
 }
 
-$createData = json_decode($createResp, true);
 $id = $createData['id'] ?? null;
 http_response_code(201);
-header('Content-Type: application/json');
 echo json_encode(['success' => true, 'action' => 'created', 'id' => $id]);
 exit;
-
-?>

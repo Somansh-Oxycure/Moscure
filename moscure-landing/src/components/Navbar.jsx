@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import logoImg from '../assets/logo.png'
+import logoImg from '../assets/logo.webp'
 
 const NAV_LINKS = [
-  { label: 'HOME',       href: '/',          page: 'landing' },
-  { label: 'PRODUCT',    href: '/product',   page: 'product' },
-  { label: 'DISEASES',   href: '/diseases',  page: 'diseases' },
+  { label: 'HOME', href: '/', page: 'landing' },
+  { label: 'PRODUCT', href: '/product', page: 'product' },
+  { label: 'DISEASES', href: '/diseases', page: 'diseases' },
   { label: 'COMPARISON', href: '/comparison', page: 'comparison' },
-  { label: 'ABOUT US',   href: '/about',     page: 'about' },
-  { label: 'CONTACT',    href: '/contact',   page: 'contact' },
+  { label: 'ABOUT US', href: '/about', page: 'about' },
+  { label: 'CONTACT', href: '/contact', page: 'contact' },
 ]
 
 export default function Navbar({ onNavigate }) {
@@ -43,11 +43,10 @@ export default function Navbar({ onNavigate }) {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
             ? 'bg-background/90 backdrop-blur-md border-b border-borderDefault shadow-lg shadow-black/40'
             : 'bg-transparent'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto mt-4 mb-2 px-6 md:px-12 h-16 flex items-center justify-between">
           {/* Logo — crawlable Link instead of button */}
@@ -73,20 +72,18 @@ export default function Navbar({ onNavigate }) {
                 <a
                   href={link.href}
                   onClick={(e) => handleLinkClick(link, e)}
-                  className={`relative px-3 py-1.5 font-mono text-xs tracking-widest transition-colors duration-200 group ${
-                    isActiveLink(link)
+                  className={`relative px-3 py-1.5 font-mono text-xs tracking-widest transition-colors duration-200 group ${isActiveLink(link)
                       ? 'text-gradientcyan'
                       : 'text-textMuted hover:text-white'
-                  }`}
+                    }`}
                   aria-current={isActiveLink(link) ? 'page' : undefined}
                 >
                   {link.label}
                   <span
-                    className={`absolute bottom-0 left-3 right-3 h-px bg-gradientcyan transition-transform duration-300 origin-left ${
-                      isActiveLink(link)
+                    className={`absolute bottom-0 left-3 right-3 h-px bg-gradientcyan transition-transform duration-300 origin-left ${isActiveLink(link)
                         ? 'scale-x-100'
                         : 'scale-x-0 group-hover:scale-x-100'
-                    }`}
+                      }`}
                   />
                 </a>
               </li>
@@ -139,11 +136,10 @@ export default function Navbar({ onNavigate }) {
                   <a
                     href={link.href}
                     onClick={(e) => handleLinkClick(link, e)}
-                    className={`block py-3 font-mono text-sm tracking-widest border-b border-borderDefault transition-colors ${
-                      isActiveLink(link)
+                    className={`block py-3 font-mono text-sm tracking-widest border-b border-borderDefault transition-colors ${isActiveLink(link)
                         ? 'text-gradientcyan'
                         : 'text-textMuted hover:text-gradientcyan'
-                    }`}
+                      }`}
                     aria-current={isActiveLink(link) ? 'page' : undefined}
                   >
                     {link.label}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ShieldCheck, XCircle, FileText, AlertTriangle, Phone } from 'lucide-react'
+import { Helmet } from 'react-helmet-async';
 import {
   DocHero, DocSection, SectionHeading,
   BulletList, IconRow, Divider, DocPageNav,
@@ -34,19 +35,12 @@ const NOTES = [
 export default function IPI1WarrantyPage() {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    document.title = 'Warranty Information – MOSCURE IPI 1 | Portable Mosquito Trap'
-
-    let meta = document.querySelector('meta[name="description"]')
-    if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta) }
-    meta.content =
-      'MOSCURE IPI 1 warranty details — 1-year limited warranty coverage, exclusions, and how to make a warranty claim for your USB mosquito trap.'
-
-    return () => { document.title = 'Moscure' }
-  }, [])
+  
 
   return (
-    <main>
+    <main>      <Helmet>
+        <title>Warranty Information – MOSCURE IPI 1 | Portable Mosquito Trap</title>
+      </Helmet>
       <DocHero
         badge="IPI Indoor · Warranty"
         title="Warranty Info"

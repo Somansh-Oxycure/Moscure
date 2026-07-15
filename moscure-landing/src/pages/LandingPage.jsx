@@ -332,7 +332,7 @@ function DiseaseCard({ disease, index }) {
         style={{ background: `linear-gradient(90deg, ${disease.gradientFrom}, ${disease.gradientTo})`, boxShadow: `0 0 12px ${disease.color}60` }}
       />
       <div className="absolute bottom-2 right-2 w-32 h-40 pointer-events-none select-none opacity-[0.04] group-hover:opacity-[0.07] transition-opacity duration-500">
-        <img src={mosquitoSvg} alt="Moscure Chemical-Free Protection mosquito illustration" aria-hidden="true" className="w-full h-full" style={{ filter: 'invert(1)' }} />
+        <img src={mosquitoSvg} alt="Moscure Chemical-Free Protection mosquito illustration" width={400} height={400} aria-hidden="true" className="w-full h-full" style={{ filter: 'invert(1)' }} />
       </div>
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"

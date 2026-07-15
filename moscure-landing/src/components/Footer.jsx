@@ -1,28 +1,29 @@
 import { Instagram, Facebook, Twitter, Linkedin } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import logoImg from '../assets/logo.png'
+import logoImg from '../assets/logo.webp'
 
 const QUICK_LINKS = [
-  { label: 'Home',       href: '/',           page: 'landing' },
-  { label: 'Product',    href: '/product',    page: 'product' },
-  { label: 'Diseases',   href: '/diseases',   page: 'diseases' },
+  { label: 'Home', href: '/', page: 'landing' },
+  { label: 'Product', href: '/product', page: 'product' },
+  { label: 'Diseases', href: '/diseases', page: 'diseases' },
   { label: 'Comparison', href: '/comparison', page: 'comparison' },
-  { label: 'About Us',   href: '/about',      page: 'about' },
-  { label: 'Contact',    href: '/contact',    page: 'contact' },
+  { label: 'About Us', href: '/about', page: 'about' },
+  { label: 'Contact', href: '/contact', page: 'contact' },
 ]
 
 const RESOURCES = [
-  { label: 'User Manual',        to: '/user-manual/' },
+  { label: 'FAQs', to: '/contact#contact-faq' },
+  { label: 'User Manual', to: '/user-manual/' },
   { label: 'Installation Guide', to: '/installation-guide/' },
-  { label: 'Warranty Info',      to: '/warranty/' },
-  { label: 'Safety Guidelines',  to: '/safety/' },
+  { label: 'Warranty Info', to: '/warranty/' },
+  { label: 'Safety Guidelines', to: '/safety/' },
 ]
 
 const SOCIALS = [
   { Icon: Instagram, label: 'Follow Moscure on Instagram', href: 'https://www.instagram.com/mos_cure' },
-  { Icon: Facebook,  label: 'Follow Moscure on Facebook',  href: '#' },
-  { Icon: Twitter,   label: 'Follow Moscure on Twitter/X', href: '#' },
-  { Icon: Linkedin,  label: 'Follow Moscure on LinkedIn',  href: '#' },
+  { Icon: Facebook, label: 'Follow Moscure on Facebook', href: '#' },
+  { Icon: Twitter, label: 'Follow Moscure on Twitter/X', href: '#' },
+  { Icon: Linkedin, label: 'Follow Moscure on LinkedIn', href: '#' },
 ]
 
 export default function Footer({ onNavigate }) {

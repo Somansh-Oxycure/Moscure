@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async';
 import {
   Cpu, Star, BookOpen, Wrench,
   Zap, Plug, Package, Droplets, Settings,
@@ -83,19 +84,12 @@ const MAINTENANCE = [
 export default function IPI1UserManualPage() {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    document.title = 'User Manual – MOSCURE IPI 1 | Portable USB Mosquito Trap'
-
-    let meta = document.querySelector('meta[name="description"]')
-    if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta) }
-    meta.content =
-      'Complete user manual for the MOSCURE IPI 1 portable USB mosquito trap. Covers product specifications, key features, how it works, and maintenance instructions.'
-
-    return () => { document.title = 'Moscure' }
-  }, [])
+  
 
   return (
-    <main>
+    <main>      <Helmet>
+        <title>User Manual – MOSCURE IPI 1 | Portable USB Mosquito Trap</title>
+      </Helmet>
       <DocHero
         badge="IPI Indoor · Documentation"
         title="User Manual"

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import LandingPage from './pages/LandingPage'
@@ -21,10 +22,19 @@ import IPI1SafetyGuidelinesPage from './pages/products/IPI1SafetyGuidelinesPage'
 import './index.css'
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [pathname])
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [pathname, hash])
   return null
 }
 
@@ -85,8 +95,10 @@ function AppInner() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppInner />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <AppInner />
+      </BrowserRouter>
+    </HelmetProvider>
   )
 }

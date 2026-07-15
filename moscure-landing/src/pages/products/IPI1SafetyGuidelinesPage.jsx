@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Zap, Eye, Users, Shield, Leaf, TriangleAlert, Wind } from 'lucide-react'
+import { Helmet } from 'react-helmet-async';
 import {
   DocHero, DocSection, SectionHeading, InfoCard,
   BulletList, IconRow, Divider, DocPageNav,
@@ -57,19 +58,12 @@ const ENVIRONMENTAL = [
 export default function IPI1SafetyGuidelinesPage() {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    document.title = 'Safety Guidelines – MOSCURE IPI 1 | USB Mosquito Trap Safety'
-
-    let meta = document.querySelector('meta[name="description"]')
-    if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta) }
-    meta.content =
-      'Important safety guidelines for the MOSCURE IPI 1 USB mosquito trap. Covers electrical safety, UV light precautions, general handling, usage safety, and environmental guidelines.'
-
-    return () => { document.title = 'Moscure' }
-  }, [])
+  
 
   return (
-    <main>
+    <main>      <Helmet>
+        <title>Safety Guidelines – MOSCURE IPI 1 | USB Mosquito Trap Safety</title>
+      </Helmet>
       <DocHero
         badge="IPI Indoor · Safety"
         title="Safety Guidelines"

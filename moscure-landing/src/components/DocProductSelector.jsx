@@ -112,6 +112,8 @@ export default function DocProductSelector({ docTitle, onSelect, indoorPath }) {
                 <img
                   src={product.img}
                   alt={product.fullName + " - Moscure organic mosquito trap device"}
+                  width={400}
+                  height={400}
                   className="h-48 w-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

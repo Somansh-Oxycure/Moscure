@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useInView, useMotionValue, animate } from 'framer-motion'
+import { Helmet } from 'react-helmet-async';
 import {
   ShieldCheck, Maximize2, Clock, Target,
   Check, X, Trophy, ChevronRight,
@@ -609,52 +610,20 @@ export default function ComparisonPage({ onNavigate }) {
   const heroRef = useRef(null)
   const heroInView = useInView(heroRef, { once: true })
 
-  useEffect(() => {
-    const prevTitle = document.title
-    document.title = 'Moscure vs Alternatives — Why Our UV Trap Beats Chemical Sprays, Coils & Rackets'
-
-    const setMeta = (name, content, prop = false) => {
-      const selector = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`
-      let el = document.querySelector(selector)
-      if (!el) {
-        el = document.createElement('meta')
-        prop ? el.setAttribute('property', name) : el.setAttribute('name', name)
-        document.head.appendChild(el)
-      }
-      el.setAttribute('content', content)
-      return el
-    }
-
-    const desc = setMeta('description', 'See how Moscure\'s chemical-free UV LED mosquito trap compares to coils, sprays, electric rackets, and other brands. 100% safe for kids & pets. Covers up to 3500 sq ft. No chemicals, no noise, no refills.')
-    const ogTitle = setMeta('og:title', 'Moscure vs Alternatives — Chemical-Free UV Trap Comparison', true)
-    const ogDesc = setMeta('og:description', 'Compare Moscure UV mosquito traps vs coils, sprays, and electric rackets. See why Moscure wins on safety, coverage, and effectiveness.', true)
-    const ogUrl = setMeta('og:url', 'https://www.moscure.com/comparison', true)
-
-    let canonical = document.querySelector('link[rel="canonical"]')
-    const canonicalCreated = !canonical
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.rel = 'canonical'
-      document.head.appendChild(canonical)
-    }
-    const prevCanonical = canonical.href
-    canonical.href = 'https://www.moscure.com/comparison'
-
-    return () => {
-      document.title = prevTitle
-      desc.remove()
-      ogTitle.remove()
-      ogDesc.remove()
-      ogUrl.remove()
-      if (canonicalCreated) canonical.remove()
-      else canonical.href = prevCanonical
-    }
-  }, [])
+  
 
   const handleToggle = (id) => setExpandedCard((prev) => (prev === id ? null : id))
 
   return (
     <div className="bg-background text-textPrimary overflow-x-hidden">
+      <Helmet>
+        <title>Moscure vs Alternatives — Why Our UV Trap Beats Chemical Sprays, Coils & Rackets</title>
+        <meta name="description" content="See how Moscure's chemical-free UV LED mosquito trap compares to coils, sprays, electric rackets, and other brands. 100% safe for kids & pets. Covers up to 3500 sq ft. No chemicals, no noise, no refills." />
+        <meta property="og:title" content="Moscure vs Alternatives — Chemical-Free UV Trap Comparison" />
+        <meta property="og:description" content="Compare Moscure UV mosquito traps vs coils, sprays, and electric rackets. See why Moscure wins on safety, coverage, and effectiveness." />
+        <meta property="og:url" content="https://www.moscure.com/comparison" />
+        <link rel="canonical" href="https://www.moscure.com/comparison" />
+      </Helmet>
 
       {/* ─── SECTION 1 — WHY MOSCURE WINS ─────────────────────────────────────── */}
       <section
