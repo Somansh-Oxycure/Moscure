@@ -120,33 +120,22 @@ function OrderCard({ order }) {
   )
 }
 
-// ─── OTP Login Form ───────────────────────────────────────────────────────────
-function OtpLoginForm() {
-  const { signInWithOtp, verifyOtp } = useAuth()
+// ─── Magic Link Login Form ───────────────────────────────────────────────────────────
+function MagicLinkLoginForm() {
+  const { signInWithOtp } = useAuth()
   const [email, setEmail] = useState('')
-  const [otp, setOtp] = useState('')
-  const [stage, setStage] = useState('email') // 'email' | 'otp'
+  const [stage, setStage] = useState('email') // 'email' | 'sent'
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [sent, setSent] = useState(false)
 
-  const handleSendOtp = async (e) => {
+  const handleSendLink = async (e) => {
     e.preventDefault()
     if (!email) return
     setLoading(true); setError(null)
     const { error } = await signInWithOtp(email)
     setLoading(false)
     if (error) { setError(error.message); return }
-    setSent(true); setStage('otp')
-  }
-
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault()
-    if (!otp) return
-    setLoading(true); setError(null)
-    const { error } = await verifyOtp(email, otp)
-    setLoading(false)
-    if (error) setError('Invalid or expired code. Try again.')
+    setStage('sent')
   }
 
   return (
@@ -162,8 +151,8 @@ function OtpLoginForm() {
           <h1 className="font-display text-4xl text-white mb-2">Track Your Order</h1>
           <p className="text-sm text-white/40">
             {stage === 'email'
-              ? 'Enter your email to receive a one-time login code.'
-              : `We sent a 6-digit code to ${email}`}
+              ? 'Enter your email to receive a magic login link.'
+              : `We sent a magic link to ${email}`}
           </p>
         </div>
 
@@ -173,7 +162,7 @@ function OtpLoginForm() {
         >
           <AnimatePresence mode="wait">
             {stage === 'email' ? (
-              <motion.form key="email-form" onSubmit={handleSendOtp} className="flex flex-col gap-4"
+              <motion.form key="email-form" onSubmit={handleSendLink} className="flex flex-col gap-4"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-mono text-white/40 uppercase tracking-wider">Email Address</label>
@@ -198,40 +187,24 @@ function OtpLoginForm() {
                   disabled={loading}
                   className="w-full bg-gradientcyan text-background font-display text-lg tracking-wider py-3.5 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  {loading ? <Loader2 size={18} className="animate-spin" /> : 'Send Login Code →'}
+                  {loading ? <Loader2 size={18} className="animate-spin" /> : 'Send Magic Link →'}
                 </motion.button>
               </motion.form>
             ) : (
-              <motion.form key="otp-form" onSubmit={handleVerifyOtp} className="flex flex-col gap-4"
+              <motion.div key="sent-message" className="flex flex-col items-center gap-4 text-center py-4"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-mono text-white/40 uppercase tracking-wider">6-Digit Code</label>
-                  <input
-                    type="text"
-                    value={otp}
-                    onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                    placeholder="123456"
-                    maxLength={6}
-                    required
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-center text-2xl font-mono tracking-[0.5em] text-white placeholder-white/20 focus:outline-none focus:border-gradientcyan/50 transition-colors"
-                  />
+                <div className="w-16 h-16 rounded-full bg-gradientcyan/10 border border-gradientcyan/20 flex items-center justify-center mb-2">
+                  <Mail size={24} className="text-gradientcyan" />
                 </div>
-                {error && (
-                  <p className="text-xs text-red-400 flex items-center gap-1"><AlertCircle size={11} />{error}</p>
-                )}
-                <motion.button
-                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  disabled={loading || otp.length < 6}
-                  className="w-full bg-gradientcyan text-background font-display text-lg tracking-wider py-3.5 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  {loading ? <Loader2 size={18} className="animate-spin" /> : 'Verify & Sign In →'}
-                </motion.button>
-                <button type="button" onClick={() => { setStage('email'); setOtp(''); setError(null) }}
-                  className="text-xs text-white/30 hover:text-white/60 text-center transition-colors">
+                <h3 className="text-white font-display text-xl">Check your email</h3>
+                <p className="text-sm text-white/60 mb-2">
+                  Click the secure link we sent to verify your email. You can safely close this window or use the link to log in.
+                </p>
+                <button type="button" onClick={() => setStage('email')}
+                  className="text-xs text-white/30 hover:text-white/60 transition-colors mt-2">
                   ← Use a different email
                 </button>
-              </motion.form>
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -329,7 +302,7 @@ export default function MyOrdersPage() {
       ) : user ? (
         <OrdersView user={user} onSignOut={signOut} />
       ) : (
-        <OtpLoginForm />
+        <MagicLinkLoginForm />
       )}
     </>
   )
