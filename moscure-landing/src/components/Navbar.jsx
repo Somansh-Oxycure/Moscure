@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Package } from 'lucide-react'
 import logoImg from '../assets/logo.webp'
 
 const NAV_LINKS = [
@@ -59,9 +59,9 @@ export default function Navbar({ onNavigate }) {
             <img
               src={logoImg}
               alt="Moscure UV mosquito trap official logo"
-              width={96}
-              height={96}
-              className="h-24 w-auto object-contain brightness-150"
+              width={64}
+              height={64}
+              className="h-16 w-auto object-contain brightness-150"
             />
           </Link>
 
@@ -90,8 +90,16 @@ export default function Navbar({ onNavigate }) {
             ))}
           </ul>
 
-          {/* CTA + hamburger */}
-          <div className="flex items-center gap-4">
+          {/* CTA + My Orders + hamburger */}
+          <div className="flex items-center gap-3">
+            <Link
+              to="/my-orders"
+              onClick={() => onNavigate?.('myOrders')}
+              className="hidden md:inline-flex items-center gap-1.5 border border-white/15 text-white/60 hover:text-white hover:border-white/30 font-mono text-xs px-4 py-2.5 rounded-full transition-all duration-200"
+              aria-label="Track your Moscure order"
+            >
+              <Package size={13} /> My Orders
+            </Link>
             <Link
               to="/product"
               onClick={() => onNavigate?.('product')}
@@ -146,7 +154,15 @@ export default function Navbar({ onNavigate }) {
                   </a>
                 </motion.li>
               ))}
-              <li className="pt-4 pb-2">
+              <li className="pt-4 pb-2 flex flex-col gap-2">
+                <Link
+                  to="/my-orders"
+                  onClick={() => { onNavigate?.('myOrders'); setMobileOpen(false) }}
+                  className="block w-full text-center border border-white/15 text-white/60 font-mono text-sm px-6 py-3 rounded-full"
+                  aria-label="Track your Moscure order"
+                >
+                  My Orders
+                </Link>
                 <Link
                   to="/product"
                   onClick={() => { onNavigate?.('product'); setMobileOpen(false) }}

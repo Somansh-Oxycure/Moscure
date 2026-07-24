@@ -62,9 +62,9 @@ export default function Footer({ onNavigate }) {
               <img
                 src={logoImg}
                 alt="Moscure UV mosquito trap official logo"
-                width={96}
-                height={96}
-                className="h-24 brightness-125 w-auto object-contain"
+                width={64}
+                height={64}
+                className="h-16 brightness-125 w-auto object-contain"
               />
             </Link>
             <p className="font-body text-sm text-textMuted leading-relaxed">

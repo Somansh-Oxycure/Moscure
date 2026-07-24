@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Shield, HeartPulse, Maximize2, Zap, Battery,
   Sparkles, Ruler, ShieldCheck, Leaf, Volume2, Clock,
   Star, ThumbsUp, CheckCircle2, Camera, Image as ImageIcon,
   Share2, ChevronDown, ChevronUp, Copy, MessageCircle,
 } from 'lucide-react'
+import CheckoutModal from '../../components/CheckoutModal'
 
 // ─── Asset imports ────────────────────────────────────────────────────────────
 import img1 from '../../assets/product-indoor.png'
@@ -551,9 +552,11 @@ function TrustTicker() {
 // ─── Page Root ────────────────────────────────────────────────────────────────
 
 export default function IPIIndoorProductPage({ onNavigate }) {
+  const navigate = useNavigate()
   const [activeImage, setActiveImage] = useState(0)
   const [mobileCtaVisible, setMobileCtaVisible] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [checkoutOpen, setCheckoutOpen] = useState(false)
   const heroRef = useRef(null)
   const ctaRef = useRef(null)
 
@@ -735,15 +738,14 @@ export default function IPIIndoorProductPage({ onNavigate }) {
 
             {/* Block 7 — CTA buttons */}
             <div className="flex flex-col gap-3" ref={ctaRef}>
-              <motion.a
-                href="https://www.amazon.in/Moscure-Mosquito-Odor-Free-Chemical-Free-Lightweight/dp/B0GCF5LM5B/ref=sr_1_1_sspa?sr=8-1-spons&aref=LNbvtfqxv6&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1"
-                target='blank'
+              <motion.button
+                onClick={() => setCheckoutOpen(true)}
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0, 245, 212, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center gap-2 bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4 w-full"
               >
                 BUY NOW →
-              </motion.a>
+              </motion.button>
 
               <motion.button
                 onClick={() => onNavigate?.('contact')}
@@ -922,15 +924,15 @@ export default function IPIIndoorProductPage({ onNavigate }) {
           </div>
 
           <div className="flex items-center gap-4 w-full max-w-sm">
-            <motion.a
-              href="https://www.amazon.in/Moscure-Mosquito-Odor-Free-Chemical-Free-Lightweight/dp/B0GCF5LM5B/ref=sr_1_1_sspa?sr=8-1-spons&aref=LNbvtfqxv6&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1"
-              target='blank'
+            <motion.button
+              ref={ctaRef}
+              onClick={() => setCheckoutOpen(true)}
               whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(0, 245, 212, 0.4)' }}
               whileTap={{ scale: 0.98 }}
               className="flex-1 flex items-center justify-center bg-gradientcyan text-background font-display text-xl tracking-wider rounded-xl py-4"
             >
               BUY NOW →
-            </motion.a>
+            </motion.button>
 
             <motion.button
               onClick={() => onNavigate?.('product')}
@@ -959,18 +961,26 @@ export default function IPIIndoorProductPage({ onNavigate }) {
               <div>
                 <p className="font-body text-xs text-textMuted">Moscure IPI</p>
               </div>
-              <motion.a
-                href="https://www.amazon.in/Moscure-Mosquito-Odor-Free-Chemical-Free-Lightweight/dp/B0GCF5LM5B/ref=sr_1_1_sspa?sr=8-1-spons&aref=LNbvtfqxv6&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1"
+              <motion.button
+                onClick={() => setCheckoutOpen(true)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="bg-gradientcyan text-background px-6 py-3 rounded-xl font-display text-lg tracking-wider"
               >
                 BUY NOW →
-              </motion.a>
+              </motion.button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── Checkout Modal ───────────────────────────────────────── */}
+      <CheckoutModal
+        product={{ ...PRODUCT, image: img1 }}
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        onGoToOrders={() => { setCheckoutOpen(false); navigate('/my-orders') }}
+      />
     </>
   )
 }

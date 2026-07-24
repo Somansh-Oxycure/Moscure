@@ -2,13 +2,14 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import TrustedByMarquee from '../../components/TrustedByMarquee'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Shield, HeartPulse, Maximize2, Zap, Battery,
   Droplets, Ruler, ShieldCheck, Wind, Volume2, Clock,
   Star, ThumbsUp, CheckCircle2, Camera, Image as ImageIcon,
   Share2, ChevronDown, ChevronUp, Copy, MessageCircle,
 } from 'lucide-react'
+import CheckoutModal from '../../components/CheckoutModal'
 
 // ─── Asset imports ────────────────────────────────────────────────────────────
 import img1 from '../../assets/product-outdoor.png'
@@ -557,9 +558,11 @@ function TrustTicker() {
 // ─── Page Root ────────────────────────────────────────────────────────────────
 
 export default function IPOOutdoorProductPage({ onNavigate }) {
+  const navigate = useNavigate()
   const [activeImage, setActiveImage] = useState(0)
   const [mobileCtaVisible, setMobileCtaVisible] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [checkoutOpen, setCheckoutOpen] = useState(false)
   const heroRef = useRef(null)
   const ctaRef = useRef(null)
 
@@ -741,16 +744,15 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
 
             {/* Block 7 — CTA buttons */}
             <div className="flex flex-col gap-3" ref={ctaRef}>
-              <motion.a
-                href="https://www.amazon.in/Moscure-Outdoor-Mosquito-Insect-Energy-Efficient/dp/B0GJ6FY1XD/ref=sr_1_6?sr=8-6"
-                target='blank'
+              <motion.button
+                onClick={() => setCheckoutOpen(true)}
                 whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(255, 214, 10, 0.4)' }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center justify-center gap-2 text-background font-display text-xl tracking-wider rounded-xl py-4 w-full"
                 style={{ backgroundColor: PRODUCT.accentColor }}
               >
                 BUY NOW →
-              </motion.a>
+              </motion.button>
 
               <motion.button
                 onClick={() => onNavigate?.('contact')}
@@ -932,16 +934,15 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
           </div>
 
           <div className="flex items-center gap-4 w-full max-w-sm">
-            <motion.a
-              href="https://www.amazon.in/Moscure-Outdoor-Mosquito-Insect-Energy-Efficient/dp/B0GJ6FY1XD/ref=sr_1_6?sr=8-6"
-              target="_blank"
+            <motion.button
+              onClick={() => setCheckoutOpen(true)}
               whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(255, 214, 10, 0.4)' }}
               whileTap={{ scale: 0.98 }}
               className="flex-1 flex items-center justify-center text-background font-display text-xl tracking-wider rounded-xl py-4"
               style={{ backgroundColor: PRODUCT.accentColor }}
             >
               BUY NOW →
-            </motion.a>
+            </motion.button>
 
             <motion.button
               onClick={() => onNavigate?.('product')}
@@ -971,19 +972,27 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
                 <p className="font-body text-xs text-textMuted">Moscure IPO</p>
                 <p className="font-display text-2xl text-gradientyellow leading-none">₹21,599</p>
               </div>
-              <motion.a
-                href="https://www.amazon.in/Moscure-Outdoor-Mosquito-Insect-Energy-Efficient/dp/B0GJ6FY1XD/ref=sr_1_6?sr=8-6"
+              <motion.button
+                onClick={() => setCheckoutOpen(true)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="text-background px-6 py-3 rounded-xl font-display text-lg tracking-wider"
                 style={{ backgroundColor: PRODUCT.accentColor }}
               >
                 BUY NOW →
-              </motion.a>
+              </motion.button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── Checkout Modal ───────────────────────────────────────── */}
+      <CheckoutModal
+        product={{ ...PRODUCT, image: img1 }}
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        onGoToOrders={() => { setCheckoutOpen(false); navigate('/my-orders') }}
+      />
     </>
   )
 }

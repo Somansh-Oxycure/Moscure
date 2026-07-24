@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import LandingPage from './pages/LandingPage'
@@ -19,6 +20,8 @@ import IPI1UserManualPage from './pages/products/IPI1UserManualPage'
 import IPI1InstallationGuidePage from './pages/products/IPI1InstallationGuidePage'
 import IPI1WarrantyPage from './pages/products/IPI1WarrantyPage'
 import IPI1SafetyGuidelinesPage from './pages/products/IPI1SafetyGuidelinesPage'
+import MyOrdersPage from './pages/MyOrdersPage'
+import AdminOrdersPage from './pages/AdminOrdersPage'
 import './index.css'
 
 function ScrollToTop() {
@@ -47,6 +50,8 @@ const PAGE_TO_PATH = {
   contact: '/contact',
   ipiIndoor: '/products/moscure-ipi-indoor-mosquito-trap',
   ipoOutdoor: '/products/moscure-ipo-outdoor-mosquito-trap',
+  myOrders: '/my-orders',
+  adminOrders: '/admin/orders',
 }
 
 function AppInner() {
@@ -86,6 +91,8 @@ function AppInner() {
         <Route path="/ipi1/installation-guide" element={<IPI1InstallationGuidePage />} />
         <Route path="/ipi1/warranty" element={<IPI1WarrantyPage />} />
         <Route path="/ipi1/safety" element={<IPI1SafetyGuidelinesPage />} />
+        <Route path="/my-orders" element={<MyOrdersPage />} />
+        <Route path="/admin/orders" element={<AdminOrdersPage />} />
         <Route path="*" element={<LandingPage onNavigate={handleNavigate} />} />
       </Routes>
       <Footer onNavigate={handleNavigate} />
@@ -97,7 +104,9 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <AppInner />
+        <AuthProvider>
+          <AppInner />
+        </AuthProvider>
       </BrowserRouter>
     </HelmetProvider>
   )
