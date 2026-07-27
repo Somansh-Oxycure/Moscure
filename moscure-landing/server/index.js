@@ -2,6 +2,8 @@
 // Express API server for Moscure — handles Razorpay payment flow and admin routes.
 // Runs on port 3001. Nginx proxies /api/* from port 80 → port 3001.
 
+import './polyfill.js'
+
 import dotenv from 'dotenv'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -9,15 +11,6 @@ import express from 'express'
 import cors from 'cors'
 import crypto from 'crypto'
 import Razorpay from 'razorpay'
-import fetch, { Headers, Request, Response } from 'node-fetch'
-
-if (!globalThis.Headers) {
-  globalThis.fetch = fetch
-  globalThis.Headers = Headers
-  globalThis.Request = Request
-  globalThis.Response = Response
-}
-
 import { createClient } from '@supabase/supabase-js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
