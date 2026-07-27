@@ -9,6 +9,15 @@ import express from 'express'
 import cors from 'cors'
 import crypto from 'crypto'
 import Razorpay from 'razorpay'
+import fetch, { Headers, Request, Response } from 'node-fetch'
+
+if (!globalThis.Headers) {
+  globalThis.fetch = fetch
+  globalThis.Headers = Headers
+  globalThis.Request = Request
+  globalThis.Response = Response
+}
+
 import { createClient } from '@supabase/supabase-js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
