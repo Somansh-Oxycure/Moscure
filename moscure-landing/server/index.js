@@ -62,17 +62,12 @@ function requireAdmin(req, res, next) {
   next()
 }
 
-// ─── Supabase admin client (service role — only used server-side) ─────────────
-let supabaseAdmin = null
-function getSupabaseAdmin() {
-  if (supabaseAdmin) return supabaseAdmin
+// ─── Supabase API Helpers (Direct REST calls to bypass heavy SDK) ────────────
+function getSupabaseCreds() {
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY
-  if (!url || !key) {
-    throw new Error('Supabase URL or Key missing in server environment.')
-  }
-  supabaseAdmin = createClient(url, key)
-  return supabaseAdmin
+  if (!url || !key) throw new Error('Supabase URL or Key missing in server environment.')
+  return { url, key }
 }
 
 // ─── Health check ─────────────────────────────────────────────────────────────
@@ -135,16 +130,14 @@ app.post('/api/verify-payment', (req, res) => {
 })
 
 // ─── GET /api/admin/orders ────────────────────────────────────────────────────
-// Returns all orders — admin only. Uses Supabase service role to bypass RLS.
 app.get('/api/admin/orders', requireAdmin, async (req, res) => {
   try {
-    const db = getSupabaseAdmin()
-    const { data, error } = await db
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending: false })
-
-    if (error) throw error
+    const { url, key } = getSupabaseCreds()
+    const response = await fetch(`${url}/rest/v1/orders?select=*&order=created_at.desc`, {
+      headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+    })
+    const data = await response.json()
+    if (!response.ok) throw new Error(data.message || 'Supabase GET error')
     res.json(data)
   } catch (err) {
     console.error('[admin/orders GET]', err)
@@ -153,7 +146,6 @@ app.get('/api/admin/orders', requireAdmin, async (req, res) => {
 })
 
 // ─── PATCH /api/admin/orders/:id ─────────────────────────────────────────────
-// Updates order status, vendor_order_id, and estimated_delivery — admin only.
 app.patch('/api/admin/orders/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params
@@ -164,16 +156,14 @@ app.patch('/api/admin/orders/:id', requireAdmin, async (req, res) => {
       return res.status(400).json({ error: 'Invalid status value' })
     }
 
-    const db = getSupabaseAdmin()
+    const { url, key } = getSupabaseCreds()
 
     if (status !== undefined) {
-      const { data: currentOrder, error: fetchErr } = await db
-        .from('orders')
-        .select('status')
-        .eq('id', id)
-        .single()
-
-      if (fetchErr) throw fetchErr
+      const getRes = await fetch(`${url}/rest/v1/orders?id=eq.${id}&select=status`, {
+        headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+      })
+      const currentData = await getRes.json()
+      const currentOrder = currentData?.[0]
 
       const statusLevels = { pending: 0, confirmed: 1, packed: 2, dispatched: 3, delivered: 4 }
       const currentLevel = statusLevels[currentOrder?.status] ?? 0
@@ -189,15 +179,21 @@ app.patch('/api/admin/orders/:id', requireAdmin, async (req, res) => {
     if (vendor_order_id !== undefined) updates.vendor_order_id = vendor_order_id
     if (estimated_delivery !== undefined) updates.estimated_delivery = estimated_delivery
 
-    const { data, error } = await db
-      .from('orders')
-      .update(updates)
-      .eq('id', id)
-      .select()
-      .single()
-
-    if (error) throw error
-    res.json(data)
+    const patchRes = await fetch(`${url}/rest/v1/orders?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(updates)
+    })
+    
+    const patchData = await patchRes.json()
+    if (!patchRes.ok) throw new Error(patchData.message || 'Supabase PATCH error')
+    
+    res.json(patchData[0])
   } catch (err) {
     console.error('[admin/orders PATCH]', err)
     res.status(500).json({ error: err.message })
