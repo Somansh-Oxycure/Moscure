@@ -1,3 +1,4 @@
+
 // src/components/CheckoutModal.jsx
 // Full checkout flow: Cart → Address → Payment → Success
 import { useState, useEffect, useCallback } from 'react'
@@ -15,16 +16,14 @@ function StepIndicator({ current }) {
     <div className="flex items-center justify-center gap-2 mb-8">
       {STEPS.map((label, i) => (
         <div key={label} className="flex items-center gap-2">
-          <div className={`flex items-center justify-center w-7 h-7 rounded-full text-xs font-mono font-bold transition-all duration-300 ${
-            i < current ? 'bg-gradientcyan text-background' :
-            i === current ? 'border-2 border-gradientcyan text-gradientcyan' :
-            'border border-white/20 text-white/30'
-          }`}>
+          <div className={`flex items-center justify-center w-7 h-7 rounded-full text-xs font-mono font-bold transition-all duration-300 ${i < current ? 'bg-gradientcyan text-background' :
+              i === current ? 'border-2 border-gradientcyan text-gradientcyan' :
+                'border border-white/20 text-white/30'
+            }`}>
             {i < current ? <CheckCircle2 size={14} /> : i + 1}
           </div>
-          <span className={`text-xs font-mono tracking-wider transition-colors ${
-            i === current ? 'text-white' : 'text-white/30'
-          }`}>{label}</span>
+          <span className={`text-xs font-mono tracking-wider transition-colors ${i === current ? 'text-white' : 'text-white/30'
+            }`}>{label}</span>
           {i < STEPS.length - 1 && (
             <div className={`w-8 h-px transition-colors ${i < current ? 'bg-gradientcyan' : 'bg-white/10'}`} />
           )}
@@ -405,7 +404,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
 
       // 2. Open Razorpay popup
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        key: razorpayOrder.key_id || import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: razorpayOrder.amount,
         currency: razorpayOrder.currency,
         name: 'Moscure',

@@ -9,6 +9,7 @@ import express from 'express'
 import cors from 'cors'
 import crypto from 'crypto'
 import Razorpay from 'razorpay'
+import { createClient } from '@supabase/supabase-js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 dotenv.config({ path: path.resolve(__dirname, '../.env') })
@@ -61,9 +62,8 @@ function requireAdmin(req, res, next) {
 
 // ─── Supabase admin client (service role — only used server-side) ─────────────
 let supabaseAdmin = null
-async function getSupabaseAdmin() {
+function getSupabaseAdmin() {
   if (supabaseAdmin) return supabaseAdmin
-  const { createClient } = await import('@supabase/supabase-js')
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY
   if (!url || !key) {
@@ -94,7 +94,7 @@ app.post('/api/create-order', async (req, res) => {
     }
 
     const order = await razorpay.orders.create(options)
-    res.json(order)
+    res.json({ ...order, key_id: keyId })
   } catch (err) {
     console.error('[create-order]', err)
     res.status(500).json({ error: err.message || 'Failed to create order' })
@@ -136,7 +136,7 @@ app.post('/api/verify-payment', (req, res) => {
 // Returns all orders — admin only. Uses Supabase service role to bypass RLS.
 app.get('/api/admin/orders', requireAdmin, async (req, res) => {
   try {
-    const db = await getSupabaseAdmin()
+    const db = getSupabaseAdmin()
     const { data, error } = await db
       .from('orders')
       .select('*')
@@ -162,7 +162,7 @@ app.patch('/api/admin/orders/:id', requireAdmin, async (req, res) => {
       return res.status(400).json({ error: 'Invalid status value' })
     }
 
-    const db = await getSupabaseAdmin()
+    const db = getSupabaseAdmin()
 
     if (status !== undefined) {
       const { data: currentOrder, error: fetchErr } = await db
