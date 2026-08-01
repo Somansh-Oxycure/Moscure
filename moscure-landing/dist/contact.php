@@ -72,6 +72,40 @@ if (!empty($errors)) {
     exit;
 }
 
+// Save lead to Supabase 'leads' table so it can trigger your email webhook
+$supabaseUrl = getenv('SUPABASE_URL') ?: getenv('VITE_SUPABASE_URL');
+$supabaseKey = getenv('SUPABASE_ANON_KEY') ?: getenv('VITE_SUPABASE_ANON_KEY');
+
+if (!empty($supabaseUrl) && !empty($supabaseKey)) {
+    // We insert into a table named 'leads' (you will need to create this in Supabase)
+    $supabaseRestUrl = rtrim($supabaseUrl, '/') . '/rest/v1/leads';
+    
+    // Construct the payload matching your table columns
+    $supabasePayload = json_encode([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'phone' => $data['phone'] ?? null,
+        'city' => $data['city'] ?? null,
+        'subject' => $data['subject'],
+        'message' => $data['message'],
+    ]);
+
+    $chSupa = curl_init($supabaseRestUrl);
+    curl_setopt($chSupa, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($chSupa, CURLOPT_POST, true);
+    curl_setopt($chSupa, CURLOPT_POSTFIELDS, $supabasePayload);
+    curl_setopt($chSupa, CURLOPT_HTTPHEADER, [
+        "apikey: {$supabaseKey}",
+        "Authorization: Bearer {$supabaseKey}",
+        "Content-Type: application/json",
+        "Prefer: return=minimal"
+    ]);
+    curl_exec($chSupa);
+    curl_close($chSupa);
+}
+
+
+
 $nameParts = preg_split('/\s+/', trim($data['name']), 2);
 $firstname = $nameParts[0] ?? '';
 $lastname = $nameParts[1] ?? '';
