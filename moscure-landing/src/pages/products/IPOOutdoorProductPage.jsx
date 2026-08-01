@@ -32,8 +32,8 @@ const PRODUCT = {
   name: 'IPO Outdoor Mosquito & Insect Trap',
   fullTitle: 'IPO Outdoor Mosquito & Insect Trap | 365nm UV LED Trap | Covers 3500 sq ft | Water Resistant, Hangable, Safe & Odor-Free Bug Trapper | 9W Energy-Efficient',
   brand: 'Moscure',
-  originalPrice: 21599,
-  price: 19500,
+  originalPrice: 25000,
+  price: 12999,
   currency: '₹',
   inStock: true,
   rating: 4.7,
@@ -181,7 +181,7 @@ const SCHEMA_JSON = JSON.stringify({
       url: 'https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap',
       offers: {
         '@type': 'Offer',
-        price: '21599',
+        price: '12999',
         priceCurrency: 'INR',
         priceValidUntil: '2027-12-31',
         availability: 'https://schema.org/InStock',
@@ -318,8 +318,8 @@ function ImageGallery({ images, activeIndex, onSelect }) {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             className={`w-14 h-14 rounded-lg border-2 overflow-hidden cursor-pointer transition-colors shrink-0 ${i === activeIndex
-                ? 'border-gradientyellow bg-gradientyellow/5'
-                : 'border-borderDefault bg-surface hover:border-white/30'
+              ? 'border-gradientyellow bg-gradientyellow/5'
+              : 'border-borderDefault bg-surface hover:border-white/30'
               }`}
           >
             {img.src ? (
@@ -594,7 +594,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
 
   const handleWhatsApp = () => {
     window.open(
-      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3500 sq ft coverage, ₹21,599\nhttps://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap')}`,
+      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3500 sq ft coverage, ₹12,999\nhttps://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap')}`,
       '_blank',
       'noopener,noreferrer'
     )
@@ -603,10 +603,10 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
   return (
     <>
       <Helmet>
-        <title>Moscure IPO Outdoor Mosquito Trap | UV LED Bug Trapper | 3500 sq ft Coverage | ₹21,599</title>
-        <meta name="description" content="Moscure IPO Outdoor Mosquito & Insect Trap uses 365nm UV LED technology to silently trap mosquitoes & flying insects across 3500 sq ft. Water resistant, hangable design. 100% chemical-free. Buy now at ₹21,599." />
+        <title>Moscure IPO Outdoor Mosquito Trap | UV LED Bug Trapper | 3500 sq ft Coverage | ₹12,999</title>
+        <meta name="description" content="Moscure IPO Outdoor Mosquito & Insect Trap uses 365nm UV LED technology to silently trap mosquitoes & flying insects across 3500 sq ft. Water resistant, hangable design. 100% chemical-free. Buy now at ₹12,999." />
         <meta name="keywords" content="outdoor mosquito trap India, UV mosquito killer outdoor, water resistant bug trapper, garden mosquito trap, patio mosquito catcher, dengue malaria mosquito trap outdoor, Moscure IPO, 3500 sq ft outdoor insect trap, hangable mosquito trap India" />
-        <meta property="og:title" content="Moscure IPO Outdoor Mosquito Trap — ₹21,599" />
+        <meta property="og:title" content="Moscure IPO Outdoor Mosquito Trap — ₹12,999" />
         <meta property="og:description" content="Water resistant, hangable UV LED mosquito trap. Covers 3500 sq ft. Chemical-free, monsoon ready." />
         <meta property="og:url" content="https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap" />
         <meta property="og:type" content="product" />
@@ -806,7 +806,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
               </motion.button>
 
               <motion.a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPO — Chemical-Free Outdoor Mosquito Trap. UV LED, 3500 sq ft coverage. ₹21,599')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPO — Chemical-Free Outdoor Mosquito Trap. UV LED, 3500 sq ft coverage. ₹12,999')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipo-outdoor-mosquito-trap')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05, borderColor: '#FFD60A' }}
@@ -970,7 +970,7 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
             <div className="flex items-center justify-between gap-3 max-w-xl mx-auto">
               <div>
                 <p className="font-body text-xs text-textMuted">Moscure IPO</p>
-                <p className="font-display text-2xl text-gradientyellow leading-none">₹21,599</p>
+                <p className="font-display text-2xl text-gradientyellow leading-none">₹12,999</p>
               </div>
               <motion.button
                 onClick={() => setCheckoutOpen(true)}

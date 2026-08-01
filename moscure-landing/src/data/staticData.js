@@ -156,8 +156,8 @@ export const PRODUCTS_DATA = [
     model: 'MC-IPI 1',
     description:
       'Scientifically engineered MLID and Phototaxis Technology trap for indoor spaces. Silent, chemical-free, and proven effective against all major disease-carrying mosquito species.',
-    originalPrice: '₹3,299',
-    price: '₹2,199',
+    originalPrice: '₹3,200',
+    price: '₹1,299',
     priceLabel: '',
     imageFile: 'product-indoor',
     imageLabel: '[ MC-IPI 1 Image ]',
@@ -183,8 +183,8 @@ export const PRODUCTS_DATA = [
     model: 'MC-IPO Unit',
     description:
       'Heavy-duty MLID and Phototaxis Technology mosquito trap built for outdoor environments. Weatherproof design protects your garden, patio, and open spaces around the clock.',
-    originalPrice: '₹21,599',
-    price: '₹19,500',
+    originalPrice: '₹25,000',
+    price: '₹12,999',
     priceLabel: '',
     imageFile: 'product-outdoor',
     imageLabel: '[ IPO Unit Image ]',
@@ -203,10 +203,10 @@ export const PRODUCTS_DATA = [
 
 // ── Product-page stats ─────────────────────────────────────
 export const STATS_DATA = [
-  { id: 's1', stat: 100, suffix: '%', label: 'Lab Tested',accent: 'gradientcyan'   },
-  { id: 's2', stat: 95,  suffix: '%', label: 'Catch Rate',accent: 'gradientyellow' },
-  { id: 's3', stat: 3500, suffix: '', prefix: 'Coverage up to', label: 'sq ft',          accent: 'gradientpink'   },
-  { id: 's4', stat: 24,  suffix: '/7',prefix:' ', label: 'Non-Stop Protection', accent: 'gradientcyan'   },
+  { id: 's1', stat: 100, suffix: '%', label: 'Lab Tested', accent: 'gradientcyan' },
+  { id: 's2', stat: 95, suffix: '%', label: 'Catch Rate', accent: 'gradientyellow' },
+  { id: 's3', stat: 3500, suffix: '', prefix: 'Coverage up to', label: 'sq ft', accent: 'gradientpink' },
+  { id: 's4', stat: 24, suffix: '/7', prefix: ' ', label: 'Non-Stop Protection', accent: 'gradientcyan' },
 ]
 
 // ── Product features ───────────────────────────────────────

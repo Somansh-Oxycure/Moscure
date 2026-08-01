@@ -2,7 +2,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
-const SENDER_EMAIL = Deno.env.get("SENDER_EMAIL") || "Moscure Orders <orders@moscure.com>"
+const SENDER_EMAIL = Deno.env.get("SENDER_EMAIL") || "Moscure <operations@moscure.com>"
+const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "operations@moscure.com"
 
 serve(async (req) => {
   if (req.method !== "POST") {
@@ -17,15 +18,135 @@ serve(async (req) => {
     console.log("Received webhook payload:", JSON.stringify(payload))
 
     const eventType = payload.type || "INSERT"
-    const order = payload.record
-    const oldOrder = payload.old_record
+    const tableName = payload.table || "orders"
+    const record = payload.record
 
-    if (!order) {
-      return new Response(JSON.stringify({ error: "No order record found" }), {
+    if (!record) {
+      return new Response(JSON.stringify({ error: "No record found in payload" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       })
     }
+
+    // ─── CASE 1: LEAD SUBMISSION ──────────────────────────────────────────────
+    if (tableName === "leads") {
+      const { name, email, phone, city, subject, message } = record
+
+      const emailSubject = `New Form Submission: ${subject || "No Subject"}`
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>New Lead — Moscure</title>
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #0b0b0f; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #e4e4e7;">
+          <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 40px auto; background-color: #12121a; border-radius: 16px; border: 1px solid #22222e; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
+            
+            <!-- Header -->
+            <tr>
+              <td style="padding: 40px 40px 20px 40px; text-align: center;">
+                <h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: 2px; color: #00F5D4; text-transform: uppercase;">
+                  MOSCURE
+                </h1>
+                <p style="margin: 8px 0 0 0; color: #a1a1aa; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                  New Form Submission
+                </p>
+              </td>
+            </tr>
+
+            <!-- Lead Details -->
+            <tr>
+              <td style="padding: 20px 40px 10px 40px;">
+                <h2 style="margin: 0 0 15px 0; font-size: 20px; font-weight: 600; color: #ffffff;">
+                  Lead Contact Info
+                </h2>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #181824; border-radius: 12px; padding: 20px; line-height: 1.6;">
+                  <tr>
+                    <td style="color: #888888; font-size: 13px; width: 100px; padding: 4px 0;">Name</td>
+                    <td style="color: #ffffff; font-size: 14px; font-weight: 600; padding: 4px 0;">${name || "N/A"}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #888888; font-size: 13px; padding: 4px 0;">Email</td>
+                    <td style="color: #ffffff; font-size: 14px; padding: 4px 0;"><a href="mailto:${email}" style="color: #00F5D4; text-decoration: none;">${email || "N/A"}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="color: #888888; font-size: 13px; padding: 4px 0;">Phone</td>
+                    <td style="color: #ffffff; font-size: 14px; padding: 4px 0;">${phone || "N/A"}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #888888; font-size: 13px; padding: 4px 0;">City</td>
+                    <td style="color: #ffffff; font-size: 14px; padding: 4px 0;">${city || "N/A"}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #888888; font-size: 13px; padding: 4px 0;">Subject</td>
+                    <td style="color: #00F5D4; font-size: 14px; font-weight: 600; padding: 4px 0;">${subject || "N/A"}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Message -->
+            <tr>
+              <td style="padding: 10px 40px 40px 40px;">
+                <h3 style="margin: 0 0 10px 0; font-size: 15px; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px;">
+                  Message
+                </h3>
+                <div style="background-color: #181824; border-radius: 12px; padding: 20px; color: #a1a1aa; font-size: 14px; line-height: 1.6; border-left: 3px solid #00F5D4;">
+                  ${(message || "").replace(/\n/g, "<br/>")}
+                </div>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="padding: 20px 40px; background-color: #0e0e14; text-align: center; border-top: 1px solid #22222e;">
+                <p style="margin: 0; color: #666666; font-size: 11px;">
+                  &copy; ${new Date().getFullYear()} Moscure. This is an automated notification.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+      `
+
+      // Split admin emails by comma to support sending to multiple administrators
+      const toEmails = ADMIN_EMAIL.split(",").map(e => e.trim())
+
+      const resendUrl = "https://api.resend.com/emails"
+      const response = await fetch(resendUrl, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: SENDER_EMAIL,
+          to: toEmails,
+          reply_to: email,
+          subject: emailSubject,
+          html: htmlContent,
+        }),
+      })
+
+      const responseData = await response.json()
+      console.log("Resend API Response (Lead):", JSON.stringify(responseData))
+
+      if (!response.ok) {
+        throw new Error(`Resend API error: ${responseData.message || "Unknown error"}`)
+      }
+
+      return new Response(JSON.stringify({ success: true, id: responseData.id }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
+    // ─── CASE 2: ORDER STATUS/CONFIRMATION (ORIGINAL LOGIC) ───────────────────
+    const order = record
+    const oldOrder = payload.old_record
 
     // On UPDATE events, verify if status actually changed
     if (eventType === "UPDATE") {
@@ -55,6 +176,7 @@ serve(async (req) => {
     let headerTitle = "Order Update"
     let statusBannerText = status ? status.toUpperCase() : "CONFIRMED"
     let statusMessage = "Here is the latest status update for your order."
+    let isNewOrder = false
 
     switch (status) {
       case "pending":
@@ -63,6 +185,7 @@ serve(async (req) => {
         headerTitle = "Order Confirmation"
         statusBannerText = "PAID & CONFIRMED"
         statusMessage = "We have received your payment and are getting your package ready."
+        isNewOrder = true
         break
       case "packed":
         emailSubject = `Order Packed: #${orderId.substring(0, 8).toUpperCase()}`
@@ -236,6 +359,8 @@ serve(async (req) => {
 
     // Call Resend REST API
     const resendUrl = "https://api.resend.com/emails"
+    const bccEmails = (isNewOrder && ADMIN_EMAIL) ? ADMIN_EMAIL.split(",").map(e => e.trim()) : undefined
+
     const response = await fetch(resendUrl, {
       method: "POST",
       headers: {
@@ -245,13 +370,14 @@ serve(async (req) => {
       body: JSON.stringify({
         from: SENDER_EMAIL,
         to: [customerEmail],
+        bcc: bccEmails,
         subject: emailSubject,
         html: htmlContent,
       }),
     })
 
     const responseData = await response.json()
-    console.log("Resend API Response:", JSON.stringify(responseData))
+    console.log("Resend API Response (Order):", JSON.stringify(responseData))
 
     if (!response.ok) {
       throw new Error(`Resend API error: ${responseData.message || "Unknown error"}`)
@@ -270,3 +396,4 @@ serve(async (req) => {
     })
   }
 })
+

@@ -6,8 +6,8 @@ export const SHIPPING_ZONES = [
     name: 'Delhi NCR',
     estimatedDays: { min: 1, max: 2 }, // 48 hours
     rates: {
-      'IPO': 200,
-      'IPI': 25
+      'IPO': 0,
+      'IPI': 0
     },
     pincodeRanges: [
       [110001, 110096], // Delhi
@@ -22,8 +22,8 @@ export const SHIPPING_ZONES = [
     name: 'Kolkata, Bangalore, Hyderabad, Kochi, Goa',
     estimatedDays: { min: 3, max: 4 }, // 3-4 days
     rates: {
-      'IPO': 500,
-      'IPI': 60
+      'IPO': 0,
+      'IPI': 0
     },
     pincodeRanges: [
       [700001, 700160], // Kolkata
@@ -72,7 +72,7 @@ export function getEstimatedDeliveryLabel(pincode, sku) {
   let date = new Date(today)
   while (daysAdded < info.estimatedDays.min) {
     date.setDate(date.getDate() + 1)
-    if (date.getDay() !== 0) daysAdded++ 
+    if (date.getDay() !== 0) daysAdded++
   }
   const minDate = date.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' })
 
