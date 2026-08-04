@@ -22,6 +22,8 @@ import IPI1WarrantyPage from './pages/products/IPI1WarrantyPage'
 import IPI1SafetyGuidelinesPage from './pages/products/IPI1SafetyGuidelinesPage'
 import MyOrdersPage from './pages/MyOrdersPage'
 import AdminOrdersPage from './pages/AdminOrdersPage'
+import RefundPolicyPage from './pages/RefundPolicyPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import './index.css'
 
 function ScrollToTop() {
@@ -93,6 +95,8 @@ function AppInner() {
         <Route path="/ipi1/safety" element={<IPI1SafetyGuidelinesPage />} />
         <Route path="/my-orders" element={<MyOrdersPage />} />
         <Route path="/admin/orders" element={<AdminOrdersPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="*" element={<LandingPage onNavigate={handleNavigate} />} />
       </Routes>
       <Footer onNavigate={handleNavigate} />

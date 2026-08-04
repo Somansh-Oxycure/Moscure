@@ -175,14 +175,18 @@ export default function Footer({ onNavigate }) {
           <p className="font-body text-sm text-textMuted">
             © 2026 Moscure. All rights reserved.
           </p>
-          <div className="flex items-center gap-5">
-            <a href="#" className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors">
+          <div className="flex flex-wrap justify-center items-center gap-5">
+            <Link to="/privacy-policy" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors">
               Privacy Policy
-            </a>
+            </Link>
             <span className="text-borderDefault" aria-hidden="true">·</span>
             <a href="#" className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors">
               Terms of Service
             </a>
+            <span className="text-borderDefault hidden sm:inline" aria-hidden="true">·</span>
+            <Link to="/refund-policy" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors">
+              Refund & Replacement Policy
+            </Link>
           </div>
         </div>
       </div>

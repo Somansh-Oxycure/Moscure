@@ -99,8 +99,8 @@ const CONTACT_INFO = [
     id: "hours",
     icon: Clock,
     label: "BUSINESS HOURS",
-    value: "Mon–Fri: 9 AM – 6 PM",
-    sub: "Sat: 10 AM – 4 PM  ·  Sun: Closed",
+    value: "Mon–Sat: 9 AM – 6 PM",
+    sub: "Sun: Closed",
     color: "#00F5D4",
     href: null,
   },
@@ -119,7 +119,7 @@ const SUBJECT_OPTIONS = [
 const FAQ_DATA = [
   {
     q: "Is there a warranty on the product?",
-    a: "Every Moscure device comes with a comprehensive 2-year manufacturer's warranty covering manufacturing defects and performance issues.",
+    a: "Every Moscure device comes with a comprehensive 1-year manufacturer's warranty covering manufacturing defects and performance issues.",
     accent: "#FFD60A",
   },
   {
@@ -128,8 +128,8 @@ const FAQ_DATA = [
     accent: "#FF4D6D",
   },
   {
-    q: "Can I return the product if not satisfied?",
-    a: "We offer a 30-day money-back guarantee, no questions asked. Simply contact us and we'll arrange a hassle-free pickup.",
+    q: "What is your return policy?",
+    a: "We offer a 3-day replacement policy if the product is damaged before delivery. Photo and video proof of the damage must be provided for validation.",
     accent: "#00F5D4",
   },
   {
@@ -144,7 +144,7 @@ const FAQ_DATA = [
   },
   {
     q: "Does Moscure kill mosquitoes or just repel them?",
-    a: "Moscure primarily repels mosquitoes, but some variants may also help reduce mosquito presence over time through continuous MLID and Phototaxis trapping.",
+    a: "Moscure traps and eliminates mosquitoes. It uses MLID and Phototaxis technology to lure them into a trap where they naturally dehydrate, with no zapping or chemicals.",
     accent: "#00F5D4",
   },
   {
@@ -162,13 +162,13 @@ const FAQ_DATA = [
 const HERO_STATS = [
   { value: "< 24h", label: "Response Time", color: "#00F5D4" },
   { value: "6 Days", label: "Support Available", color: "#FFD60A" },
-  { value: "2 Yrs", label: "Product Warranty", color: "#FF4D6D" },
+  { value: "1 Yr", label: "Product Warranty", color: "#FF4D6D" },
 ];
 
 const TRUST_ITEMS = [
   { icon: Shield, label: "Chemical-Free Product", color: "#00F5D4" },
   { icon: Headphones, label: "Dedicated Customer Support", color: "#FFD60A" },
-  { icon: Trophy, label: "30-Day Money-Back Guarantee", color: "#FF4D6D" },
+  { icon: Trophy, label: "3-Day Damage Replacement", color: "#FF4D6D" },
 ];
 
 // ─── FormField ────────────────────────────────────────────────────────────────

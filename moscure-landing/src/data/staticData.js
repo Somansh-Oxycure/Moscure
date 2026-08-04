@@ -191,13 +191,13 @@ export const PRODUCTS_DATA = [
     specs: [
       { label: 'Coverage', value: '3500 sq ft' },
       { label: 'MLID Wavelength', value: '365 nm (UV-A)' },
-      { label: 'Power', value: '9W (Energy-Efficient)' },
+      { label: 'Power', value: '10.6W (Energy-Efficient)' },
       { label: 'Dimensions', value: '11.9 × 11.9 × 17.8 cm' },
       { label: 'Weight', value: '280 g' },
       { label: 'Water Resistant', value: 'Yes (IPX4)' },
     ],
     fullDescription:
-      'The Moscure IPO Unit is purpose-built for outdoor protection. 365 nm UV-A LED technology lures all major mosquito species into the trap — no chemicals, no odour. Water-resistant construction with included hanging mount lets you deploy it in gardens, balconies, and patios for up to 3500 sq ft of coverage. Energy-efficient at just 9W.',
+      'The Moscure IPO Unit is purpose-built for outdoor protection. 365 nm UV-A LED technology lures all major mosquito species into the trap — no chemicals, no odour. Water-resistant construction with included hanging mount lets you deploy it in gardens, balconies, and patios for up to 3500 sq ft of coverage. Energy-efficient at just 10.6W.',
   },
 ]
 
