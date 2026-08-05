@@ -557,15 +557,15 @@ export default function PrivacyPolicyPage() {
                 </a>
 
                 <a
-                  href="tel:+918010111177"
+                  href="https://wa.me/919217339695"
                   className="flex items-center gap-3 bg-gradientcyan/5 border border-gradientcyan/20 rounded-xl p-4 hover:bg-gradientcyan/10 transition-colors group"
-                  aria-label="Call Moscure support"
+                  aria-label="WhatsApp Moscure support"
                 >
                   <Phone size={18} className="text-gradientcyan shrink-0" aria-hidden="true" />
                   <div>
-                    <p className="font-mono text-xs text-gradientcyan uppercase tracking-wider mb-0.5">Phone</p>
+                    <p className="font-mono text-xs text-gradientcyan uppercase tracking-wider mb-0.5">WhatsApp us on :</p>
                     <p className="font-body text-xs text-textMuted group-hover:text-white transition-colors">
-                      +91 80101 11177
+                      +91 9217339695
                     </p>
                   </div>
                 </a>

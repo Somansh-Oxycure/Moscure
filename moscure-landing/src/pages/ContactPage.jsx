@@ -80,11 +80,11 @@ const CONTACT_INFO = [
   {
     id: "phone",
     icon: Phone,
-    label: "CALL US",
-    value: "+91-8010111177",
+    label: "WHATSAPP US ON :",
+    value: "+91-9217339695",
     sub: "Mon–Sat, 9 AM – 6 PM IST",
     color: "#FFD60A",
-    href: "tel:+918010111177",
+    href: "https://wa.me/919217339695",
   },
   {
     id: "location",
@@ -395,11 +395,11 @@ function BottomCtaSection({ onNavigate }) {
           className="mt-8"
         >
           <a
-            href="tel:+918010111177"
+            href="https://wa.me/919217339695"
             className="inline-flex items-center gap-2 font-mono text-xs text-textMuted hover:text-gradientcyan transition-colors duration-200 uppercase tracking-wider"
           >
             <Phone size={12} />
-            Or call +91-8010111177 · Mon–Sat, 9 AM – 6 PM IST
+            Or WhatsApp us on : +91-9217339695 · Mon–Sat, 9 AM – 6 PM IST
           </a>
         </motion.div>
       </div>
@@ -544,7 +544,7 @@ export default function ContactPage({ onNavigate }) {
     <div className="bg-background text-textPrimary min-h-screen">
       <Helmet>
         <title>Contact Moscure — Get Support, Warranty Claims & Product Enquiries | India</title>
-        <meta name="description" content="Contact Moscure for product support, warranty claims, installation help, and bulk/B2B enquiries. Reach us at operations@moscure.com or call +91 80101 11177. Mon–Sat, 9 AM – 6 PM IST." />
+        <meta name="description" content="Contact Moscure for product support, warranty claims, installation help, and bulk/B2B enquiries. Reach us at operations@moscure.com or WhatsApp us on : +91 9217339695. Mon–Sat, 9 AM – 6 PM IST." />
         <meta property="og:title" content="Contact Moscure — Support, Warranty & Enquiries" />
         <meta property="og:description" content="Get in touch with Moscure for product support, warranty, or any enquiries. Email, call, or fill out our contact form." />
         <meta property="og:url" content="https://www.moscure.com/contact" />

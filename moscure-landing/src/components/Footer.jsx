@@ -142,11 +142,11 @@ export default function Footer({ onNavigate }) {
               <li className="flex items-center gap-3">
                 <span className="text-base" aria-hidden="true">📞</span>
                 <a
-                  href="tel:+918010111177"
+                  href="https://wa.me/919217339695"
                   className="font-body text-sm text-textMuted hover:text-gradientcyan transition-colors"
-                  aria-label="Call Moscure support: +91 80101 11177"
+                  aria-label="WhatsApp Moscure support: +91 9217339695"
                 >
-                  +91 80101 11177
+                  WhatsApp us on : +91 9217339695
                 </a>
               </li>
               <li className="flex items-center gap-3">

@@ -1021,13 +1021,13 @@ export default function AboutPageV2({ onNavigate }) {
                 If you're facing mosquito issues in your area, we're here to provide effective, chemical-free solutions.
               </p>
 
-              <p className="font-display text-5xl text-gradientpink mb-4">Call us Now.</p>
+              <p className="font-display text-5xl text-gradientpink mb-4">WhatsApp us on :</p>
 
               <a
-                href="tel:+918010111177"
+                href="https://wa.me/919217339695"
                 className="font-body text-2xl text-white font-medium hover:text-gradientcyan transition-colors duration-200 flex items-center gap-3 mb-8"
               >
-                📞 +91 80101 11177
+                📞 +91 9217339695
               </a>
 
               {/* Promise strip */}
