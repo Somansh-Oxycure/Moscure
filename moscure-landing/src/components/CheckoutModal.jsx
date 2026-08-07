@@ -393,11 +393,41 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
       const shippingCost = shippingInfo?.shippingCost ?? 0
       const totalAmount = product.price * qty + shippingCost
 
-      // 1. Create order on our backend
+      // Get current user session
+      const { data: { session } } = await supabase.auth.getSession()
+
+      const estimated_delivery = (() => {
+        if (!shippingInfo) return null
+        let daysAdded = 0
+        let date = new Date()
+        while (daysAdded < shippingInfo.estimatedDays.max) {
+          date.setDate(date.getDate() + 1)
+          if (date.getDay() !== 0) daysAdded++
+        }
+        return date.toISOString().split('T')[0]
+      })()
+
+      // 1. Create order on our backend (this now saves a pending order in DB)
       const orderRes = await fetch('/api/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: totalAmount, currency: 'INR' }),
+        body: JSON.stringify({ 
+          amount: totalAmount, 
+          currency: 'INR',
+          user_id: session?.user?.id ?? null,
+          items: [{ sku: product.sku, name: product.name, qty, price: product.price }],
+          address: {
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            line1: form.line1,
+            line2: form.line2,
+            city: form.city,
+            state: form.state,
+            pincode: form.pincode,
+          },
+          estimated_delivery
+        }),
       })
       if (!orderRes.ok) throw new Error('Failed to create order. Please try again.')
       const razorpayOrder = await orderRes.json()
@@ -418,7 +448,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
         },
         theme: { color: '#00F5D4' },
         handler: async (response) => {
-          // 3. Verify payment on backend
+          // 3. Verify payment on backend (this updates the pending order to confirmed)
           const verifyRes = await fetch('/api/verify-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -431,47 +461,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
           const verifyData = await verifyRes.json()
           if (!verifyData.success) throw new Error('Payment verification failed.')
 
-          // 4. Get current user session (may be null for guests)
-          const { data: { session } } = await supabase.auth.getSession()
-
-          // 5. Save order to Supabase
-          const { data: savedOrder, error: saveError } = await supabase
-            .from('orders')
-            .insert({
-              user_id: session?.user?.id ?? null,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              items: [{ sku: product.sku, name: product.name, qty, price: product.price }],
-              address: {
-                name: form.name,
-                email: form.email,
-                phone: form.phone,
-                line1: form.line1,
-                line2: form.line2,
-                city: form.city,
-                state: form.state,
-                pincode: form.pincode,
-              },
-              amount_paise: razorpayOrder.amount,
-              status: 'confirmed',
-              estimated_delivery: (() => {
-                // Calculate max estimated delivery date
-                if (!shippingInfo) return null
-                let daysAdded = 0
-                let date = new Date()
-                while (daysAdded < shippingInfo.estimatedDays.max) {
-                  date.setDate(date.getDate() + 1)
-                  if (date.getDay() !== 0) daysAdded++
-                }
-                return date.toISOString().split('T')[0]
-              })(),
-            })
-            .select()
-            .single()
-
-          if (saveError) console.error('Order save error:', saveError)
-
-          setOrderId(savedOrder?.id ?? response.razorpay_payment_id)
+          setOrderId(verifyData.order?.id ?? razorpayOrder.db_order_id ?? response.razorpay_payment_id)
           setStep(3) // success
         },
         modal: {

@@ -33,7 +33,11 @@ app.use(cors({
   },
 }))
 
-app.use(express.json())
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf.toString()
+  }
+}))
 
 // ─── Razorpay client ──────────────────────────────────────────────────────────
 // Toggle between test and live keys via RAZORPAY_MODE env var
@@ -76,10 +80,10 @@ app.get('/api/health', (_req, res) => {
 })
 
 // ─── POST /api/create-order ───────────────────────────────────────────────────
-// Creates a Razorpay order — must be called from the frontend before opening checkout.
+// Creates a Razorpay order and saves a pending order in the database.
 app.post('/api/create-order', async (req, res) => {
   try {
-    const { amount, currency = 'INR' } = req.body
+    const { amount, currency = 'INR', user_id, items, address, estimated_delivery } = req.body
     if (!amount || typeof amount !== 'number' || amount <= 0) {
       return res.status(400).json({ error: 'Invalid amount' })
     }
@@ -91,6 +95,33 @@ app.post('/api/create-order', async (req, res) => {
     }
 
     const order = await razorpay.orders.create(options)
+
+    if (items && address) {
+      const { url, key } = getSupabaseCreds()
+      const insertRes = await fetch(`${url}/rest/v1/orders`, {
+        method: 'POST',
+        headers: {
+          'apikey': key,
+          'Authorization': `Bearer ${key}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({
+          user_id: user_id || null,
+          razorpay_order_id: order.id,
+          items,
+          address,
+          amount_paise: order.amount,
+          status: 'pending',
+          estimated_delivery: estimated_delivery || null
+        })
+      })
+      const savedOrder = await insertRes.json()
+      if (!insertRes.ok) throw new Error(savedOrder.message || 'Supabase INSERT error')
+      
+      return res.json({ ...order, key_id: keyId, db_order_id: savedOrder[0].id })
+    }
+
     res.json({ ...order, key_id: keyId })
   } catch (err) {
     console.error('[create-order]', err)
@@ -99,8 +130,8 @@ app.post('/api/create-order', async (req, res) => {
 })
 
 // ─── POST /api/verify-payment ─────────────────────────────────────────────────
-// Verifies Razorpay payment signature using HMAC SHA256.
-app.post('/api/verify-payment', (req, res) => {
+// Verifies Razorpay payment signature using HMAC SHA256 and confirms order.
+app.post('/api/verify-payment', async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body
 
@@ -119,13 +150,78 @@ app.post('/api/verify-payment', (req, res) => {
       .digest('hex')
 
     if (expectedSignature === razorpay_signature) {
-      res.json({ success: true })
+      const { url, key } = getSupabaseCreds()
+      const patchRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': key,
+          'Authorization': `Bearer ${key}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({
+          status: 'confirmed',
+          razorpay_payment_id: razorpay_payment_id
+        })
+      })
+      
+      const patchData = await patchRes.json()
+      if (!patchRes.ok) console.error('Supabase update failed in verify-payment:', patchData)
+
+      res.json({ success: true, order: patchData?.[0] })
     } else {
       res.status(400).json({ success: false, error: 'Invalid signature' })
     }
   } catch (err) {
     console.error('[verify-payment]', err)
     res.status(500).json({ success: false, error: err.message })
+  }
+})
+
+// ─── POST /api/razorpay-webhook ───────────────────────────────────────────────
+app.post('/api/razorpay-webhook', async (req, res) => {
+  try {
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET
+    if (!secret) return res.status(200).send('Webhook secret not configured')
+
+    const signature = req.headers['x-razorpay-signature']
+    if (!signature) return res.status(400).send('Missing signature')
+
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(req.rawBody)
+      .digest('hex')
+
+    if (expectedSignature !== signature) {
+      return res.status(400).send('Invalid signature')
+    }
+
+    const event = req.body
+    if (event.event === 'payment.captured' || event.event === 'order.paid') {
+      let razorpay_order_id = event.payload?.payment?.entity?.order_id || event.payload?.order?.entity?.id
+      let razorpay_payment_id = event.payload?.payment?.entity?.id
+
+      if (razorpay_order_id) {
+        const { url, key } = getSupabaseCreds()
+        await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': key,
+            'Authorization': `Bearer ${key}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            status: 'confirmed',
+            ...(razorpay_payment_id && { razorpay_payment_id })
+          })
+        })
+      }
+    }
+
+    res.json({ status: 'ok' })
+  } catch (err) {
+    console.error('[webhook]', err)
+    res.status(500).send('Webhook error')
   }
 })
 

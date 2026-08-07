@@ -148,6 +148,15 @@ serve(async (req) => {
     const order = record
     const oldOrder = payload.old_record
 
+    // Do not send emails for pending orders (wait for payment confirmation)
+    if (order.status === "pending") {
+      console.log("Order is pending payment. Skipping email.")
+      return new Response(JSON.stringify({ message: "Order is pending. No email sent." }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
     // On UPDATE events, verify if status actually changed
     if (eventType === "UPDATE") {
       if (oldOrder && oldOrder.status === order.status) {
@@ -179,7 +188,6 @@ serve(async (req) => {
     let isNewOrder = false
 
     switch (status) {
-      case "pending":
       case "confirmed":
         emailSubject = `Order Confirmed: #${orderId.substring(0, 8).toUpperCase()}`
         headerTitle = "Order Confirmation"

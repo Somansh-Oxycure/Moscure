@@ -1013,7 +1013,7 @@ export default function ComparisonPage({ onNavigate }) {
                     transition={{ duration: 3, repeat: Infinity }}
                     className="font-display text-4xl text-gradientcyan"
                   >
-                    ₹1,299 <span className="text-xl text-textMuted">/ ₹12,999</span>
+                    ₹1,699 <span className="text-xl text-textMuted">/ ₹15,999</span>
                   </motion.p>
                   <p className="font-mono text-xs text-white">Indoor  /  Outdoor</p>
                   <div className="flex flex-col gap-1.5 mt-2">

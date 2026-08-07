@@ -20,12 +20,32 @@ serve(async (req) => {
     // Webhooks send payload wrapped inside database event details:
     // payload.record represents the newly inserted order row
     const order = payload.record
+    const eventType = payload.type || "INSERT"
+    const oldOrder = payload.old_record
 
     if (!order) {
       return new Response(JSON.stringify({ error: "No order record found" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       })
+    }
+
+    if (order.status !== "confirmed") {
+      console.log(`Order status is '${order.status}'. Skipping WhatsApp message.`)
+      return new Response(JSON.stringify({ message: `Order status is '${order.status}'. No message sent.` }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
+    if (eventType === "UPDATE") {
+      if (oldOrder && oldOrder.status === order.status) {
+        console.log(`[Status Unchanged] Status is still '${order.status}'. Skipping WhatsApp message.`)
+        return new Response(JSON.stringify({ message: "Status unchanged. No message sent." }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        })
+      }
     }
 
     const { id: orderId, address, amount_paise } = order
