@@ -31,7 +31,7 @@ const PRODUCT = {
   fullTitle: 'IPI Indoor Mosquito & Insect Trap 365nm UV LED | Silent Electric Bug Trapper | Covers 400 sq ft | Odor-Free, Chemical-Free | Safe for Kids & Pets | 1.5W Compact Fly Killer | 280g Lightweight',
   brand: 'Moscure',
   originalPrice: 3200,
-  price: 1699,
+  price: 1299,
   currency: '₹',
   inStock: true,
   rating: 4.8,
@@ -178,7 +178,7 @@ const SCHEMA_JSON = JSON.stringify({
       url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
       offers: {
         '@type': 'Offer',
-        price: '1699',
+        price: '1299',
         priceCurrency: 'INR',
         priceValidUntil: '2027-12-31',
         availability: 'https://schema.org/InStock',

@@ -33,7 +33,7 @@ const PRODUCT = {
   fullTitle: 'IPO Outdoor Mosquito & Insect Trap | 365nm UV LED Trap | Covers 3500 sq ft | Water Resistant, Hangable, Safe & Odor-Free Bug Trapper | 9W Energy-Efficient',
   brand: 'Moscure',
   originalPrice: 25000,
-  price: 15999,
+  price: 12999,
   currency: '₹',
   inStock: true,
   rating: 4.7,
@@ -181,7 +181,7 @@ const SCHEMA_JSON = JSON.stringify({
       url: 'https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap',
       offers: {
         '@type': 'Offer',
-        price: '15999',
+        price: '12999',
         priceCurrency: 'INR',
         priceValidUntil: '2027-12-31',
         availability: 'https://schema.org/InStock',
