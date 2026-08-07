@@ -21,7 +21,8 @@ function prerenderPlugin(options) {
         previewServer = await preview({
           root: resolve('.'),
           preview: {
-            port: 5173,
+            port: 4173,
+            strictPort: true,
             host: 'localhost'
           }
         })
@@ -30,7 +31,7 @@ function prerenderPlugin(options) {
         return
       }
 
-      const serverUrl = 'http://localhost:5173'
+      const serverUrl = 'http://localhost:4173'
       console.log(`[prerender] Preview server started at ${serverUrl}`)
 
       let browser
