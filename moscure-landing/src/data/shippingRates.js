@@ -19,7 +19,7 @@ export const SHIPPING_ZONES = [
   },
   {
     id: 'other_cities',
-    name: 'Kolkata, Bangalore, Hyderabad, Kochi, Goa',
+    name: 'Mumbai, Pune, Nagpur, Ahmedabad, Jaipur, Chandigarh, Goa, Kochi, Bangalore, Hyderabad, Chennai, Kolkata',
     estimatedDays: { min: 3, max: 4 }, // 3-4 days
     rates: {
       'IPO': 0,
@@ -31,6 +31,13 @@ export const SHIPPING_ZONES = [
       [500001, 500100], // Hyderabad
       [682001, 682050], // Kochi
       [403001, 403814], // Goa
+      [400001, 400104], // Mumbai
+      [411001, 411065], // Pune
+      [440001, 440037], // Nagpur
+      [380001, 380085], // Ahmedabad
+      [302001, 302040], // Jaipur
+      [160001, 160102], // Chandigarh
+      [600001, 600138], // Chennai
     ],
   }
 ]
