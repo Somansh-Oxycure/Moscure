@@ -111,7 +111,7 @@ function CartStep({ product, qty, onQtyChange, onNext }) {
 }
 
 // ─── Step 2: Delivery Details ─────────────────────────────────────────────────
-function DeliveryStep({ form, onChange, errors, onNext, onBack, shippingInfo, deliveryLabel, onTestOrder }) {
+function DeliveryStep({ form, onChange, errors, onNext, onBack, shippingInfo, deliveryLabel, onTestOrder, product }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-3">
@@ -165,7 +165,7 @@ function DeliveryStep({ form, onChange, errors, onNext, onBack, shippingInfo, de
             {shippingInfo?.isSupported === false && (
               <div className="mt-2.5">
                 <a
-                  href={`https://wa.me/919217339695?text=${encodeURIComponent(`Hi Moscure, my pincode is ${form.pincode}. I'd like to order the ${product.name} directly.`)}`}
+                  href={`https://wa.me/919217339695?text=${encodeURIComponent(`Hi Moscure, my pincode is ${form.pincode}. I'd like to order the ${product?.name || 'product'} directly.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-black font-semibold text-xs px-3.5 py-2 rounded-lg transition-all duration-300 shadow-lg shadow-green-500/20"
@@ -572,6 +572,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
                       onBack={() => setStep(0)}
                       onNext={() => { if (validateDelivery()) handlePayment() }}
                       onTestOrder={() => { if (validateDelivery()) handleTestOrder() }}
+                      product={product}
                     />
                     {/* Order summary row */}
                     <div className="mt-4 border-t border-white/10 pt-4 flex justify-between text-sm">
