@@ -25,7 +25,7 @@ export default function ReviewPage({ onNavigate }) {
     setFormData((prev) => ({ ...prev, rating: ratingValue }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.rating === 0) {
       alert('Please select a star rating.');
@@ -33,12 +33,35 @@ export default function ReviewPage({ onNavigate }) {
     }
     
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit review');
+      }
+
       setIsSubmitted(true);
-      // Reset form could go here
-    }, 1500);
+      // Reset form (optional)
+      setFormData({
+        name: '',
+        email: '',
+        product: 'Moscure IPI (Indoor)',
+        rating: 0,
+        comment: '',
+      });
+      setHoveredStar(0);
+    } catch (error) {
+      console.error(error);
+      alert('There was an error submitting your review. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -247,7 +270,7 @@ export default function ReviewPage({ onNavigate }) {
             <div className="bg-surface border border-borderDefault rounded-2xl p-6 hover:border-gradientcyan/40 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h4 className="text-white font-medium mb-1">Incredible results indoors!</h4>
+                  <h4 className="text-white font-medium mb-1">Indoors mein kya mast result hai!</h4>
                   <div className="flex text-[#FFD60A] w-4 h-4 gap-1">
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="fill-current" viewBox="0 0 24 24">
@@ -259,14 +282,14 @@ export default function ReviewPage({ onNavigate }) {
                 <span className="text-xs text-textMuted font-mono">1 WEEK AGO</span>
               </div>
               <p className="text-textMuted text-sm leading-relaxed mb-4">
-                "I bought the Moscure IPI for my living room, and the difference is night and day. It's completely silent, the blue light acts as a nice nightlight, and most importantly—no more mosquito bites!"
+                "Moscure IPI ko main apne living room ke liye liya tha, aur result sach mein badiya hai. Ekdum silent chalta hai, blue light nightlight ki tarah achi lagti hai, aur sabse important baat—ab koi machhar nahi katte!"
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00f5d4]/20 to-[#ff4d6d]/20 flex items-center justify-center text-xs text-white font-bold">
                   SR
                 </div>
                 <div className="text-sm">
-                  <div className="text-white/80 font-medium">Sarah R.</div>
+                  <div className="text-white/80 font-medium">Sanjay R.</div>
                   <div className="text-textMuted/60 text-xs">Verified Buyer • Moscure IPI</div>
                 </div>
               </div>
@@ -276,7 +299,7 @@ export default function ReviewPage({ onNavigate }) {
             <div className="bg-surface border border-borderDefault rounded-2xl p-6 hover:border-gradientcyan/40 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h4 className="text-white font-medium mb-1">Perfect for patio evenings</h4>
+                  <h4 className="text-white font-medium mb-1">Patio ki shaam ke liye perfect</h4>
                   <div className="flex text-[#FFD60A] w-4 h-4 gap-1">
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="fill-current" viewBox="0 0 24 24">
@@ -288,14 +311,14 @@ export default function ReviewPage({ onNavigate }) {
                 <span className="text-xs text-textMuted font-mono">1 MONTH AGO</span>
               </div>
               <p className="text-textMuted text-sm leading-relaxed mb-4">
-                "The outdoor trap (IPO) works exactly as advertised. We finally got to host a barbecue without everyone getting eaten alive. The coverage area is quite impressive."
+                "Outdoor trap (IPO) ekdum badhiya kaam karta hai jaisa bataya gaya tha. Aakhir kaar humne bina machhar ke kaate ek badhiya barbecue host kiya. Iska coverage area kaafi bada aur impressive hai."
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ffd60a]/20 to-[#00f5d4]/20 flex items-center justify-center text-xs text-white font-bold">
                   MJ
                 </div>
                 <div className="text-sm">
-                  <div className="text-white/80 font-medium">Michael J.</div>
+                  <div className="text-white/80 font-medium">Mohit J.</div>
                   <div className="text-textMuted/60 text-xs">Verified Buyer • Moscure IPO</div>
                 </div>
               </div>
@@ -305,7 +328,7 @@ export default function ReviewPage({ onNavigate }) {
             <div className="bg-surface border border-borderDefault rounded-2xl p-6 hover:border-gradientcyan/40 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h4 className="text-white font-medium mb-1">Safe and chemical-free</h4>
+                  <h4 className="text-white font-medium mb-1">Safe aur bina kisi chemical ke</h4>
                   <div className="flex text-[#FFD60A] w-4 h-4 gap-1">
                     {[...Array(4)].map((_, i) => (
                       <svg key={i} className="fill-current" viewBox="0 0 24 24">
@@ -320,7 +343,7 @@ export default function ReviewPage({ onNavigate }) {
                 <span className="text-xs text-textMuted font-mono">3 MONTHS AGO</span>
               </div>
               <p className="text-textMuted text-sm leading-relaxed mb-4">
-                "I bought this primarily because I didn't want my kids breathing in coil smoke anymore. It's so much safer. The only minor complaint is that the trap needs to be cleaned regularly, but that just means it's working!"
+                "Maine isko mainly isliye liya kyunki main nahi chahti thi ki mere bachche aur coil ka dhuaan saans mein lein. Ye bahut safe hai. Bas ek choti si dikkat hai ki trap ko regular saaf karna padta hai, par iska matlab hai ki ye kaam kar raha hai!"
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff4d6d]/20 to-[#ffd60a]/20 flex items-center justify-center text-xs text-white font-bold">

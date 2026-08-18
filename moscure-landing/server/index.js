@@ -296,6 +296,44 @@ app.patch('/api/admin/orders/:id', requireAdmin, async (req, res) => {
   }
 })
 
+// ─── POST /api/reviews ────────────────────────────────────────────────────────
+app.post('/api/reviews', async (req, res) => {
+  try {
+    const { product, rating, name, email, comment } = req.body
+    if (!product || !rating) {
+      return res.status(400).json({ error: 'Product and rating are required' })
+    }
+
+    const { url, key } = getSupabaseCreds()
+    const insertRes = await fetch(`${url}/rest/v1/reviews`, {
+      method: 'POST',
+      headers: {
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
+        product,
+        rating,
+        name: name || null,
+        email: email || null,
+        comment: comment || null
+      })
+    })
+
+    const data = await insertRes.json()
+    if (!insertRes.ok) {
+      throw new Error(data.message || 'Supabase INSERT error for reviews')
+    }
+
+    res.json({ success: true, review: data[0] })
+  } catch (err) {
+    console.error('[create-review]', err)
+    res.status(500).json({ error: err.message || 'Failed to save review' })
+  }
+})
+
 // ─── Start server ─────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`[Moscure API] Server running on port ${PORT}`)
