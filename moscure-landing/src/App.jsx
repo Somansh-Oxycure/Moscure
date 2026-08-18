@@ -10,6 +10,7 @@ import DiseasesPage from './pages/DiseasesPage'
 import ComparisonPage from './pages/ComparisonPage'
 import AboutPageV2 from './pages/AboutPageV2'
 import ContactPage from './pages/ContactPage'
+import ReviewPage from './pages/ReviewPage'
 import IPIIndoorProductPage from './pages/products/IPIIndoorProductPage'
 import IPOOutdoorProductPage from './pages/products/IPOOutdoorProductPage'
 import UserManualPage from './pages/products/UserManualPage'
@@ -50,6 +51,7 @@ const PAGE_TO_PATH = {
   comparison: '/comparison',
   about: '/about',
   contact: '/contact',
+  review: '/review',
   ipiIndoor: '/products/moscure-ipi-indoor-mosquito-trap',
   ipoOutdoor: '/products/moscure-ipo-outdoor-mosquito-trap',
   myOrders: '/my-orders',
@@ -79,6 +81,7 @@ function AppInner() {
         <Route path="/comparison" element={<ComparisonPage onNavigate={handleNavigate} />} />
         <Route path="/about" element={<AboutPageV2 onNavigate={handleNavigate} />} />
         <Route path="/contact" element={<ContactPage onNavigate={handleNavigate} />} />
+        <Route path="/review" element={<ReviewPage onNavigate={handleNavigate} />} />
         <Route path="/products/moscure-ipi-indoor-mosquito-trap" element={<IPIIndoorProductPage onNavigate={handleNavigate} />} />
         <Route path="/products/moscure-ipo-outdoor-mosquito-trap" element={<IPOOutdoorProductPage onNavigate={handleNavigate} />} />
         <Route path="/user-manual" element={<UserManualPage />} />
