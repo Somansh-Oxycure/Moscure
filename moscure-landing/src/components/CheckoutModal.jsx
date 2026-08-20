@@ -307,6 +307,21 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
     }
   }, [isOpen])
 
+  // Track InitiateCheckout event for Meta Pixel
+  useEffect(() => {
+    if (isOpen && step === 0 && product) {
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({
+        event: 'InitiateCheckout',
+        content_name: product.name,
+        content_ids: [product.sku],
+        content_type: 'product',
+        value: product.price * qty,
+        currency: product.currency === '₹' ? 'INR' : product.currency
+      })
+    }
+  }, [isOpen, step, product])
+
   // Update shipping info when pincode changes
   useEffect(() => {
     if (form.pincode?.length === 6) {
@@ -390,7 +405,21 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
 
       if (saveError) throw new Error(saveError.message)
 
-      setOrderId(savedOrder?.id ?? mockPaymentId)
+      const finalOrderId = savedOrder?.id ?? mockPaymentId
+      
+      // Track Purchase event for Meta Pixel (without shipping)
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({
+        event: 'Purchase',
+        content_name: product.name,
+        content_ids: [product.sku],
+        content_type: 'product',
+        value: product.price * qty,
+        currency: product.currency === '₹' ? 'INR' : product.currency,
+        transaction_id: finalOrderId
+      })
+
+      setOrderId(finalOrderId)
       setStep(3) // success
     } catch (err) {
       setGlobalError(err.message)
@@ -476,7 +505,21 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
           const verifyData = await verifyRes.json()
           if (!verifyData.success) throw new Error('Payment verification failed.')
 
-          setOrderId(verifyData.order?.id ?? razorpayOrder.db_order_id ?? response.razorpay_payment_id)
+          const finalOrderId = verifyData.order?.id ?? razorpayOrder.db_order_id ?? response.razorpay_payment_id
+          
+          // Track Purchase event for Meta Pixel (without shipping)
+          window.dataLayer = window.dataLayer || []
+          window.dataLayer.push({
+            event: 'Purchase',
+            content_name: product.name,
+            content_ids: [product.sku],
+            content_type: 'product',
+            value: product.price * qty,
+            currency: product.currency === '₹' ? 'INR' : product.currency,
+            transaction_id: finalOrderId
+          })
+
+          setOrderId(finalOrderId)
           setStep(3) // success
         },
         modal: {

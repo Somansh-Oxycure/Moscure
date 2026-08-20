@@ -566,6 +566,19 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
   const heroRef = useRef(null)
   const ctaRef = useRef(null)
 
+  // Track ViewContent event for Meta Pixel
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({
+      event: 'ViewContent',
+      content_name: PRODUCT.name,
+      content_ids: [PRODUCT.sku],
+      content_type: 'product',
+      value: PRODUCT.price,
+      currency: PRODUCT.currency === '₹' ? 'INR' : PRODUCT.currency
+    })
+  }, [])
+
   // Mobile sticky CTA: appears once the Buy Now button scrolls out of view
   useEffect(() => {
     const observer = new IntersectionObserver(

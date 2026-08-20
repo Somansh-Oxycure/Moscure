@@ -31,7 +31,7 @@ const PRODUCT = {
   fullTitle: 'IPI Indoor Mosquito & Insect Trap 365nm UV LED | Silent Electric Bug Trapper | Covers 400 sq ft | Odor-Free, Chemical-Free | Safe for Kids & Pets | 1.5W Compact Fly Killer | 280g Lightweight',
   brand: 'Moscure',
   originalPrice: 3200,
-  price: 1299,
+  price: 1399,
   currency: '₹',
   inStock: true,
   rating: 4.8,
@@ -178,7 +178,7 @@ const SCHEMA_JSON = JSON.stringify({
       url: 'https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap',
       offers: {
         '@type': 'Offer',
-        price: '1299',
+        price: '1399',
         priceCurrency: 'INR',
         priceValidUntil: '2027-12-31',
         availability: 'https://schema.org/InStock',
@@ -560,6 +560,19 @@ export default function IPIIndoorProductPage({ onNavigate }) {
   const heroRef = useRef(null)
   const ctaRef = useRef(null)
 
+  // Track ViewContent event for Meta Pixel
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({
+      event: 'ViewContent',
+      content_name: PRODUCT.name,
+      content_ids: [PRODUCT.sku],
+      content_type: 'product',
+      value: PRODUCT.price,
+      currency: PRODUCT.currency === '₹' ? 'INR' : PRODUCT.currency
+    })
+  }, [])
+
   // Mobile sticky CTA: appears once the Buy Now button scrolls out of view
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -586,7 +599,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
 
   const handleWhatsApp = () => {
     window.open(
-      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPI Indoor Mosquito Trap — Chemical-Free, UV LED, ₹1,699\nhttps://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap')}`,
+      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPI Indoor Mosquito Trap — Chemical-Free, UV LED, ₹1,399\nhttps://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap')}`,
       '_blank',
       'noopener,noreferrer'
     )
@@ -595,10 +608,10 @@ export default function IPIIndoorProductPage({ onNavigate }) {
   return (
     <>
       <Helmet>
-        <title>Moscure IPI Indoor Mosquito Trap | UV LED Bug Trapper | Chemical-Free | ₹1,699</title>
-        <meta name="description" content="Moscure IPI Indoor Mosquito & Insect Trap uses 365nm UV LED technology to silently attract and trap mosquitoes, flies & gnats. Covers 400 sq ft. 100% chemical-free, safe for kids & pets. Energy efficient 1.5W. Buy now at ₹1,699." />
+        <title>Moscure IPI Indoor Mosquito Trap | UV LED Bug Trapper | Chemical-Free | ₹1,399</title>
+        <meta name="description" content="Moscure IPI Indoor Mosquito & Insect Trap uses 365nm UV LED technology to silently attract and trap mosquitoes, flies & gnats. Covers 400 sq ft. 100% chemical-free, safe for kids & pets. Energy efficient 1.5W. Buy now at ₹1,399." />
         <meta name="keywords" content="indoor mosquito trap India, UV mosquito killer, chemical free bug Trapper, dengue malaria mosquito trap, silent mosquito catcher, mosquito trap kids safe, Moscure IPI, mosquito trap 400 sq ft, electric insect trap India" />
-        <meta property="og:title" content="Moscure IPI Indoor Mosquito Trap — ₹1,699" />
+        <meta property="og:title" content="Moscure IPI Indoor Mosquito Trap — ₹1,399" />
         <meta property="og:description" content="Silent, chemical-free UV LED mosquito trap. Safe for kids & pets. Covers 400 sq ft." />
         <meta property="og:url" content="https://www.moscure.com/products/moscure-ipi-indoor-mosquito-trap" />
         <meta property="og:type" content="product" />
@@ -798,7 +811,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
               </motion.button>
 
               <motion.a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPI — Chemical-Free Indoor Mosquito Trap. UV LED, 400 sq ft coverage. ₹1,699')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipi-indoor-mosquito-trap')}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Moscure IPI — Chemical-Free Indoor Mosquito Trap. UV LED, 400 sq ft coverage. ₹1,399')}&url=${encodeURIComponent('https://moscure.in/products/moscure-ipi-indoor-mosquito-trap')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05, borderColor: '#00F5D4' }}
