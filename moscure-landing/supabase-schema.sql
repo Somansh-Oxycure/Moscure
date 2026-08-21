@@ -101,3 +101,19 @@ create policy "Allow order creation"
 create index if not exists orders_user_id_idx on public.orders(user_id);
 create index if not exists orders_status_idx on public.orders(status);
 create index if not exists orders_created_at_idx on public.orders(created_at desc);
+
+-- 5. Reviews table
+create table if not exists public.reviews (
+  id          uuid primary key default gen_random_uuid(),
+  product     text not null,
+  rating      integer not null check (rating >= 1 and rating <= 5),
+  name        text,
+  email       text,
+  comment     text,
+  created_at  timestamptz default now()
+);
+
+-- Note: The Express server uses the service role key to insert reviews, which bypasses RLS.
+-- If you plan to query reviews from the frontend, uncomment the following:
+-- alter table public.reviews enable row level security;
+-- create policy "Anyone can view reviews" on public.reviews for select using (true);
