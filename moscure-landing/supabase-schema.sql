@@ -12,7 +12,7 @@ create table if not exists public.profiles (
   created_at  timestamptz default now()
 );
 
--- Trigger: auto-create profile row when user signs up via OTP
+-- Trigger: auto-create profile row w hen user signs up via OTP
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin

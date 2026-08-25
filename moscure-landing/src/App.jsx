@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import RakshaBandhanPopup from './components/RakshaBandhanPopup'
 import LandingPage from './pages/LandingPage'
 import ProductPage from './pages/ProductPage'
 import DiseasesPage from './pages/DiseasesPage'
@@ -74,6 +75,7 @@ function AppInner() {
     <div className="bg-background text-textPrimary min-h-screen">
       <ScrollToTop />
       <Navbar onNavigate={handleNavigate} />
+      <RakshaBandhanPopup onNavigate={handleNavigate} />
       <Routes>
         <Route path="/" element={<LandingPage onNavigate={handleNavigate} />} />
         <Route path="/product" element={<ProductPage onNavigate={handleNavigate} />} />

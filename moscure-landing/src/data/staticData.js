@@ -157,7 +157,7 @@ export const PRODUCTS_DATA = [
     description:
       'Scientifically engineered MLID and Phototaxis Technology trap for indoor spaces. Silent, chemical-free, and proven effective against all major disease-carrying mosquito species.',
     originalPrice: '₹3,200',
-    price: '₹1,399',
+    price: '₹1,099',
     priceLabel: '',
     imageFile: 'product-indoor',
     imageLabel: '[ MC-IPI 1 Image ]',
