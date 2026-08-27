@@ -3,7 +3,7 @@
 // Full checkout flow: Cart → Address → Payment → Success
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronRight, ChevronLeft, MapPin, User, Phone, Mail, Package, CheckCircle2, Loader2, AlertCircle, Truck } from 'lucide-react'
+import { X, ChevronRight, ChevronLeft, MapPin, User, Phone, Mail, Package, CheckCircle2, Loader2, AlertCircle, Truck, Tag } from 'lucide-react'
 import { loadRazorpayScript } from '../lib/razorpay'
 import { supabase } from '../lib/supabase'
 import { getShippingInfo, getEstimatedDeliveryLabel } from '../data/shippingRates'
@@ -111,7 +111,7 @@ function CartStep({ product, qty, onQtyChange, onNext }) {
 }
 
 // ─── Step 2: Delivery Details ─────────────────────────────────────────────────
-function DeliveryStep({ form, onChange, errors, onNext, onBack, shippingInfo, deliveryLabel, onTestOrder, product }) {
+function DeliveryStep({ form, onChange, errors, onNext, onBack, shippingInfo, deliveryLabel, onTestOrder, product, couponInput, setCouponInput, appliedCoupon, couponError, isValidatingCoupon, onApplyCoupon }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-3">
@@ -145,6 +145,32 @@ function DeliveryStep({ form, onChange, errors, onNext, onBack, shippingInfo, de
         <Field label="Pincode *" error={errors.pincode}>
           <Input name="pincode" value={form.pincode} onChange={onChange} placeholder="400001" maxLength={6} />
         </Field>
+      </div>
+
+      {/* Coupon Section */}
+      <div className="mt-2">
+        <label className="text-xs font-mono text-white/50 uppercase tracking-wider mb-1 block">Have a Coupon?</label>
+        <div className="flex gap-2">
+          <Input 
+            value={couponInput}
+            onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+            placeholder="Enter code" 
+            className="flex-1"
+            disabled={!!appliedCoupon || isValidatingCoupon}
+          />
+          <button
+            type="button"
+            onClick={onApplyCoupon}
+            disabled={!couponInput.trim() || !!appliedCoupon || isValidatingCoupon}
+            className="px-4 bg-white/10 hover:bg-white/20 disabled:opacity-50 text-white rounded-lg text-sm font-mono transition-colors flex items-center justify-center min-w-[80px]"
+          >
+            {isValidatingCoupon ? <Loader2 size={16} className="animate-spin" /> : appliedCoupon ? 'Applied' : 'Apply'}
+          </button>
+        </div>
+        {couponError && <p className="text-xs text-red-400 mt-1.5 flex items-center gap-1"><AlertCircle size={11} />{couponError}</p>}
+        {appliedCoupon && (
+          <p className="text-xs text-green-400 mt-1.5 flex items-center gap-1"><CheckCircle2 size={11} /> {appliedCoupon.discount}% discount applied</p>
+        )}
       </div>
 
       {/* Delivery Estimate */}
@@ -296,6 +322,10 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
   const [globalError, setGlobalError] = useState(null)
   const [shippingInfo, setShippingInfo] = useState(null)
   const [deliveryLabel, setDeliveryLabel] = useState('')
+  const [couponInput, setCouponInput] = useState('')
+  const [appliedCoupon, setAppliedCoupon] = useState(null)
+  const [couponError, setCouponError] = useState('')
+  const [isValidatingCoupon, setIsValidatingCoupon] = useState(false)
 
   // Reset when modal closes
   useEffect(() => {
@@ -303,6 +333,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
       setTimeout(() => {
         setStep(0); setQty(1); setOrderId(null); setGlobalError(null); setErrors({})
         setForm({ name: '', email: '', phone: '', line1: '', line2: '', city: '', state: '', pincode: '' })
+        setCouponInput(''); setAppliedCoupon(null); setCouponError(''); setIsValidatingCoupon(false)
       }, 300)
     }
   }, [isOpen])
@@ -334,6 +365,24 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
     }
   }, [form.pincode])
 
+  const handleApplyCoupon = async () => {
+    if (!couponInput.trim()) return;
+    setIsValidatingCoupon(true);
+    setCouponError('');
+    try {
+      const res = await fetch(`/api/validate-coupon?code=${encodeURIComponent(couponInput.trim())}&sku=${encodeURIComponent(product.sku)}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to validate coupon');
+      if (data.valid) {
+        setAppliedCoupon({ code: couponInput.trim(), discount: data.discount_percentage });
+      }
+    } catch (err) {
+      setCouponError(err.message);
+    } finally {
+      setIsValidatingCoupon(false);
+    }
+  };
+
   const handleChange = useCallback((e) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
@@ -362,7 +411,9 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
     setGlobalError(null)
     try {
       const shippingCost = shippingInfo?.shippingCost ?? 0
-      const totalAmount = product.price * qty + shippingCost
+      const subtotal = product.price * qty
+      const discount = appliedCoupon ? Math.floor(subtotal * (appliedCoupon.discount / 100)) : 0
+      const totalAmount = subtotal - discount + shippingCost
       const mockOrderId = 'pay_mock_' + Math.random().toString(36).substr(2, 9)
       const mockPaymentId = 'pay_mock_id_' + Math.random().toString(36).substr(2, 9)
 
@@ -377,6 +428,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
           razorpay_order_id: mockOrderId,
           razorpay_payment_id: mockPaymentId,
           items: [{ sku: product.sku, name: product.name, qty, price: product.price }],
+          coupon_code: appliedCoupon?.code || null,
           address: {
             name: form.name,
             email: form.email,
@@ -435,7 +487,9 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
       if (!loaded) throw new Error('Razorpay failed to load. Check your internet connection.')
 
       const shippingCost = shippingInfo?.shippingCost ?? 0
-      const totalAmount = product.price * qty + shippingCost
+      const subtotal = product.price * qty
+      const discount = appliedCoupon ? Math.floor(subtotal * (appliedCoupon.discount / 100)) : 0
+      const totalAmount = subtotal - discount + shippingCost
 
       // Get current user session
       const { data: { session } } = await supabase.auth.getSession()
@@ -460,6 +514,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
           currency: 'INR',
           user_id: session?.user?.id ?? null,
           items: [{ sku: product.sku, name: product.name, qty, price: product.price }],
+          coupon_code: appliedCoupon?.code || null,
           address: {
             name: form.name,
             email: form.email,
@@ -542,7 +597,9 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
     }
   }
 
-  const totalAmount = product ? product.price * qty + (shippingInfo?.shippingCost ?? 0) : 0
+  const totalAmount = product 
+    ? (product.price * qty) - (appliedCoupon ? Math.floor((product.price * qty) * (appliedCoupon.discount / 100)) : 0) + (shippingInfo?.shippingCost ?? 0) 
+    : 0
 
   return (
     <AnimatePresence>
@@ -616,9 +673,23 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
                       onNext={() => { if (validateDelivery()) handlePayment() }}
                       onTestOrder={() => { if (validateDelivery()) handleTestOrder() }}
                       product={product}
+                      couponInput={couponInput}
+                      setCouponInput={setCouponInput}
+                      appliedCoupon={appliedCoupon}
+                      couponError={couponError}
+                      isValidatingCoupon={isValidatingCoupon}
+                      onApplyCoupon={handleApplyCoupon}
                     />
                     {/* Order summary row */}
-                    <div className="mt-4 border-t border-white/10 pt-4 flex justify-between text-sm">
+                    {appliedCoupon && (
+                      <div className="mt-4 border-t border-white/10 pt-4 flex justify-between text-sm text-green-400">
+                        <span className="font-mono">DISCOUNT ({appliedCoupon.discount}%)</span>
+                        <span className="font-display text-base">
+                          -₹{Math.floor(product.price * qty * (appliedCoupon.discount / 100)).toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                    )}
+                    <div className={`${appliedCoupon ? 'mt-2' : 'mt-4 border-t border-white/10 pt-4'} flex justify-between text-sm`}>
                       <span className="text-white/50 font-mono">ORDER TOTAL</span>
                       <span className="font-display text-white text-base">
                         ₹{totalAmount.toLocaleString('en-IN')}

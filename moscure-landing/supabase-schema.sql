@@ -117,3 +117,41 @@ create table if not exists public.reviews (
 -- If you plan to query reviews from the frontend, uncomment the following:
 -- alter table public.reviews enable row level security;
 -- create policy "Anyone can view reviews" on public.reviews for select using (true);
+
+-- 6. Coupons table
+create table if not exists public.coupons (
+  id                  uuid primary key default gen_random_uuid(),
+  code                text unique not null,
+  discount_percentage integer not null check (discount_percentage > 0 and discount_percentage <= 100),
+  is_used             boolean not null default false,
+  valid_until         timestamptz not null,
+  product_sku         text, -- if null, valid for all products
+  created_at          timestamptz default now(),
+  used_at             timestamptz
+);
+
+-- Anyone can validate a coupon
+alter table public.coupons enable row level security;
+create policy ""Anyone can validate coupons""
+  on public.coupons for select
+  using (true);
+
+-- Admin updates (or service role) handle marking as used
+create policy ""No public updates to coupons""
+  on public.coupons for update
+  using (false);
+
+-- Insert the 6 required one-time 50% discount codes for IPI product, valid until Sept 15, 2026.
+insert into public.coupons (code, discount_percentage, valid_until, product_sku)
+values 
+  ('IPI50-X9M4-YQ7W', 50, '2026-09-15 23:59:59+05:30', 'MOSCURE-IPI'),
+  ('IPI50-B3K8-ZT2L', 50, '2026-09-15 23:59:59+05:30', 'MOSCURE-IPI'),
+  ('IPI50-F7P5-RV9J', 50, '2026-09-15 23:59:59+05:30', 'MOSCURE-IPI'),
+  ('IPI50-H2N6-CX4D', 50, '2026-09-15 23:59:59+05:30', 'MOSCURE-IPI'),
+  ('IPI50-W5L1-MQ8G', 50, '2026-09-15 23:59:59+05:30', 'MOSCURE-IPI'),
+  ('IPI50-T8J3-KS6F', 50, '2026-09-15 23:59:59+05:30', 'MOSCURE-IPI')
+on conflict (code) do nothing;
+
+-- 7. Alter orders table to include coupon
+alter table public.orders
+add column if not exists coupon_code text;

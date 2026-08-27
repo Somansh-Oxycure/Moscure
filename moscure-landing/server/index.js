@@ -79,11 +79,40 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', mode: isTestMode ? 'test' : 'live', timestamp: new Date().toISOString() })
 })
 
+// ─── GET /api/validate-coupon ─────────────────────────────────────────────────
+app.get('/api/validate-coupon', async (req, res) => {
+  try {
+    const { code, sku } = req.query
+    if (!code) return res.status(400).json({ error: 'Coupon code required' })
+
+    const { url, key } = getSupabaseCreds()
+    const response = await fetch(`${url}/rest/v1/coupons?code=eq.${code}&select=*`, {
+      headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+    })
+    const data = await response.json()
+    if (!response.ok) throw new Error(data.message || 'Supabase GET error')
+    
+    if (data.length === 0) return res.status(404).json({ error: 'Invalid coupon code' })
+    const coupon = data[0]
+
+    if (coupon.is_used) return res.status(400).json({ error: 'Coupon has already been used' })
+    if (new Date(coupon.valid_until) < new Date()) return res.status(400).json({ error: 'Coupon has expired' })
+    if (coupon.product_sku && sku && !sku.startsWith(coupon.product_sku)) {
+      return res.status(400).json({ error: 'Coupon is not valid for this product' })
+    }
+
+    res.json({ valid: true, discount_percentage: coupon.discount_percentage })
+  } catch (err) {
+    console.error('[validate-coupon]', err)
+    res.status(500).json({ error: 'Failed to validate coupon' })
+  }
+})
+
 // ─── POST /api/create-order ───────────────────────────────────────────────────
 // Creates a Razorpay order and saves a pending order in the database.
 app.post('/api/create-order', async (req, res) => {
   try {
-    const { amount, currency = 'INR', user_id, items, address, estimated_delivery } = req.body
+    const { amount, currency = 'INR', user_id, items, address, estimated_delivery, coupon_code } = req.body
     if (!amount || typeof amount !== 'number' || amount <= 0) {
       return res.status(400).json({ error: 'Invalid amount' })
     }
@@ -113,7 +142,8 @@ app.post('/api/create-order', async (req, res) => {
           address,
           amount_paise: order.amount,
           status: 'pending',
-          estimated_delivery: estimated_delivery || null
+          estimated_delivery: estimated_delivery || null,
+          coupon_code: coupon_code || null
         })
       })
       const savedOrder = await insertRes.json()
@@ -151,6 +181,14 @@ app.post('/api/verify-payment', async (req, res) => {
 
     if (expectedSignature === razorpay_signature) {
       const { url, key } = getSupabaseCreds()
+      // 1. Get the order to see if it has a coupon
+      const getOrderRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}&select=id,coupon_code`, {
+        headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+      })
+      const orderData = await getOrderRes.json()
+      const orderCouponCode = orderData?.[0]?.coupon_code
+
+      // 2. Mark order as confirmed
       const patchRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}`, {
         method: 'PATCH',
         headers: {
@@ -167,6 +205,22 @@ app.post('/api/verify-payment', async (req, res) => {
       
       const patchData = await patchRes.json()
       if (!patchRes.ok) console.error('Supabase update failed in verify-payment:', patchData)
+
+      // 3. Mark coupon as used if present
+      if (patchRes.ok && orderCouponCode) {
+        await fetch(`${url}/rest/v1/coupons?code=eq.${orderCouponCode}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': key,
+            'Authorization': `Bearer ${key}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            is_used: true,
+            used_at: new Date().toISOString()
+          })
+        }).catch(err => console.error('Failed to update coupon:', err))
+      }
 
       res.json({ success: true, order: patchData?.[0] })
     } else {
@@ -203,18 +257,45 @@ app.post('/api/razorpay-webhook', async (req, res) => {
 
       if (razorpay_order_id) {
         const { url, key } = getSupabaseCreds()
-        await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}`, {
-          method: 'PATCH',
-          headers: {
-            'apikey': key,
-            'Authorization': `Bearer ${key}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            status: 'confirmed',
-            ...(razorpay_payment_id && { razorpay_payment_id })
-          })
+        
+        // Get order first to check for coupon
+        const getOrderRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}&select=coupon_code,status`, {
+          headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
         })
+        const orderData = await getOrderRes.json()
+        const orderInfo = orderData?.[0]
+        
+        if (orderInfo && orderInfo.status !== 'confirmed') {
+          // Confirm order
+          await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}`, {
+            method: 'PATCH',
+            headers: {
+              'apikey': key,
+              'Authorization': `Bearer ${key}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              status: 'confirmed',
+              ...(razorpay_payment_id && { razorpay_payment_id })
+            })
+          })
+
+          // Mark coupon as used if present
+          if (orderInfo.coupon_code) {
+            await fetch(`${url}/rest/v1/coupons?code=eq.${orderInfo.coupon_code}`, {
+              method: 'PATCH',
+              headers: {
+                'apikey': key,
+                'Authorization': `Bearer ${key}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                is_used: true,
+                used_at: new Date().toISOString()
+              })
+            }).catch(err => console.error('Failed to update coupon in webhook:', err))
+          }
+        }
       }
     }
 
