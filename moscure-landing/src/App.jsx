@@ -75,7 +75,7 @@ function AppInner() {
     <div className="bg-background text-textPrimary min-h-screen">
       <ScrollToTop />
       <Navbar onNavigate={handleNavigate} />
-      <RakshaBandhanPopup onNavigate={handleNavigate} />
+      {/* <RakshaBandhanPopup onNavigate={handleNavigate} /> */}
       <Routes>
         <Route path="/" element={<LandingPage onNavigate={handleNavigate} />} />
         <Route path="/product" element={<ProductPage onNavigate={handleNavigate} />} />
