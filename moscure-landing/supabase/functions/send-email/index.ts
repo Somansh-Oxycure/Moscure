@@ -148,10 +148,10 @@ serve(async (req) => {
     const order = record
     const oldOrder = payload.old_record
 
-    // Do not send emails for pending orders (wait for payment confirmation)
-    if (order.status === "pending") {
-      console.log("Order is pending payment. Skipping email.")
-      return new Response(JSON.stringify({ message: "Order is pending. No email sent." }), {
+    // Do not send emails for unpaid orders (wait for payment confirmation)
+    if (order.status === "unpaid") {
+      console.log("Order is unpaid payment. Skipping email.")
+      return new Response(JSON.stringify({ message: "Order is unpaid. No email sent." }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       })

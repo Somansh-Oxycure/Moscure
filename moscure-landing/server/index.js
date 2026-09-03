@@ -141,9 +141,10 @@ app.post('/api/create-order', async (req, res) => {
           items,
           address,
           amount_paise: order.amount,
-          status: 'pending',
+          status: 'unpaid',
           estimated_delivery: estimated_delivery || null,
-          coupon_code: coupon_code || null
+          coupon_code: coupon_code || null,
+          status_history: [{ status: 'unpaid', timestamp: new Date().toISOString() }]
         })
       })
       const savedOrder = await insertRes.json()
@@ -182,11 +183,14 @@ app.post('/api/verify-payment', async (req, res) => {
     if (expectedSignature === razorpay_signature) {
       const { url, key } = getSupabaseCreds()
       // 1. Get the order to see if it has a coupon
-      const getOrderRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}&select=id,coupon_code`, {
+      const getOrderRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}&select=id,coupon_code,status_history`, {
         headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
       })
       const orderData = await getOrderRes.json()
       const orderCouponCode = orderData?.[0]?.coupon_code
+      const statusHistory = orderData?.[0]?.status_history || []
+      
+      const newStatusHistory = [...statusHistory, { status: 'confirmed', timestamp: new Date().toISOString() }]
 
       // 2. Mark order as confirmed
       const patchRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}`, {
@@ -199,7 +203,8 @@ app.post('/api/verify-payment', async (req, res) => {
         },
         body: JSON.stringify({
           status: 'confirmed',
-          razorpay_payment_id: razorpay_payment_id
+          razorpay_payment_id: razorpay_payment_id,
+          status_history: newStatusHistory
         })
       })
       
@@ -259,13 +264,16 @@ app.post('/api/razorpay-webhook', async (req, res) => {
         const { url, key } = getSupabaseCreds()
         
         // Get order first to check for coupon
-        const getOrderRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}&select=coupon_code,status`, {
+        const getOrderRes = await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}&select=coupon_code,status,status_history`, {
           headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
         })
         const orderData = await getOrderRes.json()
         const orderInfo = orderData?.[0]
         
         if (orderInfo && orderInfo.status !== 'confirmed') {
+          const statusHistory = orderInfo.status_history || []
+          const newStatusHistory = [...statusHistory, { status: 'confirmed', timestamp: new Date().toISOString() }]
+
           // Confirm order
           await fetch(`${url}/rest/v1/orders?razorpay_order_id=eq.${razorpay_order_id}`, {
             method: 'PATCH',
@@ -276,7 +284,8 @@ app.post('/api/razorpay-webhook', async (req, res) => {
             },
             body: JSON.stringify({
               status: 'confirmed',
-              ...(razorpay_payment_id && { razorpay_payment_id })
+              ...(razorpay_payment_id && { razorpay_payment_id }),
+              status_history: newStatusHistory
             })
           })
 
@@ -328,30 +337,36 @@ app.patch('/api/admin/orders/:id', requireAdmin, async (req, res) => {
     const { id } = req.params
     const { status, vendor_order_id, estimated_delivery } = req.body
 
-    const allowedStatuses = ['pending', 'confirmed', 'packed', 'dispatched', 'delivered']
+    const allowedStatuses = ['unpaid', 'confirmed', 'packed', 'dispatched', 'delivered']
     if (status && !allowedStatuses.includes(status)) {
       return res.status(400).json({ error: 'Invalid status value' })
     }
 
     const { url, key } = getSupabaseCreds()
+    
+    const updates = {}
 
     if (status !== undefined) {
-      const getRes = await fetch(`${url}/rest/v1/orders?id=eq.${id}&select=status`, {
+      const getRes = await fetch(`${url}/rest/v1/orders?id=eq.${id}&select=status,status_history`, {
         headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
       })
       const currentData = await getRes.json()
       const currentOrder = currentData?.[0]
 
-      const statusLevels = { pending: 0, confirmed: 1, packed: 2, dispatched: 3, delivered: 4 }
+      const statusLevels = { unpaid: 0, confirmed: 1, packed: 2, dispatched: 3, delivered: 4 }
       const currentLevel = statusLevels[currentOrder?.status] ?? 0
       const newLevel = statusLevels[status] ?? 0
 
       if (newLevel < currentLevel) {
         return res.status(400).json({ error: `Cannot revert order status from '${currentOrder?.status}' back to '${status}'.` })
       }
+
+      if (status !== currentOrder?.status) {
+        const statusHistory = currentOrder?.status_history || []
+        updates.status_history = [...statusHistory, { status, timestamp: new Date().toISOString() }]
+      }
     }
 
-    const updates = {}
     if (status !== undefined) updates.status = status
     if (vendor_order_id !== undefined) updates.vendor_order_id = vendor_order_id
     if (estimated_delivery !== undefined) updates.estimated_delivery = estimated_delivery

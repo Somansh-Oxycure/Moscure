@@ -5,10 +5,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
-import { Lock, Loader2, RefreshCw, ChevronDown, Package, Truck, CheckCircle2, Clock, AlertCircle, Save, Search, X } from 'lucide-react'
+import { Lock, Loader2, RefreshCw, ChevronDown, Package, Truck, CheckCircle2, Clock, AlertCircle, Save, Search, X, Download, History } from 'lucide-react'
 
 const STATUS_OPTIONS = [
-  { value: 'pending',    label: 'Pending' },
+  { value: 'unpaid',     label: 'Unpaid' },
   { value: 'confirmed',  label: 'Confirmed' },
   { value: 'packed',     label: 'Packed' },
   { value: 'dispatched', label: 'Out for Delivery' },
@@ -16,7 +16,7 @@ const STATUS_OPTIONS = [
 ]
 
 const STATUS_COLORS = {
-  pending:    'text-yellow-400',
+  unpaid:     'text-red-500',
   confirmed:  'text-cyan-400',
   packed:     'text-blue-400',
   dispatched: 'text-purple-400',
@@ -100,29 +100,37 @@ function OrderRow({ order, onSave }) {
   const isDirty = status !== order.status || vendorId !== (order.vendor_order_id ?? '') || estDelivery !== (order.estimated_delivery ?? '')
 
   return (
-    <div className="bg-white/3 border border-white/8 rounded-xl overflow-hidden">
+    <div className="bg-white/3 border border-white/8 rounded-xl overflow-hidden hover:bg-white/5 transition-colors">
       {/* Row header */}
       <button
         onClick={() => setExpanded(v => !v)}
-        className="w-full px-5 py-4 flex items-center gap-4 text-left hover:bg-white/3 transition-colors"
+        className="w-full px-5 py-4 flex items-center gap-4 text-left transition-colors"
       >
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className={`text-xs font-mono font-bold ${STATUS_COLORS[status]}`}>
-              ● {STATUS_OPTIONS.find(s => s.value === status)?.label}
-            </span>
-            <span className="text-xs text-white/30 font-mono">{createdAt}</span>
+        <div className="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <div>
+            <div className="flex items-center gap-3 mb-1">
+              <span className={`text-xs font-mono font-bold ${STATUS_COLORS[order.status]}`}>
+                ● {STATUS_OPTIONS.find(s => s.value === order.status)?.label}
+              </span>
+            </div>
+            <p className="text-xs text-white/40 font-mono">ID: {order.id.slice(0,8)}</p>
           </div>
-          <p className="text-sm text-white/70 mt-0.5 truncate">
-            {order.address?.name} · {order.address?.email}
-          </p>
-          <p className="text-xs text-white/35 font-mono mt-0.5">
-            {order.items?.map(i => `${i.name} ×${i.qty}`).join(', ')}
-          </p>
+          <div>
+            <p className="text-sm text-white/80 font-medium truncate">{order.address?.name}</p>
+            <p className="text-xs text-white/40 truncate">{order.address?.email}</p>
+          </div>
+          <div>
+             <span className="text-xs text-white/40 font-mono block">{createdAt}</span>
+             <p className="text-xs text-white/50 truncate mt-0.5">
+              {order.items?.length} item(s)
+            </p>
+          </div>
+           <div className="text-right flex-shrink-0 md:text-left">
+            <p className="font-display text-base text-white">₹{totalINR}</p>
+          </div>
         </div>
-        <div className="text-right shrink-0">
-          <p className="font-display text-base text-white">₹{totalINR}</p>
-          <ChevronDown size={14} className={`text-white/30 mx-auto mt-1 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+        <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-white/5">
+          <ChevronDown size={16} className={`text-white/60 transition-transform ${expanded ? 'rotate-180' : ''}`} />
         </div>
       </button>
 
@@ -136,89 +144,185 @@ function OrderRow({ order, onSave }) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 border-t border-white/8 pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Shipping address */}
-              <div>
-                <p className="text-xs text-white/35 font-mono uppercase tracking-wider mb-2">Shipping Address</p>
-                <p className="text-sm text-white/60 leading-relaxed">
-                  {order.address?.name}<br />
-                  {order.address?.phone} · {order.address?.email}<br />
-                  {order.address?.line1}{order.address?.line2 ? `, ${order.address.line2}` : ''}<br />
-                  {order.address?.city}, {order.address?.state} – {order.address?.pincode}
-                </p>
+            <div className="px-5 pb-5 border-t border-white/8 pt-6">
+              
+              {/* Tables Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                
+                {/* Customer Details Table */}
+                <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden h-full">
+                  <div className="bg-white/5 px-4 py-3 border-b border-white/10">
+                    <h3 className="text-sm font-mono text-white/70 uppercase tracking-wider">Customer Details</h3>
+                  </div>
+                  <table className="w-full text-left border-collapse">
+                    <tbody>
+                      <tr className="border-b border-white/5">
+                        <th className="py-3 px-4 text-xs text-white/40 font-mono font-normal w-1/3">Name</th>
+                        <td className="py-3 px-4 text-sm text-white/80">{order.address?.name}</td>
+                      </tr>
+                      <tr className="border-b border-white/5">
+                        <th className="py-3 px-4 text-xs text-white/40 font-mono font-normal">Email</th>
+                        <td className="py-3 px-4 text-sm text-white/80">{order.address?.email}</td>
+                      </tr>
+                      <tr className="border-b border-white/5">
+                        <th className="py-3 px-4 text-xs text-white/40 font-mono font-normal">Phone</th>
+                        <td className="py-3 px-4 text-sm text-white/80">{order.address?.phone}</td>
+                      </tr>
+                      <tr>
+                        <th className="py-3 px-4 text-xs text-white/40 font-mono font-normal align-top">Address</th>
+                        <td className="py-3 px-4 text-sm text-white/80">
+                          {order.address?.line1}{order.address?.line2 ? `, ${order.address.line2}` : ''}<br />
+                          {order.address?.city}, {order.address?.state} – {order.address?.pincode}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Order Items & Payment Table */}
+                <div className="flex flex-col gap-4">
+                  <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+                    <div className="bg-white/5 px-4 py-3 border-b border-white/10">
+                      <h3 className="text-sm font-mono text-white/70 uppercase tracking-wider">Order Items</h3>
+                    </div>
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="border-b border-white/5 bg-white/5">
+                          <th className="py-2 px-4 text-xs text-white/40 font-mono font-normal">Item</th>
+                          <th className="py-2 px-4 text-xs text-white/40 font-mono font-normal text-right">Qty</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {order.items?.map((item, idx) => (
+                          <tr key={idx} className="border-b border-white/5 last:border-0">
+                            <td className="py-2.5 px-4 text-sm text-white/80">{item.name}</td>
+                            <td className="py-2.5 px-4 text-sm text-white/80 text-right font-mono">{item.qty}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+                     <div className="bg-white/5 px-4 py-2.5 border-b border-white/10">
+                      <h3 className="text-xs font-mono text-white/70 uppercase tracking-wider">Payment Details</h3>
+                    </div>
+                    <table className="w-full text-left border-collapse">
+                      <tbody>
+                        <tr className="border-b border-white/5">
+                          <th className="py-2 px-4 text-xs text-white/40 font-mono font-normal w-1/3">Razorpay Order</th>
+                          <td className="py-2 px-4 text-xs text-white/70 font-mono">{order.razorpay_order_id ?? '—'}</td>
+                        </tr>
+                        <tr>
+                          <th className="py-2 px-4 text-xs text-white/40 font-mono font-normal">Payment ID</th>
+                          <td className="py-2 px-4 text-xs text-white/70 font-mono">{order.razorpay_payment_id ?? '—'}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
               </div>
 
-              {/* Admin controls */}
-              <div className="flex flex-col gap-3">
-                <div>
-                  <label className="text-xs text-white/35 font-mono uppercase tracking-wider block mb-1">Order Status</label>
-                  <select
-                    value={status}
-                    onChange={e => setStatus(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gradientcyan/50 transition-colors"
-                  >
-                    {STATUS_OPTIONS.map(s => {
-                      const statusLevels = { pending: 0, confirmed: 1, packed: 2, dispatched: 3, delivered: 4 }
-                      const currentLevel = statusLevels[order.status] ?? 0
-                      const optionLevel = statusLevels[s.value] ?? 0
-                      const isDisabled = optionLevel < currentLevel
-
-                      return (
-                        <option
-                          key={s.value}
-                          value={s.value}
-                          disabled={isDisabled}
-                          className={isDisabled ? 'bg-[#0a0a0a] text-white/30' : 'bg-[#0a0a0a] text-white'}
-                        >
-                          {s.label} {isDisabled ? '(Locked)' : ''}
-                        </option>
-                      )
+              {/* Status History Timeline */}
+              {order.status_history && order.status_history.length > 0 && (
+                <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden mb-6">
+                  <div className="bg-white/5 px-4 py-3 border-b border-white/10 flex items-center gap-2">
+                    <History size={16} className="text-white/40" />
+                    <h3 className="text-sm font-mono text-white/70 uppercase tracking-wider">Status History</h3>
+                  </div>
+                  <div className="p-5 flex gap-4 overflow-x-auto hide-scrollbar">
+                    {order.status_history.map((hist, idx) => {
+                       const histStatus = STATUS_OPTIONS.find(s => s.value === hist.status)
+                       const histDate = new Date(hist.timestamp).toLocaleDateString('en-IN', {
+                         day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                       })
+                       return (
+                         <div key={idx} className="flex-shrink-0 bg-white/5 border border-white/10 rounded-lg p-3 min-w-[140px]">
+                           <div className={`text-xs font-mono font-bold mb-1 ${STATUS_COLORS[hist.status]}`}>
+                             ● {histStatus?.label || hist.status}
+                           </div>
+                           <div className="text-xs text-white/40 font-mono">
+                             {histDate}
+                           </div>
+                         </div>
+                       )
                     })}
-                  </select>
+                  </div>
                 </div>
+              )}
 
-                <div>
-                  <label className="text-xs text-white/35 font-mono uppercase tracking-wider block mb-1">Vendor Order ID</label>
-                  <input
-                    value={vendorId}
-                    onChange={e => setVendorId(e.target.value)}
-                    placeholder="e.g. VEND-98765"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-white/20 focus:outline-none focus:border-gradientcyan/50 transition-colors"
-                  />
+              {/* Admin Controls Area */}
+              <div className="bg-[#0a0a0a] rounded-xl border border-white/10 p-5">
+                 <h3 className="text-sm font-mono text-gradientcyan uppercase tracking-wider mb-4 flex items-center gap-2">
+                   <Save size={16} /> Admin Controls
+                 </h3>
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-end">
+                  <div>
+                    <label className="text-xs text-white/40 font-mono uppercase tracking-wider block mb-2">Update Status</label>
+                    <select
+                      value={status}
+                      onChange={e => setStatus(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-gradientcyan/50 transition-colors"
+                    >
+                      {STATUS_OPTIONS.map(s => {
+                        const statusLevels = { unpaid: 0, confirmed: 1, packed: 2, dispatched: 3, delivered: 4 }
+                        const currentLevel = statusLevels[order.status] ?? 0
+                        const optionLevel = statusLevels[s.value] ?? 0
+                        const isDisabled = optionLevel < currentLevel
+
+                        return (
+                          <option
+                            key={s.value}
+                            value={s.value}
+                            disabled={isDisabled}
+                            className={isDisabled ? 'bg-[#0a0a0a] text-white/30' : 'bg-[#0a0a0a] text-white'}
+                          >
+                            {s.label} {isDisabled ? '(Locked)' : ''}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-white/40 font-mono uppercase tracking-wider block mb-2">Vendor Order ID</label>
+                    <input
+                      value={vendorId}
+                      onChange={e => setVendorId(e.target.value)}
+                      placeholder="e.g. VEND-98765"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-gradientcyan/50 transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-white/40 font-mono uppercase tracking-wider block mb-2">Est. Delivery Date</label>
+                    <div className="flex gap-3">
+                      <input
+                        type="date"
+                        value={estDelivery}
+                        onChange={e => setEstDelivery(e.target.value)}
+                        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-gradientcyan/50 transition-colors min-w-[130px]"
+                      />
+                      <motion.button
+                        whileHover={{ scale: isDirty ? 1.05 : 1 }}
+                        whileTap={{ scale: isDirty ? 0.95 : 1 }}
+                        onClick={handleSave}
+                        disabled={!isDirty || saving}
+                        className={`flex items-center justify-center gap-2 py-2.5 px-5 rounded-lg text-sm font-mono transition-all shrink-0 ${
+                          saved ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                          isDirty ? 'bg-gradientcyan text-background' :
+                          'bg-white/5 text-white/25 cursor-not-allowed border border-transparent'
+                        }`}
+                      >
+                        {saving ? <Loader2 size={16} className="animate-spin" /> : (saved ? <CheckCircle2 size={16} /> : <Save size={16} />)}
+                        <span className="hidden sm:inline">{saved ? 'Saved' : saving ? 'Saving…' : 'Save'}</span>
+                      </motion.button>
+                    </div>
+                  </div>
                 </div>
-
-                <div>
-                  <label className="text-xs text-white/35 font-mono uppercase tracking-wider block mb-1">Estimated Delivery Date</label>
-                  <input
-                    type="date"
-                    value={estDelivery}
-                    onChange={e => setEstDelivery(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gradientcyan/50 transition-colors"
-                  />
-                </div>
-
-                <motion.button
-                  whileHover={{ scale: isDirty ? 1.02 : 1 }}
-                  whileTap={{ scale: isDirty ? 0.98 : 1 }}
-                  onClick={handleSave}
-                  disabled={!isDirty || saving}
-                  className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-mono transition-all ${
-                    saved ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
-                    isDirty ? 'bg-gradientcyan text-background' :
-                    'bg-white/5 text-white/25 cursor-not-allowed'
-                  }`}
-                >
-                  {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-                  {saved ? 'Saved!' : saving ? 'Saving…' : 'Save Changes'}
-                </motion.button>
               </div>
 
-              {/* Payment info */}
-              <div className="md:col-span-2 border-t border-white/5 pt-3">
-                <p className="text-xs text-white/25 font-mono">
-                  Razorpay Order: {order.razorpay_order_id ?? '—'} · Payment: {order.razorpay_payment_id ?? '—'}
-                </p>
-              </div>
             </div>
           </motion.div>
         )}
@@ -295,12 +399,40 @@ function AdminDashboard() {
             <p className="font-mono text-xs text-gradientcyan uppercase tracking-widest mb-1">Admin</p>
             <h1 className="font-display text-3xl text-white">Order Management</h1>
           </div>
-          <button
-            onClick={fetchOrders}
-            className="flex items-center gap-2 text-sm text-white/40 hover:text-white border border-white/10 hover:border-white/25 rounded-lg px-3 py-2 transition-colors font-mono"
-          >
-            <RefreshCw size={13} className={loading ? 'animate-spin' : ''} /> Refresh
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => {
+                if (filtered.length === 0) return
+                const headers = ['Order ID', 'Date', 'Status', 'Customer Name', 'Email', 'Phone', 'Address', 'Items', 'Total (INR)']
+                const csvRows = filtered.map(o => {
+                  const date = new Date(o.created_at).toLocaleString('en-IN')
+                  const address = `${o.address?.line1 || ''} ${o.address?.line2 || ''}, ${o.address?.city || ''}, ${o.address?.state || ''} - ${o.address?.pincode || ''}`
+                  const items = o.items?.map(i => `${i.name} (x${i.qty})`).join('; ')
+                  const amount = (o.amount_paise / 100).toFixed(2)
+                  return [o.id, date, o.status, o.address?.name || '', o.address?.email || '', o.address?.phone || '', address, items, amount].map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')
+                })
+                const csvContent = [headers.join(','), ...csvRows].join('\n')
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+                const url = URL.createObjectURL(blob)
+                const link = document.createElement('a')
+                link.href = url
+                link.setAttribute('download', `orders_export_${new Date().toISOString().split('T')[0]}.csv`)
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link)
+              }}
+              disabled={filtered.length === 0}
+              className="flex items-center gap-2 text-sm text-white/80 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-2 transition-colors font-mono disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Download size={13} /> Export CSV
+            </button>
+            <button
+              onClick={fetchOrders}
+              className="flex items-center gap-2 text-sm text-white/40 hover:text-white border border-white/10 hover:border-white/25 rounded-lg px-3 py-2 transition-colors font-mono"
+            >
+              <RefreshCw size={13} className={loading ? 'animate-spin' : ''} /> Refresh
+            </button>
+          </div>
         </div>
 
         {/* Stats row */}
