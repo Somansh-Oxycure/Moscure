@@ -646,7 +646,7 @@ export default function IPOLandingPage({ onNavigate }) {
 
   const handleWhatsApp = () => {
     window.open(
-      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3500 sq ft coverage, ₹15,999\nhttps://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap')}`,
+      `https://wa.me/?text=${encodeURIComponent('Check out the Moscure IPO Outdoor Mosquito Trap — Chemical-Free, UV LED, 3500 sq ft coverage, ₹12,999\nhttps://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap')}`,
       '_blank',
       'noopener,noreferrer'
     )
@@ -655,10 +655,10 @@ export default function IPOLandingPage({ onNavigate }) {
   return (
     <>
       <Helmet>
-        <title>Moscure IPO Outdoor Mosquito Trap | UV LED Bug Trapper | 3500 sq ft Coverage | ₹15,999</title>
-        <meta name="description" content="Moscure IPO Outdoor Mosquito & Insect Trap uses 365nm UV LED technology to silently trap mosquitoes & flying insects across 3500 sq ft. Water resistant, hangable design. 100% chemical-free. Buy now at ₹15,999." />
+        <title>Moscure IPO Outdoor Mosquito Trap | UV LED Bug Trapper | 3500 sq ft Coverage | ₹12,999</title>
+        <meta name="description" content="Moscure IPO Outdoor Mosquito & Insect Trap uses 365nm UV LED technology to silently trap mosquitoes & flying insects across 3500 sq ft. Water resistant, hangable design. 100% chemical-free. Buy now at ₹12,999." />
         <meta name="keywords" content="outdoor mosquito trap India, UV mosquito killer outdoor, water resistant bug trapper, garden mosquito trap, patio mosquito catcher, dengue malaria mosquito trap outdoor, Moscure IPO, 3500 sq ft outdoor insect trap, hangable mosquito trap India" />
-        <meta property="og:title" content="Moscure IPO Outdoor Mosquito Trap — ₹15,999" />
+        <meta property="og:title" content="Moscure IPO Outdoor Mosquito Trap — ₹12,999" />
         <meta property="og:description" content="Water resistant, hangable UV LED mosquito trap. Covers 3500 sq ft. Chemical-free, monsoon ready." />
         <meta property="og:url" content="https://www.moscure.com/products/moscure-ipo-outdoor-mosquito-trap" />
         <meta property="og:type" content="product" />
@@ -752,15 +752,15 @@ export default function IPOLandingPage({ onNavigate }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex items-end gap-3 flex-wrap"
+              className="flex items-center gap-3 flex-wrap"
             >
-              <div className="flex items-baseline gap-1">
-                <span className="font-body text-sm text-textMuted">{PRODUCT.currency}</span>
-                <span className="font-display text-3xl text-textMuted line-through mr-2">{PRODUCT.originalPrice.toLocaleString('en-IN')}</span>
-                <span className="font-display text-5xl text-white leading-none">
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <span className="font-display text-3xl sm:text-4xl md:text-5xl text-white leading-none font-bold">
                   ₹{PRODUCT.price.toLocaleString('en-IN')}
                 </span>
-                <span className="font-mono text-xs text-textMuted uppercase"></span>
+                <span className="font-display text-xl sm:text-2xl text-textMuted line-through">
+                  ₹{PRODUCT.originalPrice.toLocaleString('en-IN')}
+                </span>
               </div>
               <span className="flex items-center gap-1.5 font-body text-sm text-gradientyellow font-medium">
                 <span className="w-2 h-2 rounded-full bg-gradientyellow inline-block" />
@@ -1541,7 +1541,7 @@ export default function IPOLandingPage({ onNavigate }) {
             <div className="flex items-center justify-between gap-3 max-w-xl mx-auto">
               <div>
                 <p className="font-body text-xs text-textMuted">Moscure IPO</p>
-                <p className="font-display text-2xl text-gradientyellow leading-none">₹15,999</p>
+                <p className="font-display text-2xl text-gradientyellow leading-none">₹{PRODUCT.price.toLocaleString('en-IN')}</p>
               </div>
               <motion.button
                 onClick={() => setCheckoutOpen(true)}
