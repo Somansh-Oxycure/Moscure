@@ -14,6 +14,7 @@ import ContactPage from './pages/ContactPage'
 import ReviewPage from './pages/ReviewPage'
 import IPIIndoorProductPage from './pages/products/IPIIndoorProductPage'
 import IPOOutdoorProductPage from './pages/products/IPOOutdoorProductPage'
+import IPOLandingPage from './pages/IPOLandingPage'
 import UserManualPage from './pages/products/UserManualPage'
 import InstallationGuidePage from './pages/products/InstallationGuidePage'
 import WarrantyPage from './pages/products/WarrantyPage'
@@ -55,6 +56,7 @@ const PAGE_TO_PATH = {
   review: '/review',
   ipiIndoor: '/products/moscure-ipi-indoor-mosquito-trap',
   ipoOutdoor: '/products/moscure-ipo-outdoor-mosquito-trap',
+  ipoLanding: '/ipo-media-campaign',
   myOrders: '/my-orders',
   adminOrders: '/admin/orders',
 }
@@ -62,6 +64,7 @@ const PAGE_TO_PATH = {
 function AppInner() {
   const navigate = useNavigate()
   const location = useLocation()
+  const isIPOLanding = location.pathname.toLowerCase().startsWith('/ipo-media-campaign')
 
   const handleNavigate = (page) => {
     navigate(PAGE_TO_PATH[page] ?? '/')
@@ -74,7 +77,7 @@ function AppInner() {
   return (
     <div className="bg-background text-textPrimary min-h-screen">
       <ScrollToTop />
-      <Navbar onNavigate={handleNavigate} />
+      {!isIPOLanding && <Navbar onNavigate={handleNavigate} />}
       {/* <RakshaBandhanPopup onNavigate={handleNavigate} /> */}
       <Routes>
         <Route path="/" element={<LandingPage onNavigate={handleNavigate} />} />
@@ -86,6 +89,7 @@ function AppInner() {
         <Route path="/review" element={<ReviewPage onNavigate={handleNavigate} />} />
         <Route path="/products/moscure-ipi-indoor-mosquito-trap" element={<IPIIndoorProductPage onNavigate={handleNavigate} />} />
         <Route path="/products/moscure-ipo-outdoor-mosquito-trap" element={<IPOOutdoorProductPage onNavigate={handleNavigate} />} />
+        <Route path="/ipo-media-campaign" element={<IPOLandingPage onNavigate={handleNavigate} />} />
         <Route path="/user-manual" element={<UserManualPage />} />
         <Route path="/user-manual/" element={<UserManualPage />} />
         <Route path="/installation-guide" element={<InstallationGuidePage />} />
@@ -104,7 +108,7 @@ function AppInner() {
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="*" element={<LandingPage onNavigate={handleNavigate} />} />
       </Routes>
-      <Footer onNavigate={handleNavigate} />
+      {!isIPOLanding && <Footer onNavigate={handleNavigate} />}
     </div>
   )
 }
