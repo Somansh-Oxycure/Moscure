@@ -39,40 +39,66 @@ export const SHIPPING_ZONES = [
       [160001, 160102], // Chandigarh
       [600001, 600138], // Chennai
     ],
+  },
+  {
+    id: 'all_india',
+    name: 'All India',
+    estimatedDays: { min: 4, max: 7 }, // 4-7 days
+    rates: {
+      'IPO': 0,
+      'IPI': 0
+    },
   }
 ]
 
 export function getShippingInfo(pincode, sku) {
   const pin = parseInt(pincode, 10)
-  if (isNaN(pin) || String(pincode).length !== 6) {
-    return null
+  if (isNaN(pin) || String(pincode).trim().length !== 6 || pin < 100000 || pin > 999999) {
+    return {
+      isSupported: false
+    }
   }
 
+  const baseSku = sku?.includes('IPO') ? 'IPO' : 'IPI'
+
+  // Check specific express delivery zones first
   for (const zone of SHIPPING_ZONES) {
-    for (const [start, end] of zone.pincodeRanges) {
-      if (pin >= start && pin <= end) {
-        const baseSku = sku?.includes('IPO') ? 'IPO' : 'IPI'
-        return {
-          zone: zone.id,
-          zoneName: zone.name,
-          estimatedDays: zone.estimatedDays,
-          shippingCost: zone.rates[baseSku],
-          isSupported: true
+    if (zone.pincodeRanges) {
+      for (const [start, end] of zone.pincodeRanges) {
+        if (pin >= start && pin <= end) {
+          return {
+            zone: zone.id,
+            zoneName: zone.name,
+            estimatedDays: zone.estimatedDays,
+            shippingCost: zone.rates[baseSku] ?? 0,
+            isSupported: true
+          }
         }
       }
     }
   }
 
-  // Not supported location
+  // Open to all other locations across India (standard delivery)
+  const allIndiaZone = SHIPPING_ZONES.find(z => z.id === 'all_india') || {
+    id: 'all_india',
+    name: 'All India',
+    estimatedDays: { min: 4, max: 7 },
+    rates: { 'IPO': 0, 'IPI': 0 }
+  }
+
   return {
-    isSupported: false
+    zone: allIndiaZone.id,
+    zoneName: allIndiaZone.name,
+    estimatedDays: allIndiaZone.estimatedDays,
+    shippingCost: allIndiaZone.rates[baseSku] ?? 0,
+    isSupported: true
   }
 }
 
 export function getEstimatedDeliveryLabel(pincode, sku) {
   const info = getShippingInfo(pincode, sku)
   if (!info) return 'Enter pincode for delivery estimate'
-  if (!info.isSupported) return 'We are currently not delivering here. Please contact us directly.'
+  if (!info.isSupported) return 'Enter a valid 6-digit Indian pincode'
 
   const today = new Date()
   let daysAdded = 0

@@ -397,7 +397,7 @@ export default function CheckoutModal({ product, isOpen, onClose, onGoToOrders }
     if (!form.line1.trim()) e.line1 = 'Required'
     if (!form.city.trim()) e.city = 'Required'
     if (!form.state.trim()) e.state = 'Required'
-    if (!/^\d{6}$/.test(form.pincode)) {
+    if (!/^[1-9]\d{5}$/.test(form.pincode)) {
       e.pincode = 'Enter valid 6-digit pincode'
     } else if (shippingInfo?.isSupported === false) {
       e.pincode = 'Delivery not available'

@@ -1542,7 +1542,7 @@ export default function IPOLandingPage({ onNavigate }) {
               <div>
                 <p className="font-body text-xs text-textMuted">Moscure IPO</p>
                 <p className="font-display text-2xl text-gradientyellow leading-none">₹{PRODUCT.price.toLocaleString('en-IN')}</p>
-              </div>
+               </div>
               <motion.button
                 onClick={() => setCheckoutOpen(true)}
                 whileHover={{ scale: 1.02 }}
