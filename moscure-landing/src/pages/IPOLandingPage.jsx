@@ -63,6 +63,13 @@ const PRODUCT = {
 const PRODUCT_IMAGES = [
   { id: 1, alt: 'Moscure IPO Outdoor Mosquito Trap — Front View', src: img1 },
   { id: 2, alt: 'Moscure IPO Outdoor — 365nm UV LED Light Active', src: img2 },
+  {
+    id: 'vid1',
+    type: 'youtube',
+    src: 'a8qVmWTwoYw',
+    thumbnail: img1,
+    alt: 'Moscure IPO Outdoor Video'
+  },
   { id: 3, alt: 'Moscure IPO — Water Resistant Outdoor Housing Detail', src: img3 },
   { id: 4, alt: 'Moscure IPO — Hanging Installation for Garden & Patio', src: img4 },
   { id: 5, alt: 'Moscure IPO — Scale & Size Reference (1,205g)', src: img5 },
@@ -292,8 +299,64 @@ function StarRating({ rating, size = 'sm' }) {
 
 function ImageGallery({ images, activeIndex, onSelect }) {
   const active = images[activeIndex]
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
+  const videoRef = useRef(null)
+
+  // Reset video state when active image changes
+  useEffect(() => {
+    setIsExpanded(false)
+    setIsMuted(true)
+  }, [activeIndex])
+
   return (
     <div>
+      {/* Expanded Video Overlay */}
+      <AnimatePresence>
+        {isExpanded && (active.type === 'video' || active.type === 'youtube') && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-sm p-4 md:p-12 cursor-pointer"
+            onClick={() => { setIsExpanded(false); setIsMuted(true) }}
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              className={`relative w-full max-h-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black ${active.type === 'youtube' ? 'max-w-[400px] h-[85vh]' : 'max-w-4xl'}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => { setIsExpanded(false); setIsMuted(true) }}
+                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-colors border border-white/20"
+              >
+                ✕
+              </button>
+              {active.type === 'youtube' ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${active.src}?autoplay=1&mute=0&rel=0&playsinline=1`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full border-0"
+                ></iframe>
+              ) : (
+                <video
+                  src={active.src}
+                  autoPlay
+                  controls
+                  className="w-full h-full max-h-[85vh] object-contain bg-black"
+                  onEnded={() => { setIsExpanded(false); setIsMuted(true) }}
+                />
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Main image */}
       <div className="animated-border-yellow">
         <div className="bg-white rounded-2xl overflow-hidden" style={{ aspectRatio: '1/1' }}>
@@ -306,7 +369,31 @@ function ImageGallery({ images, activeIndex, onSelect }) {
               transition={{ duration: 0.3 }}
               className="w-full h-full"
             >
-              {active.src ? (
+              {active.type === 'video' || active.type === 'youtube' ? (
+                <div className="w-full h-full relative cursor-pointer overflow-hidden bg-black" onClick={() => { setIsExpanded(true); setIsMuted(false) }}>
+                  {active.type === 'youtube' ? (
+                    <div className="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center bg-black">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${active.src}?autoplay=1&mute=1&loop=1&playlist=${active.src}&controls=0&modestbranding=1&rel=0&playsinline=1`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        className="w-full h-full border-0 object-contain"
+                      ></iframe>
+                    </div>
+                  ) : (
+                    <video
+                      ref={videoRef}
+                      src={active.src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+              ) : active.src ? (
                 <img
                   src={active.src}
                   alt={active.alt}
@@ -340,7 +427,12 @@ function ImageGallery({ images, activeIndex, onSelect }) {
               : 'border-borderDefault bg-surface hover:border-white/30'
               }`}
           >
-            {img.src ? (
+            {img.type === 'video' || img.type === 'youtube' ? (
+              <div className="w-full h-full bg-black relative flex items-center justify-center">
+                {img.thumbnail && <img src={img.thumbnail} alt={img.alt} className="absolute inset-0 w-full h-full object-cover opacity-50" />}
+                <Volume2 className="w-5 h-5 text-white relative z-10" />
+              </div>
+            ) : img.src ? (
               <img src={img.src} alt={img.alt} width={100} height={100} className="w-full h-full object-contain p-1 bg-white" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-textMuted font-mono text-xs">
@@ -594,6 +686,109 @@ function FAQItem({ question, answer }) {
   )
 }
 
+function VideoTestimonials() {
+  const videoIds = ['a8qVmWTwoYw', 'BXlIOvM3LpE', 'GaSK2J-HMy4', 'ddaxKgiJzOY', 'uO3goxBOjOM']
+  const [expandedVideo, setExpandedVideo] = useState(null)
+
+  return (
+    <section className="relative py-16 md:py-24 border-t border-borderDefault bg-background overflow-hidden">
+      {/* Expanded Video Overlay */}
+      <AnimatePresence>
+        {expandedVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-sm p-4 md:p-12 cursor-pointer"
+            onClick={() => setExpandedVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              className="relative w-full max-w-[400px] h-[85vh] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setExpandedVideo(null)}
+                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-colors border border-white/20"
+              >
+                ✕
+              </button>
+              <iframe
+                src={`https://www.youtube.com/embed/${expandedVideo}?autoplay=1&mute=0&rel=0&playsinline=1`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full border-0"
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-12 text-center"
+        >
+          <p className="font-mono text-xs uppercase tracking-widest text-gradientyellow mb-3">
+            ✦ WATCH IT IN ACTION
+          </p>
+          <h2 className="font-display text-5xl md:text-6xl text-white leading-none">
+            Client Stories
+          </h2>
+        </motion.div>
+
+        <div className="relative">
+          <div
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 hide-scrollbar"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            <style>{`
+              .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+
+            {videoIds.map((id, index) => (
+              <motion.div
+                key={id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="snap-start shrink-0 w-[85%] sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] relative rounded-2xl overflow-hidden bg-surface border border-borderDefault cursor-pointer group"
+                style={{ aspectRatio: '9/16' }}
+                onClick={() => setExpandedVideo(id)}
+              >
+                {/* YouTube iframe trick to hide controls and play silently */}
+                <div className="absolute inset-0 w-full h-[130%] -top-[15%] pointer-events-none">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&modestbranding=1&rel=0&playsinline=1`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    className="w-full h-full border-0"
+                  ></iframe>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Fading edges for carousel */}
+          <div className="absolute top-0 bottom-0 left-0 w-8 md:w-12 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
+          <div className="absolute top-0 bottom-0 right-0 w-8 md:w-12 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ─── Page Root ────────────────────────────────────────────────────────────────
 
 export default function IPOLandingPage({ onNavigate }) {
@@ -630,11 +825,14 @@ export default function IPOLandingPage({ onNavigate }) {
 
   // Auto-rotate product images every 3 seconds
   useEffect(() => {
+    const active = PRODUCT_IMAGES[activeImage]
+    if (active?.type === 'video' || active?.type === 'youtube') return // Don't auto-rotate if video is active
+
     const timer = setInterval(() => {
       setActiveImage(i => (i + 1) % PRODUCT_IMAGES.length)
     }, 3000)
     return () => clearInterval(timer)
-  }, [])
+  }, [activeImage])
 
 
 
@@ -1356,7 +1554,10 @@ export default function IPOLandingPage({ onNavigate }) {
 
       <TrustedByMarquee />
 
-      {/* ── SECTION 4: Reviews ───────────────────────────────────────── */}
+      {/* ── SECTION 4: Video Testimonials ────────────────────────────── */}
+      <VideoTestimonials />
+
+      {/* ── SECTION 5: Reviews ───────────────────────────────────────── */}
       <section id="reviews" className="relative bg-surface border-t border-borderDefault py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.div
@@ -1542,7 +1743,7 @@ export default function IPOLandingPage({ onNavigate }) {
               <div>
                 <p className="font-body text-xs text-textMuted">Moscure IPO</p>
                 <p className="font-display text-2xl text-gradientyellow leading-none">₹{PRODUCT.price.toLocaleString('en-IN')}</p>
-               </div>
+              </div>
               <motion.button
                 onClick={() => setCheckoutOpen(true)}
                 whileHover={{ scale: 1.02 }}

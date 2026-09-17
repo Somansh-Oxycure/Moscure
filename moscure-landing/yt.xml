@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <link rel="self" href="http://www.youtube.com/feeds/videos.xml?playlist_id=PLUBCWJYpFxzE"/>
+ <id>yt:playlist:PLUBCWJYpFxzE</id>
+ <yt:playlistId>PLUBCWJYpFxzE</yt:playlistId>
+ <yt:channelId>UC58EjRMnCuzEwyf9gIxetFw</yt:channelId>
+ <title>moscure site</title>
+ <author>
+  <name>Moscure</name>
+  <uri>https://www.youtube.com/channel/UC58EjRMnCuzEwyf9gIxetFw</uri>
+ </author>
+ <published>2026-09-16T07:06:01+00:00</published>
+</feed>
