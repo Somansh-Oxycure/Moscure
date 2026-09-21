@@ -932,6 +932,9 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
       {/* ── SECTION 2: Trust Ticker ──────────────────────────────────── */}
       <TrustTicker />
 
+      {/* ── SECTION 4: Video Testimonials ────────────────────────────── */}
+      <VideoTestimonials accent="yellow" />
+
       {/* ── SECTION 3: Product Detail Images ────────────────────────── */}
       <section id="product-details" className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
         <motion.div
@@ -960,9 +963,6 @@ export default function IPOOutdoorProductPage({ onNavigate }) {
       </section>
 
       <TrustedByMarquee />
-
-      {/* ── SECTION 4: Video Testimonials ────────────────────────────── */}
-      <VideoTestimonials accent="yellow" />
 
       {/* ── SECTION 5: Reviews ───────────────────────────────────────── */}
       <section id="reviews" className="relative bg-surface border-t border-borderDefault py-16 md:py-24">

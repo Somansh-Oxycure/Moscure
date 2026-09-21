@@ -924,6 +924,9 @@ export default function IPIIndoorProductPage({ onNavigate }) {
       {/* ── SECTION 2: Trust Ticker ──────────────────────────────────── */}
       <TrustTicker />
 
+      {/* ── SECTION 4: Video Testimonials ────────────────────────────── */}
+      <VideoTestimonials accent="cyan" />
+
       {/* ── SECTION 3: Product Detail Images ────────────────────────── */}
       <section id="product-details" className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
         <motion.div
@@ -952,7 +955,7 @@ export default function IPIIndoorProductPage({ onNavigate }) {
       </section>
 
       {/* ── SECTION 4: Video Testimonials ────────────────────────────── */}
-      <VideoTestimonials accent="cyan" />
+      {/* removed */}
 
       {/* ── SECTION 5: Reviews ───────────────────────────────────────── */}
       <section id="reviews" className="relative bg-surface border-t border-borderDefault py-16 md:py-24">

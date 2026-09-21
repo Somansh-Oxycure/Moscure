@@ -564,10 +564,10 @@ export default function ProductPage({ onNavigate }) {
       </Helmet>
       <ProductsHeroSection onNavigate={onNavigate} />
       <TestedSpeciesSection />
+      <VideoTestimonials accent="cyan" />
       <FeaturesGridSection />
       <HowItWorksSection />
       <LabTestedSection />
-      <VideoTestimonials accent="cyan" />
       <BottomCTASection onNavigate={onNavigate} />
     </main>
   )

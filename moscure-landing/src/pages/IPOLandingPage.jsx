@@ -906,6 +906,9 @@ export default function IPOLandingPage({ onNavigate }) {
       {/* ── SECTION 2: Trust Ticker ──────────────────────────────────── */}
       <TrustTicker />
 
+      {/* ── SECTION 4: Video Testimonials ────────────────────────────── */}
+      <VideoTestimonials accent="yellow" />
+
       {/* ── SECTION 2.5: WHY THE ISSUE IS BIGGER THAN YOU THINK ────────────────────────── */}
       <section className="relative bg-[#090909] py-16 md:py-24 border-b border-borderDefault">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -1454,7 +1457,7 @@ export default function IPOLandingPage({ onNavigate }) {
       <TrustedByMarquee />
 
       {/* ── SECTION 4: Video Testimonials ────────────────────────────── */}
-      <VideoTestimonials accent="yellow" />
+      {/* removed */}
 
       {/* ── SECTION 5: Reviews ───────────────────────────────────────── */}
       <section id="reviews" className="relative bg-surface border-t border-borderDefault py-16 md:py-24">

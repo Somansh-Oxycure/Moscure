@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useInView, animate } from 'framer-moti
 import { X, Check, Shield, Wind, Zap, Droplets } from 'lucide-react'
 import { BRAND_VALUES, DISEASES_DATA, COMPARISON_DATA, FEATURES_DATA } from '../data/staticData'
 import TrustedByMarquee from '../components/TrustedByMarquee'
+import VideoTestimonials from '../components/VideoTestimonials'
 import productImg from '../assets/product.webp'
 import mosquitoSvg from '../assets/mosquito-silhouette.svg'
 
@@ -770,6 +771,7 @@ export default function LandingPage({ onNavigate }) {
     <main>
       <HeroSection onNavigate={onNavigate} />
       <BrandValuesTicker />
+      <VideoTestimonials accent="cyan" />
       <DiseasesSection onNavigate={onNavigate} />
       <TrustedByMarquee />
       <ComparisonSection onNavigate={onNavigate} />
