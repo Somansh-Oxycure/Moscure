@@ -18,6 +18,7 @@ import CheckoutModal from '../components/CheckoutModal'
 
 // ─── Asset imports ────────────────────────────────────────────────────────────
 import logoImg from '../assets/logo.webp'
+import emiImg from '../assets/EMI-IPO-457PERMONTH.png'
 import img1 from '../assets/product-outdoor.png'
 import img2 from '../assets/Outdoor_2.jpg'
 import img3 from '../assets/Outdoor_3.jpg'
@@ -71,6 +72,7 @@ const PRODUCT_IMAGES = [
     thumbnail: img1,
     alt: 'Moscure IPO Outdoor Video'
   },
+  { id: 'emi', alt: 'Moscure IPO EMI Starting at ₹457/month', src: emiImg },
   { id: 3, alt: 'Moscure IPO — Water Resistant Outdoor Housing Detail', src: img3 },
   { id: 4, alt: 'Moscure IPO — Hanging Installation for Garden & Patio', src: img4 },
   { id: 5, alt: 'Moscure IPO — Scale & Size Reference (1,205g)', src: img5 },
@@ -1669,4 +1671,4 @@ export default function IPOLandingPage({ onNavigate }) {
       />
     </>
   )
-}
+}
